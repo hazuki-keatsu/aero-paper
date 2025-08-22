@@ -1,6 +1,14 @@
 @import "tailwindcss";
 @import "./typography.css";
 
+@font-face {
+  font-family: "Yozai";
+  src: url("../assets/fonts/Yozai-Regular.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
 @custom-variant dark (&:where([data-theme=dark], [data-theme=dark] *));
 
 :root,
@@ -10,6 +18,9 @@ html[data-theme="light"] {
   --accent: #006cac;
   --muted: #e6e6e6;
   --border: #ece9e9;
+  --highlight-text: #ff6b6b;
+  --secondary-highlight: #4ecdc4;
+  --font-mono: "Yozai", ui-monospace, SFMono-Regular, "SF Mono", Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
 }
 
 html[data-theme="dark"] {
@@ -18,6 +29,9 @@ html[data-theme="dark"] {
   --accent: #ff6b01;
   --muted: #343f60;
   --border: #ab4b08;
+  --highlight-text: #ff8a8a;
+  --secondary-highlight: #6dd5d1;
+  --font-mono: "Yozai", ui-monospace, SFMono-Regular, "SF Mono", Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
 }
 
 @theme inline {
@@ -26,6 +40,9 @@ html[data-theme="dark"] {
   --color-accent: var(--accent);
   --color-muted: var(--muted);
   --color-border: var(--border);
+  --color-highlight-text: var(--highlight-text);
+  --color-secondary-highlight: var(--secondary-highlight);
+  --font-family-mono: var(--font-mono);
 }
 
 @layer base {
@@ -55,7 +72,7 @@ html[data-theme="dark"] {
 }
 
 @utility max-w-app {
-  @apply max-w-3xl;
+  @apply max-w-4xl xl:max-w-5xl;
 }
 
 .active-nav {

@@ -70,17 +70,17 @@ const isActive = (path: string) => {
         >
           <li class="col-span-2">
             <a href="/posts" class:list={{ "active-nav": isActive("/posts") }}>
-              Posts
+              文章
             </a>
           </li>
           <li class="col-span-2">
             <a href="/tags" class:list={{ "active-nav": isActive("/tags") }}>
-              Tags
+              标签
             </a>
           </li>
           <li class="col-span-2">
             <a href="/about" class:list={{ "active-nav": isActive("/about") }}>
-              About
+              关于
             </a>
           </li>
           {
@@ -95,7 +95,7 @@ const isActive = (path: string) => {
                     },
                   ]}
                   ariaLabel="archives"
-                  title="Archives"
+                  title="归档"
                 >
                   <IconArchive class="hidden sm:inline-block" />
                   <span class="sm:sr-only">Archives</span>
@@ -111,7 +111,7 @@ const isActive = (path: string) => {
                 { "[&>svg]:stroke-accent": isActive("/search") },
               ]}
               ariaLabel="search"
-              title="Search"
+              title="搜索"
             >
               <IconSearch />
               <span class="sr-only">Search</span>
@@ -123,7 +123,7 @@ const isActive = (path: string) => {
                 <button
                   id="theme-btn"
                   class="focus-outline relative size-12 p-4 sm:size-8 hover:[&>svg]:stroke-accent"
-                  title="Toggles light & dark"
+                  title="切换暗色 & 亮色模式"
                   aria-label="auto"
                   aria-live="polite"
                 >

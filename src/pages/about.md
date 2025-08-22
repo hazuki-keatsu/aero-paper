@@ -1,10 +1,10 @@
 ---
 layout: ../layouts/AboutLayout.astro
-title: "About"
+title: "关于"
 ---
 
 <div class="prose">
-    <img align="left" src="profile_picture.jpg" alt="Hazuki Keatsu" style="width: 100px; height: 100px; border-radius: 50%; object-fit: cover; border: 3px solid #e5e7eb; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);margin: 0 20px 0 0">
+    <img align="left" src="/profile_picture.jpg" alt="Hazuki Keatsu" style="width: 100px; height: 100px; border-radius: 50%; object-fit: cover; border: 3px solid #e5e7eb; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);margin: 0 20px 0 0">
 </div>
 
 **你好**，我是 Hazuki Keatsu！👋

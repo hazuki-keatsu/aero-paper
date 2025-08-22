@@ -25,7 +25,7 @@ const recentPosts = sortedPosts.filter(({ data }) => !data.featured);
   <main id="main-content" data-layout="index">
     <section id="hero" class="pt-8 pb-6">
       <h1 class="my-4 inline-block text-4xl font-bold sm:my-8 sm:text-5xl">
-        Hazuki Keatsu
+        <span class="text-highlight-text font-semibold">Ha</span>zuki <span class="text-secondary-highlight font-semibold">Kea</span>tsu
       </h1>
       <a
         target="_blank"
@@ -39,17 +39,17 @@ const recentPosts = sortedPosts.filter(({ data }) => !data.featured);
           height={20}
           class="scale-125 stroke-accent stroke-3 rtl:-rotate-90"
         />
-        <span class="sr-only">RSS Feed</span>
+        <span class="sr-only">RSS 种子</span>
       </a>
 
       <p>
-        Try to Live, and try to Love...
+        Try to <b>Live</b>, try to <b>Love</b>...
       </p>
       {
         // only display if at least one social link is enabled
         SOCIALS.length > 0 && (
           <div class="mt-4 flex flex-col sm:flex-row sm:items-center">
-            <div class="me-2 mb-1 whitespace-nowrap sm:mb-0">Social Links:</div>
+            <div class="me-2 mb-1 whitespace-nowrap sm:mb-0">社交链接:</div>
             <Socials />
           </div>
         )
@@ -62,7 +62,7 @@ const recentPosts = sortedPosts.filter(({ data }) => !data.featured);
       featuredPosts.length > 0 && (
         <>
           <section id="featured" class="pt-12 pb-6">
-            <h2 class="text-2xl font-semibold tracking-wide">Featured</h2>
+            <h2 class="text-2xl font-semibold tracking-wide">置顶</h2>
             <ul>
               {featuredPosts.map(data => (
                 <Card variant="h3" {...data} />
@@ -77,7 +77,7 @@ const recentPosts = sortedPosts.filter(({ data }) => !data.featured);
     {
       recentPosts.length > 0 && (
         <section id="recent-posts" class="pt-12 pb-6">
-          <h2 class="text-2xl font-semibold tracking-wide">Recent Posts</h2>
+          <h2 class="text-2xl font-semibold tracking-wide">最近发布</h2>
           <ul>
             {recentPosts.map(
               (data, index) =>
@@ -90,7 +90,7 @@ const recentPosts = sortedPosts.filter(({ data }) => !data.featured);
 
     <div class="my-8 text-center">
       <LinkButton href="/posts/">
-        All Posts
+        全部
         <IconArrowRight class="inline-block rtl:-rotate-180" />
       </LinkButton>
     </div>

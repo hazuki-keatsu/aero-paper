@@ -2,6 +2,7 @@ import type { Props } from "astro";
 import IconMail from "@/assets/icons/IconMail.svg";
 import IconGitHub from "@/assets/icons/IconGitHub.svg";
 import IconBrandX from "@/assets/icons/IconBrandX.svg";
+import IconBilibili from "@/assets/icons/IconBilibili.svg";
 import { SITE } from "@/config";
 
 interface Social {
@@ -19,9 +20,15 @@ export const SOCIALS: Social[] = [
     icon: IconGitHub,
   },
   {
+    name: "Bilibili",
+    href: "https://space.bilibili.com/392082366",
+    linkTitle: `${SITE.title} on Bilibili`,
+    icon: IconBilibili,
+  },
+  {
     name: "X",
     href: "https://x.com/yeyuefeng700",
-    linkTitle: `${SITE.title} on GitHub`,
+    linkTitle: `${SITE.title} on X`,
     icon: IconBrandX,
   },
   {
@@ -52,3 +59,4 @@ export const SHARE_LINKS: Social[] = [
     icon: IconMail,
   },
 ] as const;
+
