@@ -5,6 +5,7 @@ import Layout from "@/layouts/Layout.astro";
 import Tag from "@/components/Tag.astro";
 import Header from "@/components/Header.astro";
 import Footer from "@/components/Footer.astro";
+import PageContainer from "@/components/PageContainer.astro";
 import getUniqueTags from "@/utils/getUniqueTags";
 import { SITE } from "@/config";
 
@@ -14,11 +15,13 @@ let tags = getUniqueTags(posts);
 ---
 
 <Layout title={`标签 | ${SITE.title}`}>
-  <Header />
-  <Main pageTitle="标签" pageDesc="所有被使用的 tags">
-    <ul>
-      {tags.map(({ tag, tagName }) => <Tag {tag} {tagName} size="lg" />)}
-    </ul>
-  </Main>
-  <Footer />
+  <PageContainer>
+    <Header />
+    <Main pageTitle="标签" pageDesc="所有被使用的 tags">
+      <ul class="flex flex-wrap gap-2">
+        {tags.map(({ tag, tagName }) => <Tag {tag} {tagName} size="lg" />)}
+      </ul>
+    </Main>
+    <Footer />
+  </PageContainer>
 </Layout>

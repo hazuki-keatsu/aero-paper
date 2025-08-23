@@ -4,17 +4,20 @@ import Main from "@/layouts/Main.astro";
 import Layout from "@/layouts/Layout.astro";
 import Header from "@/components/Header.astro";
 import Footer from "@/components/Footer.astro";
+import PageContainer from "@/components/PageContainer.astro";
 import { SITE } from "@/config";
 
 const backUrl = SITE.showBackButton ? `${Astro.url.pathname}` : "/";
 ---
 
 <Layout title={`搜索 | ${SITE.title}`}>
-  <Header />
-  <Main pageTitle="搜索" pageDesc="搜索文章 ...">
-    <div id="pagefind-search" transition:persist data-backurl={backUrl}></div>
-  </Main>
-  <Footer />
+  <PageContainer>
+    <Header />
+    <Main pageTitle="搜索" pageDesc="搜索文章 ...">
+      <div id="pagefind-search" transition:persist data-backurl={backUrl}></div>
+    </Main>
+    <Footer />
+  </PageContainer>
 </Layout>
 
 <script>

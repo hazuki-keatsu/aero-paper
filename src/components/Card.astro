@@ -18,10 +18,10 @@ const headerProps = {
 };
 ---
 
-<li class="my-6">
+<li class="my-6 content-card p-6 rounded-lg hover:shadow-lg transition-all duration-300">
   <a
     href={getPath(id, filePath)}
-    class="inline-block text-lg font-medium text-accent decoration-dashed underline-offset-4 focus-visible:no-underline focus-visible:underline-offset-0"
+    class="inline-block text-lg font-medium text-accent decoration-dashed underline-offset-4 focus-visible:no-underline focus-visible:underline-offset-0 hover:text-highlight-text transition-colors"
   >
     {
       variant === "h2" ? (
@@ -32,5 +32,5 @@ const headerProps = {
     }
   </a>
   <Datetime {pubDatetime} {modDatetime} {timezone} />
-  <p>{description}</p>
+  <p class="mt-2 text-foreground/80">{description}</p>
 </li>

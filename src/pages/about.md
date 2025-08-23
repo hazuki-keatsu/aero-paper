@@ -49,7 +49,7 @@ title: "关于"
 - Kali Linux (2.5.10.0) - WSL
 
 <div class="prose">
-    <img src="https://skillicons.dev/icons?i=androidstudio,cpp,flutter,dart,git,github,go,kotlin,latex,linux,md,neovim,obsidian,py,pytorch,windows,vscode,sqlite&perline=9">
+    <img src="/src/assets/images/skill_icons.svg" alt="Skill Icon">
 </div>
 
 ## 个人爱好

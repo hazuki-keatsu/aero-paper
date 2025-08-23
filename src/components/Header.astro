@@ -23,21 +23,21 @@ const isActive = (path: string) => {
 };
 ---
 
-<header>
+<header class="relative z-10">
   <a
     id="skip-to-content"
     href="#main-content"
     class="absolute start-16 -top-full z-50 bg-background px-3 py-2 text-accent backdrop-blur-lg transition-all focus:top-4"
   >
-    Skip to content
+    跳转到内容
   </a>
   <div
     id="nav-container"
-    class="mx-auto flex max-w-app flex-col items-center justify-between sm:flex-row"
+    class="mx-auto flex max-w-app flex-col items-center justify-between sm:flex-row px-4"
   >
     <div
       id="top-nav-wrap"
-      class="relative flex w-full items-baseline justify-between bg-background p-4 sm:items-center sm:py-6"
+      class="relative flex w-full items-baseline justify-between content-card mt-4 mb-2 p-4 sm:items-center sm:py-6 sm:mb-0"
     >
       <a
         href="/"
@@ -137,7 +137,6 @@ const isActive = (path: string) => {
       </nav>
     </div>
   </div>
-  <Hr />
 </header>
 
 <script>
