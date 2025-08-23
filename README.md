@@ -1,180 +1,203 @@
-# AstroPaper 📄
+# Hazuki Blog Theme
 
-![AstroPaper](public/astropaper-og.jpg)
-[![Figma](https://img.shields.io/badge/Figma-F24E1E?style=for-the-badge&logo=figma&logoColor=white)](https://www.figma.com/community/file/1356898632249991861)
-![Typescript](https://img.shields.io/badge/TypeScript-007ACC?style=for-the-badge&logo=typescript&logoColor=white)
-![GitHub](https://img.shields.io/github/license/satnaing/astro-paper?color=%232F3741&style=for-the-badge)
-[![Conventional Commits](https://img.shields.io/badge/Conventional%20Commits-1.0.0-%23FE5196?logo=conventionalcommits&logoColor=white&style=for-the-badge)](https://conventionalcommits.org)
-[![Commitizen friendly](https://img.shields.io/badge/commitizen-friendly-brightgreen.svg?style=for-the-badge)](http://commitizen.github.io/cz-cli/)
+🌸 基于 [AstroPaper](https://github.com/satnaing/astro-paper) 的自定义博客主题，为 Hazuki Keatsu 的个人博客设计。
 
-AstroPaper is a minimal, responsive, accessible and SEO-friendly Astro blog theme. This theme is designed and crafted based on [my personal blog](https://satnaing.dev/blog).
+![博客预览](https://img.shields.io/badge/Astro-5.12.0-FF5D01?style=for-the-badge&logo=astro&logoColor=white)
+![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-4.1.11-38B2AC?style=for-the-badge&logo=tailwind-css&logoColor=white)
+![TypeScript](https://img.shields.io/badge/TypeScript-4EA94B?style=for-the-badge&logo=typescript&logoColor=white)
 
-Read [the blog posts](https://astro-paper.pages.dev/posts/) or check [the README Documentation Section](#-documentation) for more info.
+## ✨ 主要特色
 
-## 🔥 Features
+### 🎨 视觉增强
+- **动态背景图片**：亮色模式使用 Mashiro 背景，深色模式使用 Asuka 背景
+- **毛玻璃效果**：现代化的半透明卡片设计，保持内容可读性
+- **响应式背景**：桌面端支持视差效果，移动端优化性能
+- **统一布局**：所有页面采用一致的卡片式布局设计
 
-- [x] type-safe markdown
-- [x] super fast performance
-- [x] accessible (Keyboard/VoiceOver)
-- [x] responsive (mobile ~ desktops)
-- [x] SEO-friendly
-- [x] light & dark mode
-- [x] fuzzy search
-- [x] draft posts & pagination
-- [x] sitemap & rss feed
-- [x] followed best practices
-- [x] highly customizable
-- [x] dynamic OG image generation for blog posts [#15](https://github.com/satnaing/astro-paper/pull/15) ([Blog Post](https://astro-paper.pages.dev/posts/dynamic-og-image-generation-in-astropaper-blog-posts/))
+### 📝 内容功能
+- **折叠目录**：支持中英文的自动生成目录，可展开/折叠
+- **语法高亮**：使用 Shiki 进行代码高亮，支持多种主题
+- **搜索功能**：基于 Pagefind 的全文搜索
+- **标签系统**：美化的标签设计，支持按标签分类
 
-_Note: I've tested screen-reader accessibility of AstroPaper using **VoiceOver** on Mac and **TalkBack** on Android. I couldn't test all other screen-readers out there. However, accessibility enhancements in AstroPaper should be working fine on others as well._
+### 🔧 技术特性
+- **SEO 优化**：内置 sitemap、RSS 订阅、Open Graph 支持
+- **性能优化**：图片懒加载、代码分割、静态生成
+- **无障碍访问**：遵循 WCAG 指南，支持键盘导航
+- **国际化**：支持中文本地化
 
-## ✅ Lighthouse Score
+## 🚀 快速开始
 
-<p align="center">
-  <a href="https://pagespeed.web.dev/report?url=https%3A%2F%2Fastro-paper.pages.dev%2F&form_factor=desktop">
-    <img width="710" alt="AstroPaper Lighthouse Score" src="AstroPaper-lighthouse-score.svg">
-  <a>
-</p>
+### 前置要求
+- Node.js 18+ 
+- pnpm
 
-## 🚀 Project Structure
-
-Inside of AstroPaper, you'll see the following folders and files:
+### 安装依赖
 
 ```bash
-/
-├── public/
-│   ├── assets/
-|   ├── pagefind/ # auto-generated when build
-│   └── favicon.svg
-│   └── astropaper-og.jpg
-│   └── favicon.svg
-│   └── toggle-theme.js
-├── src/
-│   ├── assets/
-│   │   └── icons/
-│   │   └── images/
-│   ├── components/
-│   ├── data/
-│   │   └── blog/
-│   │       └── some-blog-posts.md
-│   ├── layouts/
-│   └── pages/
-│   └── styles/
-│   └── utils/
-│   └── config.ts
-│   └── constants.ts
-│   └── content.config.ts
-└── astro.config.ts
-```
+# 克隆仓库
+git clone https://github.com/hazuki-keatsu/hazuki-blog-theme.git
+cd hazuki-blog-theme
 
-Astro looks for `.astro` or `.md` files in the `src/pages/` directory. Each page is exposed as a route based on its file name.
-
-Any static assets, like images, can be placed in the `public/` directory.
-
-All blog posts are stored in `src/data/blog` directory.
-
-## 📖 Documentation
-
-Documentation can be read in two formats\_ _markdown_ & _blog post_.
-
-- Configuration - [markdown](src/data/blog/how-to-configure-astropaper-theme.md) | [blog post](https://astro-paper.pages.dev/posts/how-to-configure-astropaper-theme/)
-- Add Posts - [markdown](src/data/blog/adding-new-post.md) | [blog post](https://astro-paper.pages.dev/posts/adding-new-posts-in-astropaper-theme/)
-- Customize Color Schemes - [markdown](src/data/blog/customizing-astropaper-theme-color-schemes.md) | [blog post](https://astro-paper.pages.dev/posts/customizing-astropaper-theme-color-schemes/)
-- Predefined Color Schemes - [markdown](src/data/blog/predefined-color-schemes.md) | [blog post](https://astro-paper.pages.dev/posts/predefined-color-schemes/)
-
-## 💻 Tech Stack
-
-**Main Framework** - [Astro](https://astro.build/)  
-**Type Checking** - [TypeScript](https://www.typescriptlang.org/)  
-**Styling** - [TailwindCSS](https://tailwindcss.com/)  
-**UI/UX** - [Figma Design File](https://www.figma.com/community/file/1356898632249991861)  
-**Static Search** - [FuseJS](https://pagefind.app/)  
-**Icons** - [Tablers](https://tabler-icons.io/)  
-**Code Formatting** - [Prettier](https://prettier.io/)  
-**Deployment** - [Cloudflare Pages](https://pages.cloudflare.com/)  
-**Illustration in About Page** - [https://freesvgillustration.com](https://freesvgillustration.com/)  
-**Linting** - [ESLint](https://eslint.org)
-
-## 👨🏻‍💻 Running Locally
-
-You can start using this project locally by running the following command in your desired directory:
-
-```bash
-# pnpm
-pnpm create astro@latest --template satnaing/astro-paper
-
-# npm
-npm create astro@latest -- --template satnaing/astro-paper
-
-# yarn
-yarn create astro --template satnaing/astro-paper
-
-# bun
-bun create astro@latest -- --template satnaing/astro-paper
-```
-
-Then start the project by running the following commands:
-
-```bash
-# install dependencies if you haven't done so in the previous step.
+# 安装依赖
 pnpm install
+```
 
-# start running the project
+### 开发模式
+
+```bash
+# 启动开发服务器
 pnpm run dev
 ```
 
-As an alternative approach, if you have Docker installed, you can use Docker to run this project locally. Here's how:
+在浏览器中打开 `http://localhost:4321` 查看效果。
+
+### 构建部署
 
 ```bash
-# Build the Docker image
-docker build -t astropaper .
+# 构建生产版本
+pnpm run build
 
-# Run the Docker container
-docker run -p 4321:80 astropaper
+# 预览构建结果
+pnpm run preview
 ```
 
-## Google Site Verification (optional)
+## 📁 项目结构
 
-You can easily add your [Google Site Verification HTML tag](https://support.google.com/webmasters/answer/9008080#meta_tag_verification&zippy=%2Chtml-tag) in AstroPaper using an environment variable. This step is optional. If you don't add the following environment variable, the google-site-verification tag won't appear in the HTML `<head>` section.
-
-```bash
-# in your environment variable file (.env)
-PUBLIC_GOOGLE_SITE_VERIFICATION=your-google-site-verification-value
+```
+├── public/                 # 静态资源
+│   ├── favicon.svg        
+│   ├── profile_picture.jpg
+│   └── assets/            # 图片资源
+├── src/
+│   ├── assets/            # 项目资源
+│   │   ├── fonts/         # 自定义字体 (Yozai)
+│   │   ├── icons/         # SVG 图标
+│   │   └── images/        # 图片资源
+│   │       └── backgrounds/ # 背景图片
+│   ├── components/        # 组件
+│   │   ├── PageContainer.astro  # 统一页面容器
+│   │   ├── Header.astro
+│   │   ├── Footer.astro
+│   │   └── ...
+│   ├── data/blog/         # 博客文章 (Markdown)
+│   ├── layouts/           # 页面布局
+│   ├── pages/             # 路由页面
+│   ├── styles/            # 样式文件
+│   │   ├── global.css     # 全局样式 + 背景效果
+│   │   └── typography.css # 排版样式
+│   └── utils/             # 工具函数
+├── astro.config.ts        # Astro 配置
+└── src/config.ts          # 站点配置
 ```
 
-> See [this discussion](https://github.com/satnaing/astro-paper/discussions/334#discussioncomment-10139247) for adding AstroPaper to the Google Search Console.
+## 📝 写作指南
 
-## 🧞 Commands
+### 创建新文章
 
-All commands are run from the root of the project, from a terminal:
+在 `src/data/blog/` 目录下创建新的 Markdown 文件：
 
-> **_Note!_** For `Docker` commands we must have it [installed](https://docs.docker.com/engine/install/) in your machine.
+```markdown
+---
+title: "文章标题"
+description: "文章描述"
+pubDatetime: 2025-01-23T10:00:00Z
+featured: false
+draft: false
+tags:
+  - 标签1
+  - 标签2
+---
 
-| Command                              | Action                                                                                                                           |
-| :----------------------------------- | :------------------------------------------------------------------------------------------------------------------------------- |
-| `pnpm install`                       | Installs dependencies                                                                                                            |
-| `pnpm run dev`                       | Starts local dev server at `localhost:4321`                                                                                      |
-| `pnpm run build`                     | Build your production site to `./dist/`                                                                                          |
-| `pnpm run preview`                   | Preview your build locally, before deploying                                                                                     |
-| `pnpm run format:check`              | Check code format with Prettier                                                                                                  |
-| `pnpm run format`                    | Format codes with Prettier                                                                                                       |
-| `pnpm run sync`                      | Generates TypeScript types for all Astro modules. [Learn more](https://docs.astro.build/en/reference/cli-reference/#astro-sync). |
-| `pnpm run lint`                      | Lint with ESLint                                                                                                                 |
-| `docker compose up -d`               | Run AstroPaper on docker, You can access with the same hostname and port informed on `dev` command.                              |
-| `docker compose run app npm install` | You can run any command above into the docker container.                                                                         |
-| `docker build -t astropaper .`       | Build Docker image for AstroPaper.                                                                                               |
-| `docker run -p 4321:80 astropaper`   | Run AstroPaper on Docker. The website will be accessible at `http://localhost:4321`.                                             |
+文章内容...
 
-> **_Warning!_** Windows PowerShell users may need to install the [concurrently package](https://www.npmjs.com/package/concurrently) if they want to [run diagnostics](https://docs.astro.build/en/reference/cli-reference/#astro-check) during development (`astro check --watch & astro dev`). For more info, see [this issue](https://github.com/satnaing/astro-paper/issues/113).
+## 目录
 
-## ✨ Feedback & Suggestions
+这里会自动生成可折叠的目录。
 
-If you have any suggestions/feedback, you can contact me via [my email](mailto:contact@satnaing.dev). Alternatively, feel free to open an issue if you find bugs or want to request new features.
+## 章节一
 
-## 📜 License
+文章内容...
+```
 
-Licensed under the MIT License, Copyright © 2025
+### 添加目录
+
+只需在文章中添加 `## 目录` 标题，系统会自动生成可折叠的目录。支持：
+- `## Table of contents`
+- `## Contents` 
+- `## 目录`
+
+### 图片使用
+
+推荐将图片放在 `src/assets/images/` 目录下，Astro 会自动优化图片。
+
+## 🎨 自定义配置
+
+### 站点配置
+
+编辑 `src/config.ts` 文件：
+
+```typescript
+export const SITE = {
+  website: "https://yoursite.com/",
+  author: "Your Name",
+  desc: "Your Blog Description", 
+  title: "Your Blog Title",
+  // ... 其他配置
+};
+```
+
+### 背景图片
+
+替换 `src/assets/images/backgrounds/` 目录下的图片：
+- `mashiro.webp` - 亮色模式背景
+- `asuka.webp` - 深色模式背景
+
+### 样式定制
+
+主要样式文件：
+- `src/styles/global.css` - 全局样式、背景效果
+- `src/styles/typography.css` - 文章排版样式
+
+## 🔧 主要改进
+
+相较于原版 AstroPaper，本主题包含以下主要改进：
+
+### 视觉增强
+- ✅ 动态背景图片系统
+- ✅ 毛玻璃效果卡片设计
+- ✅ 统一的页面布局
+- ✅ 优化的移动端体验
+
+### 功能增强
+- ✅ 中文目录支持
+- ✅ 折叠目录功能
+- ✅ 优化的代码字体显示
+- ✅ 改进的标签样式
+
+### 技术优化
+- ✅ 响应式背景图片
+- ✅ 性能优化的移动端设置
+- ✅ 改进的组件对齐
+- ✅ 中文本地化支持
+
+## 📄 许可证
+
+本项目基于 MIT 许可证，详见 [LICENSE](LICENSE) 文件。
+
+## 🙏 致谢
+
+- [AstroPaper](https://github.com/satnaing/astro-paper) - 原始主题
+- [Astro](https://astro.build/) - 静态站点生成器
+- [Tailwind CSS](https://tailwindcss.com/) - CSS 框架
+- [Shiki](https://shiki.style/) - 语法高亮
+
+## 📞 联系方式
+
+- 网站：[keatsu.top](http://keatsu.top/)
+- 作者：Hazuki Keatsu
+- GitHub：[hazuki-keatsu](https://github.com/hazuki-keatsu)
 
 ---
 
-Made with 🤍 by [Sat Naing](https://satnaing.dev) 👨🏻‍💻 and [contributors](https://github.com/satnaing/astro-paper/graphs/contributors).
+> 💡 **提示**：如果您喜欢这个主题，请给项目点个 ⭐ Star！
