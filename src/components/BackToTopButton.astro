@@ -7,16 +7,16 @@ import IconArrowNarrowUp from "@/assets/icons/IconArrowNarrowUp.svg";
   id="btt-btn-container"
   class:list={[
     "fixed end-4 bottom-8 z-50",
-    "md:sticky md:end-auto md:float-end md:me-1",
+    "sticky end-auto float-end me-1",
     "translate-y-14 opacity-0 transition duration-500",
   ]}
 >
   <button
     data-button="back-to-top"
     class:list={[
-      "group relative bg-background px-2 py-1",
+      "group relative bg-background px-2 py-1 flex items-center justify-center",
       "size-14 rounded-full shadow-xl",
-      "md:h-8 md:w-fit md:rounded-md md:shadow-none md:focus-visible:rounded-none",
+      "md:h-12 md:w-24 md:rounded-md md:shadow-none md:focus-visible:rounded-none",
       "md:bg-background/35 md:bg-clip-padding md:backdrop-blur-lg",
     ]}
   >
@@ -25,7 +25,7 @@ import IconArrowNarrowUp from "@/assets/icons/IconArrowNarrowUp.svg";
       class="absolute inset-0 -z-10 block size-14 scale-110 rounded-full bg-transparent md:hidden md:h-8 md:rounded-md"
     ></span>
     <IconChevronLeft class="inline-block rotate-90 md:hidden" />
-    <span class="sr-only text-sm group-hover:text-accent md:not-sr-only">
+    <span class="sr-only text-sm group-hover:text-accent md:not-sr-only flex items-center gap-1">
       <IconArrowNarrowUp class="inline-block size-4" />
       回到顶部
     </span>

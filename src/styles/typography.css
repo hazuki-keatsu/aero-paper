@@ -13,10 +13,6 @@
       @apply mb-3 text-foreground;
     }
 
-    h3 {
-      @apply italic;
-    }
-
     p,
     strong,
     ol,
@@ -68,10 +64,12 @@
 
     code {
       @apply rounded bg-muted/75 p-1 break-words text-foreground before:content-none after:content-none;
+      font-family: var(--font-family-code);
     }
 
     .astro-code code {
       @apply flex-[1_0_100%] bg-inherit p-0;
+      font-family: var(--font-family-code);
     }
 
     blockquote {
@@ -88,12 +86,14 @@
 
     pre {
       @apply focus-visible:border-transparent focus-visible:outline-2 focus-visible:outline-accent focus-visible:outline-dashed;
+      font-family: var(--font-family-code);
     }
   }
 
   /* ===== Code Blocks & Syntax Highlighting ===== */
   .astro-code {
     @apply flex border bg-(--shiki-light-bg) text-(--shiki-light) outline-border [&_span]:text-(--shiki-light);
+    font-family: var(--font-family-code);
   }
 
   html[data-theme="dark"] .astro-code {
