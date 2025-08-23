@@ -1,18 +1,19 @@
-# Hazuki Blog Theme
+# Aero Paper
 
 🌸 基于 [AstroPaper](https://github.com/satnaing/astro-paper) 的自定义博客主题，为 Hazuki Keatsu 的个人博客设计。
 
-![博客预览](https://img.shields.io/badge/Astro-5.12.0-FF5D01?style=for-the-badge&logo=astro&logoColor=white)
+![博客预览](https://img.shields.io/badge/Astro-4.0.12-FF5D01?style=for-the-badge&logo=astro&logoColor=white)
 ![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-4.1.11-38B2AC?style=for-the-badge&logo=tailwind-css&logoColor=white)
-![TypeScript](https://img.shields.io/badge/TypeScript-4EA94B?style=for-the-badge&logo=typescript&logoColor=white)
+![Typescript](https://img.shields.io/badge/TypeScript-007ACC?style=for-the-badge&logo=typescript&logoColor=white)
 
 ## ✨ 主要特色
 
 ### 🎨 视觉增强
-- **动态背景图片**：亮色模式使用 Mashiro 背景，深色模式使用 Asuka 背景
+- **动态背景图片**：亮色模式和深色模式使用不同的背景图片
 - **毛玻璃效果**：现代化的半透明卡片设计，保持内容可读性
 - **响应式背景**：桌面端支持视差效果，移动端优化性能
 - **统一布局**：所有页面采用一致的卡片式布局设计
+- **手写字体**：使用 Yozai 作为页面的字体
 
 ### 📝 内容功能
 - **折叠目录**：支持中英文的自动生成目录，可展开/折叠
@@ -36,8 +37,11 @@
 
 ```bash
 # 克隆仓库
-git clone https://github.com/hazuki-keatsu/hazuki-blog-theme.git
-cd hazuki-blog-theme
+git clone https://github.com/hazuki-keatsu/aero-paper.git
+cd aero-paper
+
+# 安装 pnpm
+npm install -g pnpm
 
 # 安装依赖
 pnpm install
@@ -93,71 +97,7 @@ pnpm run preview
 
 ## 📝 写作指南
 
-### 创建新文章
-
-在 `src/data/blog/` 目录下创建新的 Markdown 文件：
-
-```markdown
----
-title: "文章标题"
-description: "文章描述"
-pubDatetime: 2025-01-23T10:00:00Z
-featured: false
-draft: false
-tags:
-  - 标签1
-  - 标签2
----
-
-文章内容...
-
-## 目录
-
-这里会自动生成可折叠的目录。
-
-## 章节一
-
-文章内容...
-```
-
-### 添加目录
-
-只需在文章中添加 `## 目录` 标题，系统会自动生成可折叠的目录。支持：
-- `## Table of contents`
-- `## Contents` 
-- `## 目录`
-
-### 图片使用
-
-推荐将图片放在 `src/assets/images/` 目录下，Astro 会自动优化图片。
-
-## 🎨 自定义配置
-
-### 站点配置
-
-编辑 `src/config.ts` 文件：
-
-```typescript
-export const SITE = {
-  website: "https://yoursite.com/",
-  author: "Your Name",
-  desc: "Your Blog Description", 
-  title: "Your Blog Title",
-  // ... 其他配置
-};
-```
-
-### 背景图片
-
-替换 `src/assets/images/backgrounds/` 目录下的图片：
-- `mashiro.webp` - 亮色模式背景
-- `asuka.webp` - 深色模式背景
-
-### 样式定制
-
-主要样式文件：
-- `src/styles/global.css` - 全局样式、背景效果
-- `src/styles/typography.css` - 文章排版样式
+请参考原项目的 [README文件](./README.raw.md)
 
 ## 🔧 主要改进
 
@@ -194,9 +134,9 @@ export const SITE = {
 
 ## 📞 联系方式
 
-- 网站：[keatsu.top](http://keatsu.top/)
 - 作者：Hazuki Keatsu
 - GitHub：[hazuki-keatsu](https://github.com/hazuki-keatsu)
+- Mail: [Outlook](mailto:yeyuefeng699@outlook.com)
 
 ---
 
