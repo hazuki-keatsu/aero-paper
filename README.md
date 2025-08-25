@@ -4,7 +4,9 @@
 
 ![博客预览](https://img.shields.io/badge/Astro-4.0.12-FF5D01?style=for-the-badge&logo=astro&logoColor=white)
 ![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-4.1.11-38B2AC?style=for-the-badge&logo=tailwind-css&logoColor=white)
+![Astro](https://img.shields.io/badge/astro-%232C2052.svg?style=for-the-badge&logo=astro&logoColor=white)
 ![Typescript](https://img.shields.io/badge/TypeScript-007ACC?style=for-the-badge&logo=typescript&logoColor=white)
+![Vercel](https://img.shields.io/badge/vercel-%23000000.svg?style=for-the-badge&logo=vercel&logoColor=white)
 
 ## ✨ 主要特色
 
@@ -13,7 +15,7 @@
 - **毛玻璃效果**：现代化的半透明卡片设计，保持内容可读性
 - **响应式背景**：桌面端支持视差效果，移动端优化性能
 - **统一布局**：所有页面采用一致的卡片式布局设计
-- **手写字体**：使用 Yozai 作为页面的字体
+- **手写字体**：使用 [Yozai](https://github.com/lxgw/yozai-font) 作为页面的字体
 
 ### 📝 内容功能
 - **折叠目录**：支持中英文的自动生成目录，可展开/折叠
@@ -27,7 +29,7 @@
 - **无障碍访问**：遵循 WCAG 指南，支持键盘导航
 - **国际化**：支持中文本地化
 
-## 🚀 快速开始
+## 🚀 本地调试
 
 ### 前置要求
 - Node.js 18+ 
@@ -39,6 +41,9 @@
 # 克隆仓库
 git clone -b template https://github.com/hazuki-keatsu/aero-paper.git
 cd aero-paper
+
+# 修改分支名以关闭 Vercel 的分支保护
+git branch -M main
 
 # 安装 pnpm
 npm install -g pnpm
@@ -123,12 +128,14 @@ pnpm run preview
 - ✅ 毛玻璃效果卡片设计
 - ✅ 统一的页面布局
 - ✅ 优化的移动端体验
+- ✅ 引入中文手写字体 [Yozai](https://github.com/lxgw/yozai-font)
 
 ### 功能增强
 - ✅ 中文目录支持
 - ✅ 折叠目录功能
 - ✅ 优化的代码字体显示
 - ✅ 改进的标签样式
+- ✅ 加入浮动音乐播放器
 
 ### 技术优化
 - ✅ 响应式背景图片
