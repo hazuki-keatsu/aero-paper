@@ -1,7 +1,6 @@
 ---
 author: Sat Naing
 pubDatetime: 2022-09-23T15:22:00Z
-modDatetime: 2025-06-13T16:52:45.934Z
 title: 如何添加新的 Post
 slug: how-to-add-new-post
 featured: false

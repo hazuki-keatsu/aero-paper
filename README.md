@@ -66,6 +66,21 @@ pnpm run build
 pnpm run preview
 ```
 
+## 🧞 `pnpm`所有命令
+
+> **_注意_** 对于 `Docker` 命令，必须在你的设备里[安装](https://docs.docker.com/engine/install/)它.
+
+| Command                              | Action                                                                                                                           |
+| :----------------------------------- | :------------------------------------------------------------------------------------------------------------------------------- |
+| `pnpm install`                       | 安安装所有的依赖                                                                                                            |
+| `pnpm run dev`                       | 在`localhost:4321`启动本地开发服务器                                                                                       |
+| `pnpm run build`                     | 在`./dist/`中构建你的网页                                                                                          |
+| `pnpm run preview`                   | 本地预览你的网页                                                                                     |
+| `pnpm run format:check`              |使用 Prettier 检查你的代码格式                                                                                                 |
+| `pnpm run format`                    | 使用 Prettier 格式化你的代码                                                                                                       |
+| `pnpm run sync`                      | 为所有的 Astro Module 产生 TypeScript 类型 [了解更多](https://docs.astro.build/en/reference/cli-reference/#astro-sync). |
+| `pnpm run lint`                      | 使用 ESLint 进行静态代码分析                                                                                                                |
+
 ## 📁 项目结构
 
 ```
@@ -134,7 +149,6 @@ pnpm run preview
 
 ## 📞 联系方式
 
-- 作者：Hazuki Keatsu
 - GitHub：[hazuki-keatsu](https://github.com/hazuki-keatsu)
 - Mail: [Outlook](mailto:yeyuefeng699@outlook.com)
 

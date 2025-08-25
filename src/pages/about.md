@@ -4,7 +4,7 @@ title: "关于"
 ---
 
 <div class="prose">
-    <img align="left" src="/profile_picture.jpg" alt="Hazuki Keatsu" style="width: 100px; height: 100px; border-radius: 50%; object-fit: cover; border: 3px solid #e5e7eb; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);margin: 0 20px 0 0">
+    <img align="left" src="/assets/profile_picture.jpg" alt="Hazuki Keatsu" style="width: 100px; height: 100px; border-radius: 50%; object-fit: cover; border: 3px solid #e5e7eb; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);margin: 0 20px 0 0">
 </div>
 
 **你好**，我是 Hazuki Keatsu！👋
@@ -19,6 +19,31 @@ title: "关于"
 - 🚀 项目开发过程中的思考与总结
 - 📚 学习笔记和技术调研
 - 🌱 个人成长和生活感悟
+
+## 关于本博客主题
+
+本博客主题是由[AstroPaper](https://github.com/satnaing/astro-paper)魔改而来，并且相关代码已经开源在仓库[AeroPaper](http://github.com/hazuki-keatsu/aero-paper)
+
+**主要特色：**
+
+### 🎨 视觉增强
+- **动态背景图片**：亮色模式和深色模式使用不同的背景图片
+- **毛玻璃效果**：现代化的半透明卡片设计，保持内容可读性
+- **响应式背景**：桌面端支持视差效果，移动端优化性能
+- **统一布局**：所有页面采用一致的卡片式布局设计
+- **手写字体**：使用 Yozai 作为页面的字体
+
+### 📝 内容功能
+- **折叠目录**：支持中英文的自动生成目录，可展开/折叠
+- **语法高亮**：使用 Shiki 进行代码高亮，支持多种主题
+- **搜索功能**：基于 Pagefind 的全文搜索
+- **标签系统**：美化的标签设计，支持按标签分类
+
+### 🔧 技术特性
+- **SEO 优化**：内置 sitemap、RSS 订阅、Open Graph 支持
+- **性能优化**：图片懒加载、代码分割、静态生成
+- **无障碍访问**：遵循 WCAG 指南，支持键盘导航
+- **国际化**：支持中文本地化
 
 ## 工具和技术栈
 
@@ -49,7 +74,7 @@ title: "关于"
 - Kali Linux (2.5.10.0) - WSL
 
 <div class="prose">
-    <img src="/src/assets/images/skill_icons.svg" alt="Skill Icon">
+    <img src="/assets/skill_icons.svg" alt="Skill Icon">
 </div>
 
 ## 个人爱好

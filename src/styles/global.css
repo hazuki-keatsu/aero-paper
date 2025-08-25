@@ -99,7 +99,7 @@ html[data-theme="dark"] {
   @media (max-width: 768px) {
     html[data-theme="dark"] body::before {
       filter: blur(2px);
-      opacity: 0.15;
+      opacity: 1;
     }
   }
   

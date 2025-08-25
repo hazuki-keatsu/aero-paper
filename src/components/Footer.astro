@@ -16,17 +16,23 @@ const { noMarginTop = false } = Astro.props;
     class="flex flex-col items-center justify-between py-6 md:flex-row-reverse md:py-4 content-card mb-4 p-6"
   >
     <Socials centered />
-    <div class="my-2 flex flex-col items-center whitespace-nowrap md:flex-row">
+    <div class="my-2 flex flex-col items-center whitespace-nowrap lg:flex-row">
       <span>Copyright &#169; {currentYear}</span>
-      <span class="hidden md:inline">&nbsp;|&nbsp;</span>
+      <span class="hidden lg:inline">&nbsp;|&nbsp;</span>
       <span>Powered by 
         <LinkButton
           class="underline decoration-dashed underline-offset-4 hover:text-accent"
-          href="https://astro-paper.pages.dev/">
-          AstroPaper
+          href="https://github.com/hazuki-keatsu/aero-paper">
+          AeroPaper
+        </LinkButton>
+         and 
+        <LinkButton
+          class="underline decoration-dashed underline-offset-4 hover:text-accent"
+          href="https://vercel.com/">
+          Vercel
         </LinkButton>
       </span>
-      <span class="hidden md:inline">&nbsp;|&nbsp;</span>
+      <span class="hidden lg:inline">&nbsp;|&nbsp;</span>
       <span>All rights reserved.</span>
     </div>
   </div>
