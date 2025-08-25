@@ -20,7 +20,18 @@ const { tag, tagName, size = "sm" } = Astro.props;
     href={`/tags/${tag}/`}
     transition:name={tag}
     class:list={[
-      "relative pe-2 text-lg group-hover:-top-0.5 group-hover:text-accent focus-visible:p-1 focus-visible:no-underline bg-muted/20 backdrop-blur-sm px-3 py-1 rounded-full border border-muted/30 hover:border-accent/50 hover:bg-accent/10 transition-all duration-200 flex items-center",
+      "relative pe-2 text-lg",
+      "bg-muted/20 backdrop-blur-sm px-3 py-1 rounded-full" ,
+      "border border-muted/30",
+      "flex items-center",
+      "transform translate-y-0", 
+      "transition-all duration-200 ease-in-out",
+      "group-hover:translate-y-[-2px]",
+      "group-hover:text-accent",
+      "hover:border-accent/50", 
+      "hover:bg-accent/10",
+      "focus-visible:p-1",
+      "focus-visible:no-underline",
       { "text-sm": size === "sm" },
     ]}
   >
