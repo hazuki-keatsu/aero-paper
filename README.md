@@ -37,7 +37,7 @@
 
 ```bash
 # 克隆仓库
-git clone https://github.com/hazuki-keatsu/aero-paper.git
+git clone -b template https://github.com/hazuki-keatsu/aero-paper.git
 cd aero-paper
 
 # 安装 pnpm
