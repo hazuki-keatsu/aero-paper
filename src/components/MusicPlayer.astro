@@ -1,0 +1,628 @@
+---
+// 导入播放列表数据
+import { SONG_LIST } from '../constants';
+import Hr from '../components/Hr.astro'
+---
+
+<div id="music-player" transition:persist="music-player" class="fixed bottom-5 left-5 z-50 backdrop-blur-lg rounded-xl text-foreground font-mono shadow-2xl transition-all duration-300 ease-in-out overflow-hidden minimized">
+  <!-- 最小化状态的按钮 -->
+  <div 
+    id="player-button" 
+    class="content-card flex items-center justify-center cursor-pointer rounded-xl transition-all duration-200 hover:bg-accent/20 group player-button-size"
+  >
+    <svg class="text-accent group-hover:scale-110 transition-transform duration-200" style="width: 1.5rem; height: 1.5rem;" viewBox="0 0 24 24" fill="currentColor">
+      <path d="M8 5v14l11-7z"/>
+    </svg>
+  </div>
+
+  <!-- 展开状态的播放器 -->
+  <div id="player-expanded" class="p-4 hidden player-expanded-width content-card">
+    <!-- 头部控制区域 -->
+    <div class="flex items-center justify-between mb-4">
+      <div class="flex items-center flex-1 min-w-0">
+        <img 
+          id="cover-image" 
+          src={SONG_LIST[0].cover} 
+          alt="封面" 
+          class="rounded-lg object-cover mr-3 shadow-md"
+          style="width: 3rem; height: 3rem;"
+        >
+        <div class="flex-1 min-w-0">
+          <div id="song-title" class="text-sm font-semibold text-foreground truncate mb-1">
+            {SONG_LIST[0].title}
+          </div>
+          <div id="song-artist" class="text-xs text-accent truncate">
+            {SONG_LIST[0].artist}
+          </div>
+        </div>
+      </div>
+      <button 
+        id="minimize-btn" 
+        class="flex items-center justify-center rounded-full bg-transparent hover:bg-accent/20 transition-all duration-200 opacity-70 hover:opacity-100 ml-2"
+        style="width: 2rem; height: 2rem;"
+      >
+        <svg style="width: 1rem; height: 1rem;" viewBox="0 0 24 24" fill="currentColor">
+          <path d="M19 13H5v-2h14v2z"/>
+        </svg>
+      </button>
+    </div>
+
+    <!-- 进度条 -->
+    <div class="flex items-center gap-2 mb-4">
+      <span id="current-time" class="text-xs text-accent min-w-[35px] text-center">0:00</span>
+      <div class="flex-1 relative">
+        <div class="bg-muted/30 rounded-full overflow-hidden" style="height: 0.25rem;">
+          <div id="progress-fill" class="h-full bg-gradient-to-r from-accent to-secondary-highlight rounded-full" style="width: 0%"></div>
+        </div>
+        <input 
+          type="range" 
+          id="progress-slider" 
+          min="0" 
+          max="100" 
+          value="0" 
+          class="absolute inset-0 w-full h-full opacity-0 cursor-pointer"
+        >
+      </div>
+      <span id="duration" class="text-xs text-accent min-w-[35px] text-center">0:00</span>
+    </div>
+
+    <!-- 控制按钮 -->
+    <div class="flex items-center justify-center gap-4 mb-4">
+      <button 
+        id="shuffle-btn" 
+        class="mode-btn flex items-center justify-center rounded-full transition-all duration-300 opacity-60 hover:opacity-100 text-foreground"
+        style="width: 2.5rem; height: 2.5rem;"
+      >
+        <svg style="width: 1.1rem; height: 1.1rem;" viewBox="0 0 24 24" fill="currentColor">
+          <path d="M10.59 9.17L5.41 4 4 5.41l5.17 5.17 1.42-1.41zM14.5 4l2.04 2.04L4 18.59 5.41 20 17.96 7.46 20 9.5V4h-5.5zm.33 9.41l-1.41 1.41 3.13 3.13L14.5 20H20v-5.5l-2.04 2.04-3.13-3.13z"/>
+        </svg>
+        <span class="mode-status">随机</span>
+      </button>
+      <button 
+        id="prev-btn" 
+        class="flex items-center justify-center rounded-full bg-transparent hover:bg-accent/20 transition-all duration-200 opacity-80 hover:opacity-100 hover:scale-105 text-foreground"
+        style="width: 2.5rem; height: 2.5rem; position: relative;"
+      >
+        <svg style="width: 1.25rem; height: 1.25rem;" viewBox="0 0 24 24" fill="currentColor">
+          <path d="M6 6h2v12H6zm3.5 6l8.5 6V6z"/>
+        </svg>
+				<span class="mode-status">上一曲</span>
+      </button>
+      <button 
+        id="play-pause-btn" 
+        class="flex items-center justify-center rounded-full bg-accent hover:bg-accent/80 transition-all duration-200 hover:scale-110 shadow-lg text-background"
+        style="width: 3rem; height: 3rem; position: relative;"
+      >
+        <svg id="play-icon" style="width: 1.5rem; height: 1.5rem;" viewBox="0 0 24 24" fill="currentColor">
+          <path d="M8 5v14l11-7z"/>
+        </svg>
+        <svg id="pause-icon" class="hidden" style="width: 1.5rem; height: 1.5rem;" viewBox="0 0 24 24" fill="currentColor">
+          <path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/>
+        </svg>
+				<span class="mode-status play-pause-status">播放/暂停</span>
+      </button>
+      <button 
+        id="next-btn" 
+        class="flex items-center justify-center rounded-full bg-transparent hover:bg-accent/20 transition-all duration-200 opacity-80 hover:opacity-100 hover:scale-105 text-foreground"
+        style="width: 2.5rem; height: 2.5rem; position: relative;"
+      >
+        <svg style="width: 1.25rem; height: 1.25rem;" viewBox="0 0 24 24" fill="currentColor">
+          <path d="M6 18l8.5-6L6 6v12zM16 6v12h2V6h-2z"/>
+        </svg>
+				<span class="mode-status">下一曲</span>
+      </button>
+      <button 
+        id="repeat-btn" 
+        class="mode-btn flex items-center justify-center rounded-full transition-all duration-300 opacity-60 hover:opacity-100 text-foreground"
+        style="width: 2.5rem; height: 2.5rem;"
+      >
+        <svg id="repeat-off-icon" style="width: 1.1rem; height: 1.1rem;" viewBox="0 0 24 24" fill="currentColor">
+          <path d="M7 7h10v3l4-4-4-4v3H5v6h2V7zm10 10H7v-3l-4 4 4 4v-3h12v-6h-2v4z"/>
+        </svg>
+        <svg id="repeat-one-icon" class="hidden" style="width: 1.1rem; height: 1.1rem;" viewBox="0 0 24 24" fill="currentColor">
+          <path d="M7 7h10v3l4-4-4-4v3H5v6h2V7zm10 10H7v-3l-4 4 4 4v-3h12v-6h-2v4zm-4-2V9h-1l-2 1v1h1.5v4H13z"/>
+        </svg>
+				<span class="mode-status">循环</span>
+      </button>
+    </div>
+
+    <!-- 音量控制 -->
+    <div class="flex items-center gap-2 mb-3">
+      <button 
+        id="volume-btn" 
+        class="flex items-center justify-center rounded-full bg-transparent hover:bg-accent/20 transition-all duration-200 opacity-80 hover:opacity-100 text-foreground"
+        style="width: 2rem; height: 2rem;"
+        title="静音/取消静音"
+      >
+        <!-- 正常音量图标 -->
+        <svg id="volume-on-icon" class="text-accent" style="width: 1rem; height: 1rem;" viewBox="0 0 24 24" fill="currentColor">
+          <path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/>
+        </svg>
+        <!-- 静音图标 -->
+        <svg id="volume-off-icon" class="text-accent hidden" style="width: 1rem; height: 1rem;" viewBox="0 0 24 24" fill="currentColor">
+          <path d="M16.5 12c0-1.77-1.02-3.29-2.5-4.03v2.21l2.45 2.45c.03-.2.05-.41.05-.63zm2.5 0c0 .94-.2 1.82-.54 2.64l1.51 1.51C20.63 14.91 21 13.5 21 12c0-4.28-2.99-7.86-7-8.77v2.06c2.89.86 5 3.54 5 6.71zM4.27 3L3 4.27 7.73 9H3v6h4l5 5v-6.73l4.25 4.25c-.67.52-1.42.93-2.25 1.18v2.06c1.38-.31 2.63-.95 3.69-1.81L19.73 21 21 19.73l-9-9L4.27 3zM12 4L9.91 6.09 12 8.18V4z"/>
+        </svg>
+      </button>
+      <div class="flex-1 relative">
+        <div class="bg-muted/30 rounded-full" style="height: 0.25rem;">
+          <div id="volume-fill" class="h-full bg-gradient-to-r from-secondary-highlight to-accent rounded-full w-1/2"></div>
+        </div>
+        <input 
+          type="range" 
+          id="volume-slider" 
+          min="0" 
+          max="100" 
+          value="50" 
+          class="absolute inset-0 w-full h-full opacity-0 cursor-pointer"
+        >
+      </div>
+      <button 
+        id="playlist-btn" 
+        class="flex text-accent items-center justify-center rounded-full bg-transparent hover:bg-accent/20 transition-all duration-200 opacity-80 hover:opacity-100"
+        style="width: 2rem; height: 2rem;"
+        title="播放列表"
+      >
+        <svg style="width: 1.25rem; height: 1.25rem;" viewBox="0 0 24 24" fill="currentColor">
+          <path d="M15 6H3v2h12V6zm0 4H3v2h12v-2zM3 16h8v-2H3v2zM17 6v8.18c-.31-.11-.65-.18-1-.18-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3V8h3V6h-5z"/>
+        </svg>
+      </button>
+    </div>
+
+    <!-- 播放列表 -->
+    <div id="playlist" class="playlist-container max-h-48 pt-2 custom-scrollbar" style="overflow-y: hidden">
+      {SONG_LIST.map((song, index) => (
+        <div 
+          class="playlist-item flex items-center p-2 cursor-pointer rounded-md transition-all duration-200 hover:bg-accent/20 group" 
+          data-index={index}
+        >
+          <img 
+            src={song.cover} 
+            alt={song.title} 
+            class="rounded object-cover mr-2 group-hover:scale-105 transition-transform duration-200"
+            style="width: 2rem; height: 2rem;"
+          >
+          <div class="flex-1 min-w-0">
+            <div class="text-xs font-medium text-foreground truncate group-hover:text-accent transition-colors">
+              {song.title}
+            </div>
+            <div class="text-xs text-accent truncate">
+              {song.artist}
+            </div>
+          </div>
+          <div class="rounded-full bg-accent opacity-0 group-hover:opacity-100 transition-opacity duration-200" style="width: 0.5rem; height: 0.5rem;"></div>
+        </div>
+      ))}
+    </div>
+  </div>
+
+  <!-- 隐藏的音频元素 -->
+  <audio id="audio-player" preload="metadata">
+    <source src={SONG_LIST[0].src} type="audio/mpeg">
+    您的浏览器不支持音频播放。
+  </audio>
+</div>
+
+<style>
+  /* 音乐播放器样式 - 使用项目配色方案 */
+  .music-player-bg {
+    background: rgba(var(--color-background) / 0.85);
+    backdrop-filter: blur(12px);
+    border: 1px solid rgba(var(--color-border) / 0.3);
+  }
+  
+  @media (prefers-color-scheme: dark) {
+    html[data-theme="dark"] .music-player-bg {
+      background: rgba(52, 63, 96, 0.85);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+    }
+  }
+  
+  /* 自定义样式 */
+  .minimized {
+    width: 4rem; /* 64px, equivalent to w-16 */
+    height: 4rem; /* 64px, equivalent to h-16 */
+  }
+  
+  .expanded {
+    width: 20rem; /* 320px, equivalent to w-80 */
+    height: auto;
+    max-height: 31.25rem; /* 500px */
+  }
+  
+  .player-button-size {
+    width: 4rem; /* 64px, equivalent to w-16 */
+    height: 4rem; /* 64px, equivalent to h-16 */
+  }
+  
+  .player-expanded-width {
+    width: 20rem; /* 320px, equivalent to w-80 */
+  }
+  
+  .minimized #player-expanded {
+    display: none;
+  }
+  
+  .expanded #player-button {
+    display: none;
+  }
+  
+  .expanded #player-expanded {
+    display: block;
+  }
+
+  /* 自定义滚动条 */
+  .custom-scrollbar::-webkit-scrollbar {
+    width: 0.25rem; /* 4px, equivalent to w-1 */
+  }
+  
+  .custom-scrollbar::-webkit-scrollbar-track {
+    background: rgba(var(--color-muted) / 0.3);
+    border-radius: 0.25rem;
+  }
+  
+  .custom-scrollbar::-webkit-scrollbar-thumb {
+    background: rgba(var(--color-accent) / 0.5);
+    border-radius: 0.25rem;
+  }
+  
+  .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+    background: rgba(var(--color-accent) / 0.7);
+  }
+
+  /* 播放列表活动状态 */
+  .playlist-item.active {
+    background: rgba(var(--color-accent) / 0.2);
+    border-left: 2px solid var(--color-accent);
+  }
+
+  .playlist-item.active .rounded-full {
+    opacity: 1 !important;
+  }
+
+  /* 播放列表过渡动画 */
+  .playlist-container {
+    max-height: 0;
+    opacity: 0;
+    padding-top: 0;
+    overflow: hidden;
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    transform-origin: top;
+  }
+  
+  .playlist-container.show {
+    max-height: 12rem; /* 192px, equivalent to max-h-48 */
+    opacity: 1;
+    padding-top: 0.5rem; /* 8px, equivalent to pt-2 */
+    overflow-y: auto;
+  }
+  
+  .playlist-container .playlist-item {
+    transform: translateY(-15px);
+    opacity: 0;
+    transition: all 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+  }
+  
+  .playlist-container.show .playlist-item {
+    transform: translateY(0);
+    opacity: 1;
+  }
+  
+  /* 播放列表项延迟动画 */
+  .playlist-container.show .playlist-item:nth-child(1) { transition-delay: 0.1s; }
+  .playlist-container.show .playlist-item:nth-child(2) { transition-delay: 0.15s; }
+  .playlist-container.show .playlist-item:nth-child(3) { transition-delay: 0.2s; }
+  .playlist-container.show .playlist-item:nth-child(4) { transition-delay: 0.25s; }
+  .playlist-container.show .playlist-item:nth-child(5) { transition-delay: 0.3s; }
+  
+  /* 播放列表按钮增强样式 */
+  #playlist-btn {
+    transition: all 0.2s ease-out;
+  }
+  
+  #playlist-btn:hover {
+    transform: scale(1.1);
+  }
+  
+  #playlist-btn:active {
+    transform: scale(0.95);
+  }
+
+  /* 播放模式按钮样式 */
+  .mode-btn, #shuffle-btn, #repeat-btn {
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    position: relative;
+    background: rgba(var(--color-muted) / 0.1);
+    border: 1px solid rgba(var(--color-border) / 0.3);
+  }
+  
+  .mode-btn:hover, #shuffle-btn:hover, #repeat-btn:hover {
+    transform: scale(1.1);
+    background: rgba(var(--color-accent) / 0.1);
+    border-color: rgba(var(--color-accent) / 0.3);
+  }
+  
+  .mode-btn:active, #shuffle-btn:active, #repeat-btn:active {
+    transform: scale(0.95);
+  }
+  
+  /* 播放模式激活状态 - 更明显的视觉效果 */
+  .mode-btn.active, #shuffle-btn.active, #repeat-btn.active {
+    opacity: 1 !important;
+    background: linear-gradient(135deg, rgba(var(--color-accent) / 0.8), rgba(var(--color-secondary-highlight) / 0.6));
+    // color: var(--color-accent);
+    border: 1px solid var(--color-accent);
+    box-shadow: 
+      0 0 0 2px rgba(var(--color-accent) / 0.2),
+      0 4px 12px rgba(var(--color-accent) / 0.3),
+      inset 0 1px 0 rgba(255, 255, 255, 0.2);
+    transform: scale(1.05);
+  }
+  
+  .mode-btn.active:hover, #shuffle-btn.active:hover, #repeat-btn.active:hover {
+    background: linear-gradient(135deg, rgba(var(--color-accent) / 0.9), rgba(var(--color-secondary-highlight) / 0.7));
+    box-shadow: 
+      0 0 0 3px rgba(var(--color-accent) / 0.3),
+      0 6px 16px rgba(var(--color-accent) / 0.4),
+      inset 0 1px 0 rgba(255, 255, 255, 0.3);
+    transform: scale(1.1);
+  }
+  
+  /* 激活状态脉冲动画 */
+  @keyframes pulse-glow {
+    0% { 
+      box-shadow: 
+        0 0 0 2px rgba(var(--color-accent) / 0.2),
+        0 4px 12px rgba(var(--color-accent) / 0.3),
+        inset 0 1px 0 rgba(255, 255, 255, 0.2);
+    }
+    50% { 
+      box-shadow: 
+        0 0 0 3px rgba(var(--color-accent) / 0.4),
+        0 6px 16px rgba(var(--color-accent) / 0.5),
+        inset 0 1px 0 rgba(255, 255, 255, 0.3);
+    }
+    100% { 
+      box-shadow: 
+        0 0 0 2px rgba(var(--color-accent) / 0.2),
+        0 4px 12px rgba(var(--color-accent) / 0.3),
+        inset 0 1px 0 rgba(255, 255, 255, 0.2);
+    }
+  }
+  
+  .mode-btn.active, #shuffle-btn.active, #repeat-btn.active {
+    animation: pulse-glow 2s ease-in-out infinite;
+  }
+  
+  /* 图标增强效果 */
+  .mode-btn svg, #shuffle-btn svg, #repeat-btn svg {
+    transition: all 0.2s ease-out;
+    filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.1));
+  }
+  
+  .mode-btn.active svg, #shuffle-btn.active svg, #repeat-btn.active svg {
+    filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.3));
+    transform: scale(1.1);
+  }
+  
+  /* 激活指示器 */
+  .mode-btn.active::after, #shuffle-btn.active::after, #repeat-btn.active::after {
+    content: '';
+    position: absolute;
+    top: -2px;
+    right: -2px;
+    width: 6px;
+    height: 6px;
+    background: var(--color-secondary-highlight);
+    border-radius: 50%;
+    box-shadow: 0 0 0 1px var(--color-background), 0 0 8px rgba(var(--color-secondary-highlight) / 0.6);
+    animation: indicator-pulse 1.5s ease-in-out infinite;
+  }
+  
+  /* 单曲循环特殊样式 */
+  #repeat-btn.repeat-one {
+    background: linear-gradient(135deg, rgba(var(--color-secondary-highlight) / 0.8), rgba(var(--color-accent) / 0.6)) !important;
+  }
+  
+  #repeat-btn.repeat-one::after {
+    background: var(--color-accent) !important;
+    box-shadow: 0 0 0 1px var(--color-background), 0 0 12px rgba(var(--color-accent) / 0.8) !important;
+  }
+  
+  #repeat-btn.repeat-one:hover {
+    background: linear-gradient(135deg, rgba(var(--color-secondary-highlight) / 0.9), rgba(var(--color-accent) / 0.7)) !important;
+  }
+  
+  /* 随机播放特殊样式 */
+  #shuffle-btn.active {
+    background: linear-gradient(135deg, rgba(var(--color-accent) / 0.8), rgba(var(--color-secondary-highlight) / 0.6)) !important;
+  }
+  
+  #shuffle-btn.active svg {
+    animation: shuffle-shake 0.8s ease-in-out infinite;
+  }
+  
+  @keyframes shuffle-shake {
+    0%, 100% { transform: scale(1.1) rotate(0deg); }
+    25% { transform: scale(1.1) rotate(-2deg); }
+    50% { transform: scale(1.1) rotate(2deg); }
+    75% { transform: scale(1.1) rotate(-1deg); }
+  }
+  
+  /* 状态指示文字 */
+  .mode-status {
+    position: absolute;
+    bottom: -18px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 0.625rem; /* 10px */
+    color: var(--color-accent);
+    background: rgba(var(--color-background) / 0.9);
+    padding: 1px 4px;
+    border-radius: 2px;
+    border: 1px solid rgba(var(--color-accent) / 0.3);
+    white-space: nowrap;
+    opacity: 0;
+    transition: opacity 0.3s ease-out;
+    pointer-events: none;
+    font-weight: 500;
+    backdrop-filter: blur(4px);
+  }
+  
+  .mode-btn.active .mode-status,
+  #shuffle-btn.active .mode-status,
+  #repeat-btn.active .mode-status {
+    opacity: 1;
+  }
+  
+  .mode-btn:hover .mode-status,
+  #shuffle-btn:hover .mode-status,
+  #repeat-btn:hover .mode-status,
+  #prev-btn:hover .mode-status,
+  #next-btn:hover .mode-status,
+  #play-pause-btn:hover .mode-status {
+    opacity: 0.8;
+  }
+  
+  /* 播放/暂停按钮状态文字特殊样式 */
+  .play-pause-status {
+    color: var(--color-background) !important;
+    background: rgba(var(--color-background) / 0.2) !important;
+    border-color: rgba(var(--color-background) / 0.3) !important;
+  }
+  
+  /* 播放/暂停按钮在播放状态下的细微变化 */
+  #play-pause-btn.playing {
+    box-shadow: 0 0 12px rgba(var(--color-accent) / 0.4);
+  }
+  
+  @keyframes indicator-pulse {
+    0%, 100% { 
+      transform: scale(1);
+      opacity: 1;
+    }
+    50% { 
+      transform: scale(1.2);
+      opacity: 0.8;
+    }
+  }
+
+  /* 进度条动画效果 */
+  #progress-fill {
+    transition: width 0.1s ease-out, transform 0.15s ease-out;
+    transform-origin: left center;
+  }
+  
+  #progress-slider {
+    transition: opacity 0.2s ease-out;
+  }
+  
+  #progress-slider:hover {
+    opacity: 0.3 !important;
+  }
+  
+  /* 进度条发光效果 */
+  @keyframes progress-glow {
+    0% { box-shadow: 0 0 5px rgba(var(--color-accent) / 0.5); }
+    50% { box-shadow: 0 0 15px rgba(var(--color-accent) / 0.8); }
+    100% { box-shadow: 0 0 5px rgba(var(--color-accent) / 0.5); }
+  }
+  
+  #progress-fill:active {
+    animation: progress-glow 0.6s ease-out;
+  }
+
+  /* 音量控制动画效果 */
+  #volume-fill {
+    transition: width 0.1s ease-out, transform 0.15s ease-out;
+    transform-origin: left center;
+  }
+  
+  #volume-btn {
+    transition: all 0.2s ease-out;
+  }
+  
+  #volume-btn:hover {
+    transform: scale(1.1);
+  }
+  
+  #volume-btn:active {
+    transform: scale(0.95);
+  }
+  
+  /* 音量图标动画 */
+  #volume-on-icon, #volume-off-icon {
+    transition: opacity 0.2s ease-out, transform 0.2s ease-out;
+  }
+  
+  /* 音量滑块增强样式 */
+  #volume-slider {
+    transition: opacity 0.2s ease-out;
+  }
+  
+  #volume-slider:hover {
+    opacity: 0.3 !important;
+  }
+  
+  /* 音量条发光效果 */
+  @keyframes volume-glow {
+    0% { box-shadow: 0 0 5px rgba(var(--color-secondary-highlight) / 0.5); }
+    50% { box-shadow: 0 0 15px rgba(var(--color-secondary-highlight) / 0.8); }
+    100% { box-shadow: 0 0 5px rgba(var(--color-secondary-highlight) / 0.5); }
+  }
+  
+  #volume-fill:active {
+    animation: volume-glow 0.6s ease-out;
+  }
+
+  /* 响应式设计 */
+  @media (max-width: 480px) {
+    .expanded {
+      width: calc(100vw - 2.5rem);
+      max-width: 20rem; /* 320px, equivalent to max-w-80 */
+    }
+  }
+</style>
+
+<script>
+  import { MusicPlayer } from '../utils/musicPlayer.ts';
+	import { SONG_LIST } from '../constants'
+
+  // 全局变量声明
+  declare global {
+    interface Window {
+      musicPlayerInstance?: MusicPlayer;
+    }
+  }
+
+  // 当DOM加载完成后初始化播放器
+  function initPlayer() {
+    // 检查是否已经初始化过了
+    if (window.musicPlayerInstance) {
+      return; // 已经初始化，不需要重复
+    }
+    
+    try {
+      const player = new MusicPlayer(SONG_LIST);
+      window.musicPlayerInstance = player;
+      console.log('音乐播放器初始化成功');
+    } catch (error) {
+      console.error('音乐播放器初始化失败:', error);
+    }
+  }
+
+  // 页面加载时初始化
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initPlayer);
+  } else {
+    initPlayer();
+  }
+
+  // 监听页面切换事件，确保播放器在新页面中仍然工作
+  document.addEventListener('astro:after-swap', () => {
+    // transition:persist会保持DOM元素，但我们需要确保事件监听器仍然有效
+    // 如果实例不存在，重新初始化
+    if (!window.musicPlayerInstance) {
+      setTimeout(initPlayer, 10);
+    }
+  });
+</script>

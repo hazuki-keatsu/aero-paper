@@ -1,0 +1,57 @@
+---
+import Layout from "../layouts/Layout.astro";
+import { SITE } from "../config";
+---
+
+<Layout title="音乐播放器配置测试" description="测试音乐播放器配置功能">
+  <main class="min-h-screen bg-skin-fill p-8">
+    <div class="max-w-2xl mx-auto">
+      <h1 class="text-3xl font-bold text-skin-base mb-6">
+        音乐播放器配置测试
+      </h1>
+      
+      <div class="p-6 rounded-lg shadow-md mb-6 content-card">
+        <h2 class="text-xl font-semibold text-skin-base mb-4">当前配置</h2>
+        <div class="space-y-2 text-skin-base">
+          <p><span class="font-medium">启用状态:</span> {SITE.musicPlayer.enabled ? "✅ 已启用" : "❌ 已禁用"}</p>
+          <p><span class="font-medium">自动展开:</span> {SITE.musicPlayer.autoShow ? "✅ 是" : "❌ 否"}</p>
+          <p><span class="font-medium">默认音量:</span> {SITE.musicPlayer.defaultVolume}%</p>
+          <p><span class="font-medium">显示页面:</span> {SITE.musicPlayer.showInPages.join(", ")}</p>
+        </div>
+      </div>
+
+      <div class="p-6 rounded-lg shadow-md content-card">
+        <h2 class="text-xl font-semibold text-skin-base mb-4">配置说明</h2>
+        <div class="space-y-3 text-skin-base">
+          <div>
+            <h3 class="font-medium">enabled (启用状态)</h3>
+            <p class="text-sm text-skin-muted">设置为 true 启用音乐播放器，false 禁用</p>
+          </div>
+          <div>
+            <h3 class="font-medium">autoShow (自动展开)</h3>
+            <p class="text-sm text-skin-muted">设置为 true 播放器会自动展开，false 为最小化状态</p>
+          </div>
+          <div>
+            <h3 class="font-medium">defaultVolume (默认音量)</h3>
+            <p class="text-sm text-skin-muted">设置默认音量大小，范围 0-100</p>
+          </div>
+          <div>
+            <h3 class="font-medium">showInPages (显示页面)</h3>
+            <p class="text-sm text-skin-muted">控制在哪些页面显示播放器：</p>
+            <ul class="list-disc list-inside ml-4 text-sm text-skin-muted">
+              <li>["all"] - 在所有页面显示</li>
+              <li>["/", "/about"] - 仅在指定页面显示</li>
+              <li>[] - 不在任何页面显示</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="mt-6 text-center">
+        <p class="text-skin-muted">
+          当前页面路径: <code class="bg-skin-accent/20 px-2 py-1 rounded text-sm">{Astro.url.pathname}</code>
+        </p>
+      </div>
+    </div>
+  </main>
+</Layout>

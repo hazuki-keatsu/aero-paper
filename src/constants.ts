@@ -12,6 +12,14 @@ interface Social {
   icon: (_props: Props) => Element;
 }
 
+interface Song {
+  id: number;
+  title: string;
+  artist: string;
+  cover: string;
+  src: string;
+}
+
 export const SOCIALS: Social[] = [
   {
     name: "GitHub",
@@ -60,3 +68,12 @@ export const SHARE_LINKS: Social[] = [
   },
 ] as const;
 
+export const SONG_LIST: Song[] = [
+  {
+    id: 1,
+    title: "spiral",
+    artist: "LONGMAN",
+    cover: "https://www.lyrical-nonsense.com/wp-content/uploads/2023/07/LONGMAN-spiral.jpg",
+    src: "/LONGMAN%20-%20spiral.mp3"
+  },
+] as const;
