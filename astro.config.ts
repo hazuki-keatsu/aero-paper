@@ -32,8 +32,8 @@ export default defineConfig({
       [
         remarkCollapse,
         {
-          test: '目录',
-          summary: '目录',
+          test: '(table[ -]of[ -]contents?|contents|目录)',
+          summary: 'Toggle table of contents',
         },
       ],
     ],
