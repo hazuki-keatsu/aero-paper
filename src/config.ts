@@ -4,7 +4,7 @@ export const SITE = {
   profile: "",
   desc: "叶月枫的博客",
   title: "Hazuki Keatsu",
-  ogImage: "astropaper-og.jpg",
+  ogImage: "aeropaper-og.jpg",
   lightAndDarkMode: true,
   postPerIndex: 4,
   postPerPage: 4,
