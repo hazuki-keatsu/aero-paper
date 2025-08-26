@@ -76,4 +76,12 @@ export const SONG_LIST: Song[] = [
     cover: "https://www.lyrical-nonsense.com/wp-content/uploads/2023/07/LONGMAN-spiral.jpg",
     src: "/LONGMAN%20-%20spiral.mp3"
   },
+  // 来源于网易云的音频链接
+  {
+    id: 2,
+    title: "Dye the sky. -25 colors-",
+    artist: "シャイニーカラーズ",
+    cover: "http://p2.music.126.net/tM1S4-q5Tt2cYUs0LTrcrw==/109951170278147013.jpg",
+    src: "https://m704.music.126.net/20250826095413/cef8b1d8891b4653ce7715c4d0d30603/jdyyaac/obj/w5rDlsOJwrLDjj7CmsOj/57137894027/f71c/6f5b/1f9f/9c8b8c9613c3bf97d3d0133b6f73f2c7.m4a"
+  }
 ] as const;

@@ -50,6 +50,19 @@ const backUrl = SITE.showBackButton ? `${Astro.url.pathname}` : "/";
         element: "#pagefind-search",
         showSubResults: true,
         showImages: false,
+        translations: {
+          "placeholder": "搜索",
+          "clear_search": "清除",
+          "load_more": "加载更多结果",
+          "search_label": "搜索这个网站",
+          "filters_label": "过滤",
+          "zero_results": "没有找到 [SEARCH_TERM]",
+          "many_results": "找到 [COUNT] 个关于 [SEARCH_TERM] 的结果",
+          "one_result": "找到 [COUNT] 个关于 [SEARCH_TERM] 的结果",
+          "alt_search": "没有找到 [SEARCH_TERM]. 展示关于 [DIFFERENT_TERM] 的结果",
+          "search_suggestion": "没有找到 [SEARCH_TERM]. 尝试以下的搜索方式:",
+          "searching": "正在搜索 [SEARCH_TERM]..."
+        },
         processTerm: function (term: string) {
           params.set("q", term); // Update the `q` parameter in the URL
           history.replaceState(history.state, "", "?" + params.toString()); // Push the new URL without reloading
@@ -104,6 +117,7 @@ const backUrl = SITE.showBackButton ? `${Astro.url.pathname}` : "/";
     --pagefind-ui-border-width: 1px;
     --pagefind-ui-image-border-radius: 8px;
     --pagefind-ui-image-box-ratio: 3 / 2;
+    --pagefind-ui-shadow
 
     form::before {
       background-color: var(--foreground);
@@ -122,6 +136,21 @@ const backUrl = SITE.showBackButton ? `${Astro.url.pathname}` : "/";
       color: var(--accent);
       outline-offset: 1px;
       outline-color: var(--accent);
+      font-size: 1.125rem;
+      font-weight: 500;
+      text-decoration: dashed;
+      text-underline-offset: 4px;
+      transition: color 0.3s ease;
+    }
+
+    .pagefind-ui__result-title a:hover {
+      color: var(--highlight-text);
+      text-decoration: underline;
+    }
+
+    .pagefind-ui__result-excerpt {
+      color: rgba(var(--foreground), 0.8);
+      margin-top: 0.5rem;
     }
 
     .pagefind-ui__result-title a:focus-visible,
@@ -137,10 +166,16 @@ const backUrl = SITE.showBackButton ? `${Astro.url.pathname}` : "/";
     .pagefind-ui__search-clear {
       padding-left: 1.5rem;
       padding-right: 1.5rem;
+      border-radius: 0.65rem;
       text-align: center;
       display: flex;
       align-items: center;
       justify-content: center;
+    }
+
+    .pagefind-ui__search-clear {
+      background-color: var(--color-accent);
+      color: var(--background);
     }
 
     .pagefind-ui__result:last-of-type {
@@ -149,10 +184,6 @@ const backUrl = SITE.showBackButton ? `${Astro.url.pathname}` : "/";
 
     .pagefind-ui__result:first-of-type {
       border-top: 0;
-    }
-
-    .pagefind-ui__result {
-      padding: 1rem;
     }
 
     .pagefind-ui__result-nested .pagefind-ui__result-link:before {
