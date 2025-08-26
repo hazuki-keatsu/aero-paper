@@ -29,7 +29,6 @@ export class MusicPlayer {
   // DOM元素
   private player!: HTMLDivElement;
   private playerButton!: HTMLDivElement;
-  private playerExpanded!: HTMLDivElement;
   private audio!: HTMLAudioElement;
   private playPauseBtn!: HTMLButtonElement;
   private playIcon!: SVGElement;
@@ -76,7 +75,6 @@ export class MusicPlayer {
   private initElements(): void {
     this.player = document.getElementById('music-player') as HTMLDivElement;
     this.playerButton = document.getElementById('player-button') as HTMLDivElement;
-    this.playerExpanded = document.getElementById('player-expanded') as HTMLDivElement;
     this.audio = document.getElementById('audio-player') as HTMLAudioElement;
     this.playPauseBtn = document.getElementById('play-pause-btn') as HTMLButtonElement;
     this.playIcon = document.getElementById('play-icon') as unknown as SVGElement;
