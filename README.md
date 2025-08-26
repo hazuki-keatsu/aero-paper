@@ -39,11 +39,8 @@
 
 ```bash
 # 克隆仓库
-git clone -b template https://github.com/hazuki-keatsu/aero-paper.git
+git clone https://github.com/hazuki-keatsu/aero-paper.git
 cd aero-paper
-
-# 修改分支名以关闭 Vercel 的分支保护
-git branch -M main
 
 # 安装 pnpm
 npm install -g pnpm
