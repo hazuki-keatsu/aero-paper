@@ -7,10 +7,10 @@ import IconSunHigh from "@/assets/icons/IconSunHigh.svg";
 import IconMenuDeep from "@/assets/icons/IconMenuDeep.svg";
 import LinkButton from "./LinkButton.astro";
 import { SITE } from "@/config";
+import CircularProgress from "./CircularProgress.astro";
 
 const { pathname } = Astro.url;
 
-// Remove trailing slash from current pathname if exists
 const currentPath =
   pathname.endsWith("/") && pathname !== "/" ? pathname.slice(0, -1) : pathname;
 
@@ -20,6 +20,8 @@ const isActive = (path: string) => {
 
   return currentPath === path || currentPathArray[0] === pathArray[0];
 };
+
+const isFirstLoad = Astro.cookies.get("hasLoaded")?.value !== "true";
 ---
 
 <header class="relative z-10">
@@ -38,12 +40,24 @@ const isActive = (path: string) => {
       id="top-nav-wrap"
       class="relative flex w-full items-baseline justify-between content-card mt-4 mb-2 p-4 sm:items-center sm:py-6 sm:mb-0"
     >
-      <a
-        href="/"
-        class="absolute py-1 text-xl leading-8 font-semibold whitespace-nowrap sm:static sm:my-auto sm:text-2xl sm:leading-none"
-      >
-        {SITE.title}
-      </a>
+      <div class="absolute py-1 text-xl leading-8 font-semibold whitespace-nowrap sm:static sm:my-auto sm:text-2xl sm:leading-none flex items-center">
+        <a href="/">
+          {SITE.title}
+        </a>
+        <div 
+          id="loading-indicator" 
+          class:list={[
+            "inline-flex transition-all duration-200 items-center ml-2 md:ml-4",
+            !isFirstLoad && "hidden" // 非首次加载时直接隐藏
+          ]}
+        >
+          <CircularProgress size={20} color="var(--color-accent)" bgColor="rgba(255,255,255,0)" inline class="mr-2" />
+          <p class="text-sm">
+            资源加载中...
+          </p>
+        </div>
+      </div>
+      
       <nav
         id="nav-menu"
         class="flex w-full flex-col items-center sm:ms-2 sm:flex-row sm:justify-end sm:space-x-4 sm:py-0"
@@ -160,7 +174,64 @@ const isActive = (path: string) => {
   }
 
   toggleNav();
-
-  // Runs on view transitions navigation
   document.addEventListener("astro:after-swap", toggleNav);
+
+  // 进度指示器逻辑
+  function initLoadingIndicator() {
+    // 使用setTimeout确保DOM完全就绪
+    setTimeout(() => {
+      const loadingIndicator = document.getElementById("loading-indicator");
+      if (!loadingIndicator) return;
+
+      // 隐藏指示器的函数
+      const hideLoadingIndicator = () => {
+        // 添加淡出动画
+        loadingIndicator.style.opacity = "0";
+        loadingIndicator.style.transform = "scale(0.9)";
+        
+        // 动画结束后完全隐藏
+        setTimeout(() => {
+          loadingIndicator.style.display = "none";
+        }, 200);
+      };
+
+      // 仅在首次加载时处理
+      if (!document.cookie.includes("hasLoaded=true")) {
+        // 监听页面完全加载完成
+        if (document.readyState === "complete") {
+          hideLoadingIndicator();
+        } else {
+          window.addEventListener("load", hideLoadingIndicator, { once: true });
+        }
+
+        // 超时保护 - 5秒后强制隐藏
+        setTimeout(hideLoadingIndicator, 5000);
+
+        // 设置cookie标记已加载
+        document.cookie = "hasLoaded=true; path=/; max-age=31536000";
+      } else {
+        // 非首次加载直接隐藏
+        loadingIndicator.style.display = "none";
+      }
+    }, 0);
+  }
+
+  // 初始化指示器
+  initLoadingIndicator();
+
+  // 处理Astro页面切换
+  document.addEventListener("astro:after-swap", () => {
+    const loadingIndicator = document.getElementById("loading-indicator");
+    if (loadingIndicator) {
+      loadingIndicator.style.display = "none";
+    }
+  });
 </script>
+
+<style>
+  #loading-indicator {
+    transition: opacity 0.2s ease, transform 0.2s ease;
+    opacity: 1;
+    transform: scale(1);
+  }
+</style>

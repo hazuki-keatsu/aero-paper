@@ -73,7 +73,7 @@ export const SONG_LIST: Song[] = [
     id: 1,
     title: "spiral",
     artist: "LONGMAN",
-    cover: "https://www.lyrical-nonsense.com/wp-content/uploads/2023/07/LONGMAN-spiral.jpg",
+    cover: "/LONGMAN%20-%20spiral.jpg",
     src: "/LONGMAN%20-%20spiral.mp3"
   },
   // 来源于网易云的音频链接

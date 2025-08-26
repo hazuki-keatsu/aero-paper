@@ -1,0 +1,46 @@
+---
+interface Props {
+  /** 进度条尺寸（像素） */
+  size?: number;
+  /** 进度条颜色 */
+  color?: string;
+  /** 背景圆环颜色 */
+  bgColor?: string;
+  /** 是否为局部显示模式（不带背景遮罩） */
+  inline?: boolean;
+  /** 自定义 CSS 类名 */
+  class?: string;
+}
+
+const { 
+  size = 48, 
+  color = '#6200ee', 
+  bgColor = 'rgba(98, 0, 238, 0.12)',
+  inline = false,
+  class: customClass = ''
+} = Astro.props;
+---
+
+<div class={`inline-block transition-opacity duration-300 opacity-100 ${customClass}`}>
+	<svg width={size} height={size} viewBox="0 0 48 48" class="animate-spin">
+		<circle 
+			cx="24" 
+			cy="24" 
+			r="18" 
+			fill="none" 
+			stroke={bgColor} 
+			stroke-width="6" 
+		/>
+		<circle 
+			cx="24" 
+			cy="24" 
+			r="18" 
+			fill="none" 
+			stroke={color} 
+			stroke-width="6" 
+			stroke-linecap="round"
+			stroke-dasharray="113"
+			stroke-dashoffset="28"
+		/>
+	</svg>
+</div>
