@@ -6,7 +6,7 @@ slug: how-to-add-new-post
 featured: false
 draft: false
 tags:
-  - docs
+  - example
 description:
   使用 AeroPaper 主题创建或添加新文章的一些规则与建议。
 ---
