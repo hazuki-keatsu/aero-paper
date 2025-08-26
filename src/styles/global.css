@@ -53,6 +53,7 @@ html[data-theme="dark"] {
     @apply border-border outline-accent/75;
     scrollbar-width: auto;
     scrollbar-color: var(--color-muted) transparent;
+    transition: background-color 0.3s ease;
   }
   html {
     @apply overflow-y-scroll scroll-smooth;
@@ -78,6 +79,7 @@ html[data-theme="dark"] {
     filter: blur(2px);
     opacity: 1;
     z-index: -2;
+    transition: all 0.3s ease;
   }
   
   /* 移动设备优化 */
