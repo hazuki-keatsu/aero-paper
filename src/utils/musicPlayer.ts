@@ -180,6 +180,8 @@ export class MusicPlayer {
   }
 
   private previousTrack(): void {
+    const wasPlaying = this.isPlaying; // 记录当前播放状态
+    
     if (this.playMode === PlayMode.Shuffle) {
       // 随机播放模式：随机选择一首歌
       this.playRandomTrack();
@@ -190,9 +192,16 @@ export class MusicPlayer {
         : this.playlist.length - 1;
       this.loadTrack(this.currentTrackIndex);
     }
+    
+    // 如果之前在播放，继续播放新的音轨
+    if (wasPlaying) {
+      this.play();
+    }
   }
 
   private nextTrack(): void {
+    const wasPlaying = this.isPlaying; // 记录当前播放状态
+    
     switch (this.playMode) {
       case PlayMode.RepeatOne:
         // 单曲循环：重新播放当前歌曲
@@ -212,6 +221,11 @@ export class MusicPlayer {
         this.loadTrack(this.currentTrackIndex);
         break;
     }
+    
+    // 如果之前在播放，继续播放新的音轨
+    if (wasPlaying) {
+      this.play();
+    }
   }
 
   private loadTrack(index: number): void {
@@ -220,6 +234,12 @@ export class MusicPlayer {
     if (this.coverImage) this.coverImage.src = track.cover;
     if (this.songTitle) this.songTitle.textContent = track.title;
     if (this.songArtist) this.songArtist.textContent = track.artist;
+    
+    // 重置播放状态和按钮状态
+    this.isPlaying = false;
+    this.playIcon?.classList.remove('hidden');
+    this.pauseIcon?.classList.add('hidden');
+    this.playPauseBtn?.classList.remove('playing');
     
     // 更新播放列表活动状态
     this.updatePlaylistActiveState(index);
