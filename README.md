@@ -2,6 +2,8 @@
 
 🌸 基于 [AstroPaper](https://github.com/satnaing/astro-paper) 的自定义博客主题，为 Hazuki Keatsu 的个人博客设计。
 
+📃 Demo: [keatsu.top](https://keatsu.top) - [仓库](https://github.com/hazuki-keatsu/keatsu-top)
+
 ![Header](header.jpg)
 
 ![博客预览](https://img.shields.io/badge/Astro-4.0.12-FF5D01?style=for-the-badge&logo=astro&logoColor=white)
