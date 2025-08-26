@@ -4,7 +4,6 @@
 
 ![博客预览](https://img.shields.io/badge/Astro-4.0.12-FF5D01?style=for-the-badge&logo=astro&logoColor=white)
 ![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-4.1.11-38B2AC?style=for-the-badge&logo=tailwind-css&logoColor=white)
-![Astro](https://img.shields.io/badge/astro-%232C2052.svg?style=for-the-badge&logo=astro&logoColor=white)
 ![Typescript](https://img.shields.io/badge/TypeScript-007ACC?style=for-the-badge&logo=typescript&logoColor=white)
 ![Vercel](https://img.shields.io/badge/vercel-%23000000.svg?style=for-the-badge&logo=vercel&logoColor=white)
 
@@ -39,11 +38,8 @@
 
 ```bash
 # 克隆仓库
-git clone -b template https://github.com/hazuki-keatsu/aero-paper.git
+git clone https://github.com/hazuki-keatsu/aero-paper.git
 cd aero-paper
-
-# 修改分支名以关闭 Vercel 的分支保护
-git branch -M main
 
 # 安装 pnpm
 npm install -g pnpm
