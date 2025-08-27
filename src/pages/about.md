@@ -5,11 +5,13 @@ title: "关于"
 
 🌸 基于 [AstroPaper](https://github.com/satnaing/astro-paper) 的自定义博客主题，为 Hazuki Keatsu 的个人博客设计。
 
-<div class="prose inline-flex flex">
-    <img class="mt-8 m-2" src="https://img.shields.io/badge/Astro-4.0.12-FF5D01?style=for-the-badge&logo=astro&logoColor=white" alt="博客预览">
-    <img class="m-2" src="https://img.shields.io/badge/Tailwind_CSS-4.1.11-38B2AC?style=for-the-badge&logo=tailwind-css&logoColor=white" alt="Tailwind CSS">
-    <img class="m-2" src="https://img.shields.io/badge/TypeScript-007ACC?style=for-the-badge&logo=typescript&logoColor=white" alt="Typescript">
-    <img class="mb-8 m-2" src="https://img.shields.io/badge/vercel-%23000000.svg?style=for-the-badge&logo=vercel&logoColor=white" alt="Vercel">
+<div class="prose flex flex-wrap">
+    <div></div>
+    <img src="https://img.shields.io/badge/Astro-4.0.12-FF5D01?style=for-the-badge&logo=astro&logoColor=white" alt="博客预览">
+    <img src="https://img.shields.io/badge/Tailwind_CSS-4.1.11-38B2AC?style=for-the-badge&logo=tailwind-css&logoColor=white" alt="Tailwind CSS">
+    <img src="https://img.shields.io/badge/TypeScript-007ACC?style=for-the-badge&logo=typescript&logoColor=white" alt="Typescript">
+    <img src="https://img.shields.io/badge/vercel-%23000000.svg?style=for-the-badge&logo=vercel&logoColor=white" alt="Vercel">
+    <div></div>
 </div>
 
 ## ✨ 主要特色

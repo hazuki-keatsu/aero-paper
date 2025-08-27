@@ -205,8 +205,8 @@ const isFirstLoad = Astro.cookies.get("hasLoaded")?.value !== "true";
           window.addEventListener("load", hideLoadingIndicator, { once: true });
         }
 
-        // 超时保护 - 5秒后强制隐藏
-        setTimeout(hideLoadingIndicator, 5000);
+        // // 超时保护 - 5秒后强制隐藏
+        // setTimeout(hideLoadingIndicator, 5000);
 
         // 设置cookie标记已加载
         document.cookie = "hasLoaded=true; path=/; max-age=31536000";
