@@ -1,9 +1,9 @@
 export const SITE = {
-  website: "http://keatsu.top/", // replace this with your deployed domain
+  website: "https://aero-paper.vercel.app/", // replace this with your deployed domain
   author: "Hazuki Keatsu",
   profile: "",
-  desc: "叶月枫的博客",
-  title: "Hazuki Keatsu",
+  desc: "A Blog Theme Modified from Astro Paper",
+  title: "Aero Paper",
   ogImage: "aeropaper-og.jpg",
   lightAndDarkMode: true,
   postPerIndex: 4,

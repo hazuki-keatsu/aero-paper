@@ -3,35 +3,23 @@ layout: ../layouts/AboutLayout.astro
 title: "关于"
 ---
 
-<div class="prose">
-    <img align="left" src="/assets/profile_picture.jpg" alt="Hazuki Keatsu" style="width: 100px; height: 100px; border-radius: 50%; object-fit: cover; border: 3px solid #e5e7eb; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);margin: 0 20px 0 0">
+🌸 基于 [AstroPaper](https://github.com/satnaing/astro-paper) 的自定义博客主题，为 Hazuki Keatsu 的个人博客设计。
+
+<div class="prose inline-flex flex">
+    <img class="mt-8 m-2" src="https://img.shields.io/badge/Astro-4.0.12-FF5D01?style=for-the-badge&logo=astro&logoColor=white" alt="博客预览">
+    <img class="m-2" src="https://img.shields.io/badge/Tailwind_CSS-4.1.11-38B2AC?style=for-the-badge&logo=tailwind-css&logoColor=white" alt="Tailwind CSS">
+    <img class="m-2" src="https://img.shields.io/badge/TypeScript-007ACC?style=for-the-badge&logo=typescript&logoColor=white" alt="Typescript">
+    <img class="mb-8 m-2" src="https://img.shields.io/badge/vercel-%23000000.svg?style=for-the-badge&logo=vercel&logoColor=white" alt="Vercel">
 </div>
 
-**你好**，我是 Hazuki Keatsu！👋
-
-我是西安电子科技大学 2024 届软件工程专业的一名本科生。
-
-## 关于我
-
-我喜欢探索新的技术栈，分享学习心得，并通过代码创造有趣的项目。在这个博客中，你会发现：
-
-- 💻 技术文章和编程经验分享
-- 🚀 项目开发过程中的思考与总结
-- 📚 学习笔记和技术调研
-- 🌱 个人成长和生活感悟
-
-## 关于本博客主题
-
-本博客主题是由[AstroPaper](https://github.com/satnaing/astro-paper)魔改而来，并且相关代码已经开源在仓库[AeroPaper](http://github.com/hazuki-keatsu/aero-paper)
-
-**主要特色：**
+## ✨ 主要特色
 
 ### 🎨 视觉增强
 - **动态背景图片**：亮色模式和深色模式使用不同的背景图片
 - **毛玻璃效果**：现代化的半透明卡片设计，保持内容可读性
 - **响应式背景**：桌面端支持视差效果，移动端优化性能
 - **统一布局**：所有页面采用一致的卡片式布局设计
-- **手写字体**：使用 Yozai 作为页面的字体
+- **手写字体**：使用 [Yozai](https://github.com/lxgw/yozai-font) 作为页面的字体
 
 ### 📝 内容功能
 - **折叠目录**：支持中英文的自动生成目录，可展开/折叠
@@ -45,53 +33,133 @@ title: "关于"
 - **无障碍访问**：遵循 WCAG 指南，支持键盘导航
 - **国际化**：支持中文本地化
 
-## 工具和技术栈
+## 🚀 本地调试
 
-我主要专注于以下技术领域：
+### 前置要求
+- Node.js 18+ 
+- pnpm
 
-- **安卓原生开发**: Kotlin + Jetpack Compose
-- **跨平台开发**: Flutter
-- **网络服务开发**: Go + Gorm + Gin
-- **人工智能**: Python + Pytorch
+### 安装依赖
 
-我主要使用以下工具：
+```bash
+# 克隆仓库
+git clone https://github.com/hazuki-keatsu/aero-paper.git
+cd aero-paper
 
-- Android Studio
-- VSCode
-- Neovim
-- Obsidian
-- Zen Browser (非常好用的浏览器！！)
-- Git, GitHub
+# 安装 pnpm
+npm install -g pnpm
 
-我的设备和开发平台：
+# 安装依赖
+pnpm install
+```
 
-- Lenovo Legion Y7000P 
-    - CPU: Intel Core i7 - 14650HX
-    - GPU: Nvidia Geforce RTX 4060 Laptop
-    - RAM: 32 GB
-    - ROM: 2 TB
-- Windows 11 23H2 Professional
-- Kali Linux (2.5.10.0) - WSL
+### 开发模式
 
-<div class="prose">
-    <img src="/assets/skill_icons.svg" alt="Skill Icon">
-</div>
+```bash
+# 启动开发服务器
+pnpm run dev
+```
 
-## 个人爱好
+在浏览器中打开 `http://localhost:4321` 查看效果。
 
-- 电吉他演奏 & 电声乐队 (Tele 是正确的！！)
-- 编曲 & 音乐创作
-- GalGame ([Aokana](https://sprite.net/aokana) 是神作！！)
-- Counter-Strike 2
+### 构建部署
 
-## 联系方式
+```bash
+# 构建生产版本
+pnpm run build
 
-如果你对我的文章有任何疑问，或者想要交流技术话题，欢迎通过以下方式联系我：
+# 预览构建结果
+pnpm run preview
+```
 
-<div class="prose">
-    <a class="prose" href="https://space.bilibili.com/392082366" style="display: inline-block;"><img src="https://img.shields.io/badge/dynamic/json?style=flat-square&label=Bilibili+Follows&labelColor=FE7398&color=282C34&query=$.data.follower&url=https://api.bilibili.com/x/relation/stat?vmid=392082366&longCache=true&logo=bilibili&logoColor=white" alt="Bilibili"></a>
-    <a class="prose" href="https://github.com/hazuki-keatsu" style="display: inline-block;"><img src="https://img.shields.io/badge/dynamic/json?style=flat-square&label=GitHub+Followers&suffix=%20&query=%24.data.totalSubs&url=https%3A%2F%2Fapi.spencerwoo.com%2Fsubstats%2F%3Fsource%3Dgithub%26queryKey%3Dhazuki-keatsu&labelColor=282c34&color=353940&logo=github&longCache=true" alt="Github"></a>
-    <a class="prose" href="mailto:yeyuefeng699@outlook.com" style="display: inline-block;"><img src="https://img.shields.io/badge/Outlook-Mail_to_Me-0F6CBD?style=flat-square&logo=gmail&logoColor=FFFFFF&logoSize=auto" alt="Outlook"></a>
-</div>
+## 🧞 `pnpm`所有命令
 
-感谢你访问我的博客，希望这里的内容对你有所帮助！
+> **_注意_** 对于 `Docker` 命令，必须在你的设备里[安装](https://docs.docker.com/engine/install/)它.
+
+| Command                              | Action                                                                                                                           |
+| :----------------------------------- | :------------------------------------------------------------------------------------------------------------------------------- |
+| `pnpm install`                       | 安安装所有的依赖                                                                                                            |
+| `pnpm run dev`                       | 在`localhost:4321`启动本地开发服务器                                                                                       |
+| `pnpm run build`                     | 在`./dist/`中构建你的网页                                                                                          |
+| `pnpm run preview`                   | 本地预览你的网页                                                                                     |
+| `pnpm run format:check`              |使用 Prettier 检查你的代码格式                                                                                                 |
+| `pnpm run format`                    | 使用 Prettier 格式化你的代码                                                                                                       |
+| `pnpm run sync`                      | 为所有的 Astro Module 产生 TypeScript 类型 [了解更多](https://docs.astro.build/en/reference/cli-reference/#astro-sync). |
+| `pnpm run lint`                      | 使用 ESLint 进行静态代码分析                                                                                                                |
+
+## 📁 项目结构
+
+```
+├── public/                 # 静态资源
+│   ├── favicon.svg        
+│   ├── profile_picture.jpg
+│   └── assets/            # 图片资源
+├── src/
+│   ├── assets/            # 项目资源
+│   │   ├── fonts/         # 自定义字体 (Yozai)
+│   │   ├── icons/         # SVG 图标
+│   │   └── images/        # 图片资源
+│   │       └── backgrounds/ # 背景图片
+│   ├── components/        # 组件
+│   │   ├── PageContainer.astro  # 统一页面容器
+│   │   ├── Header.astro
+│   │   ├── Footer.astro
+│   │   └── ...
+│   ├── data/blog/         # 博客文章 (Markdown)
+│   ├── layouts/           # 页面布局
+│   ├── pages/             # 路由页面
+│   ├── styles/            # 样式文件
+│   │   ├── global.css     # 全局样式 + 背景效果
+│   │   └── typography.css # 排版样式
+│   └── utils/             # 工具函数
+├── astro.config.ts        # Astro 配置
+└── src/config.ts          # 站点配置
+```
+
+## 📝 写作指南
+
+请参考原项目的 [README文件](./README.raw.md)
+
+## 🔧 主要改进
+
+相较于原版 AstroPaper，本主题包含以下主要改进：
+
+### 视觉增强
+- ✅ 动态背景图片系统
+- ✅ 毛玻璃效果卡片设计
+- ✅ 统一的页面布局
+- ✅ 优化的移动端体验
+- ✅ 引入中文手写字体 [Yozai](https://github.com/lxgw/yozai-font)
+
+### 功能增强
+- ✅ 中文目录支持
+- ✅ 折叠目录功能
+- ✅ 优化的代码字体显示
+- ✅ 改进的标签样式
+- ✅ 加入浮动音乐播放器
+
+### 技术优化
+- ✅ 响应式背景图片
+- ✅ 性能优化的移动端设置
+- ✅ 改进的组件对齐
+- ✅ 中文本地化支持
+
+## 📄 许可证
+
+本项目基于 MIT 许可证，详见 [LICENSE](LICENSE) 文件。
+
+## 🙏 致谢
+
+- [AstroPaper](https://github.com/satnaing/astro-paper) - 原始主题
+- [Astro](https://astro.build/) - 静态站点生成器
+- [Tailwind CSS](https://tailwindcss.com/) - CSS 框架
+- [Shiki](https://shiki.style/) - 语法高亮
+
+## 📞 联系方式
+
+- GitHub：[hazuki-keatsu](https://github.com/hazuki-keatsu)
+- Mail: [Outlook](mailto:yeyuefeng699@outlook.com)
+
+---
+
+> 💡 **提示**：如果您喜欢这个主题，请给项目点个 ⭐ Star！
