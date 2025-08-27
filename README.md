@@ -2,7 +2,7 @@
 
 🌸 基于 [AstroPaper](https://github.com/satnaing/astro-paper) 的自定义博客主题，为 Hazuki Keatsu 的个人博客设计。
 
-📃 Demo: [keatsu.top](https://keatsu.top) - [仓库](https://github.com/hazuki-keatsu/keatsu-top)
+📃 [Demo](https://aero-paper.vercel.app/)
 
 ![Header](header.jpg)
 
