@@ -76,12 +76,4 @@ export const SONG_LIST: Song[] = [
     cover: "/LONGMAN%20-%20spiral.jpg",
     src: "/LONGMAN%20-%20spiral.mp3"
   },
-  // 来源于网易云的音频链接
-  {
-    id: 2,
-    title: "Dye the sky. -25 colors-",
-    artist: "シャイニーカラーズ",
-    cover: "http://p2.music.126.net/tM1S4-q5Tt2cYUs0LTrcrw==/109951170278147013.jpg",
-    src: "https://er-sycdn.kuwo.cn/f2eda961da3391e9449d1f47431a4a83/68ae5fdf/resource/30106/trackmedia/M800003xGgeK3y8O46.mp3"
-  }
 ] as const;
