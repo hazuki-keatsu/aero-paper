@@ -5,6 +5,8 @@ title: "关于"
 
 🌸 基于 [AstroPaper](https://github.com/satnaing/astro-paper) 的自定义博客主题，为 Hazuki Keatsu 的个人博客设计。
 
+![主视图](/aeropaper-og.jpg)
+
 <div class="prose flex flex-wrap">
     <div></div>
     <img src="https://img.shields.io/badge/Astro-4.0.12-FF5D01?style=for-the-badge&logo=astro&logoColor=white" alt="博客预览">
@@ -22,6 +24,7 @@ title: "关于"
 - **响应式背景**：桌面端支持视差效果，移动端优化性能
 - **统一布局**：所有页面采用一致的卡片式布局设计
 - **手写字体**：使用 [Yozai](https://github.com/lxgw/yozai-font) 作为页面的字体
+- **Og图片**：调整Og图片生成器风格与网页风格相同
 
 ### 📝 内容功能
 - **折叠目录**：支持中英文的自动生成目录，可展开/折叠
@@ -34,6 +37,7 @@ title: "关于"
 - **性能优化**：图片懒加载、代码分割、静态生成
 - **无障碍访问**：遵循 WCAG 指南，支持键盘导航
 - **国际化**：支持中文本地化
+- **加载指示器**：添加资源加载指示器
 
 ## 🚀 本地调试
 
@@ -120,35 +124,11 @@ pnpm run preview
 
 ## 📝 写作指南
 
-请参考原项目的 [README文件](./README.raw.md)
-
-## 🔧 主要改进
-
-相较于原版 AstroPaper，本主题包含以下主要改进：
-
-### 视觉增强
-- ✅ 动态背景图片系统
-- ✅ 毛玻璃效果卡片设计
-- ✅ 统一的页面布局
-- ✅ 优化的移动端体验
-- ✅ 引入中文手写字体 [Yozai](https://github.com/lxgw/yozai-font)
-
-### 功能增强
-- ✅ 中文目录支持
-- ✅ 折叠目录功能
-- ✅ 优化的代码字体显示
-- ✅ 改进的标签样式
-- ✅ 加入浮动音乐播放器
-
-### 技术优化
-- ✅ 响应式背景图片
-- ✅ 性能优化的移动端设置
-- ✅ 改进的组件对齐
-- ✅ 中文本地化支持
+请参考原项目的 [README文件](https://github.com/hazuki-keatsu/aero-paper/README.raw.md)
 
 ## 📄 许可证
 
-本项目基于 MIT 许可证，详见 [LICENSE](LICENSE) 文件。
+本项目基于 MIT 许可证，详见 [LICENSE](https://github.com/hazuki-keatsu/aero-paper/LICENSE) 文件。
 
 ## 🙏 致谢
 

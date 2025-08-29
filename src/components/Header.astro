@@ -28,9 +28,10 @@ const isFirstLoad = Astro.cookies.get("hasLoaded")?.value !== "true";
   <div 
     id="loading-indicator" 
     class:list={[
-      "inline-flex content-card p-2 mt-8 z-50 shadow-lg transition-all duration-200 items-center ml-2 md:ml-4",
+      "inline-flex content-card p-4 z-50 shadow-lg transition-all duration-200 items-center",
       !isFirstLoad && "hidden", // 非首次加载时直接隐藏
-      "absolute top-0 left-1/2 transform -translate-x-1/2"
+      "absolute top-6 left-1/2 transform -translate-x-1/2",
+      "xl:absolute xl:translate-x-0 xl:left-4 xl:top-4"
     ]}
   >
     <CircularProgress size={20} color="var(--color-accent)" bgColor="rgba(255,255,255,0)" inline class="mr-2" />
