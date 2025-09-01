@@ -89,6 +89,10 @@
       font-family: var(--font-family-code);
     }
   }
+  
+  .prose .katex-display {
+    @apply text-foreground;
+  }
 
   /* ===== Code Blocks & Syntax Highlighting ===== */
   .astro-code {
