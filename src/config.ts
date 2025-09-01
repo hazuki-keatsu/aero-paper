@@ -12,7 +12,7 @@ export const SITE = {
   showArchives: true,
   showBackButton: true, // show back button in post detail
   editPost: {
-    enabled: true,
+    enabled: false,
     text: "编辑页面",
     url: "https://github.com/hazuki-keatsu/hazuki-blog/edit/main/",
   },

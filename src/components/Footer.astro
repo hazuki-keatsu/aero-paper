@@ -19,15 +19,30 @@ const { noMarginTop = false } = Astro.props;
     <div class="my-2 flex flex-col items-center whitespace-nowrap lg:flex-row">
       <span>Copyright &#169; {currentYear}</span>
       <span class="hidden lg:inline">&nbsp;|&nbsp;</span>
-      <span>Powered by 
+      <span>由
         <LinkButton
           class="underline decoration-dashed underline-offset-4 hover:text-accent"
           href="https://github.com/hazuki-keatsu/aero-paper">
           AeroPaper
         </LinkButton>
+        强力驱动
       </span>
       <span class="hidden lg:inline">&nbsp;|&nbsp;</span>
-      <span>All rights reserved.</span>
+      <span>
+        文章基于
+        <LinkButton class="underline decoration-dashed underline-offset-4 hover:text-accent" href="https://creativecommons.org/licenses/by-nc/4.0/">
+          CC BY-NC
+        </LinkButton>
+        协议发布
+      </span>
+      <span class="hidden lg:inline">&nbsp;|&nbsp;</span>
+      <span>
+        <LinkButton
+          class="underline decoration-dashed underline-offset-4 hover:text-accent"
+          href="https://beian.miit.gov.cn/">
+          鄂ICP备2025143996号
+        </LinkButton>
+      </span>
     </div>
   </div>
   <div class="h-2"></div>
