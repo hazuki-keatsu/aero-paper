@@ -94,6 +94,93 @@
     @apply text-foreground;
   }
 
+  /* ===== Callout Styles ===== */
+  .app-prose .callout {
+    @apply my-4 border-l-4 rounded-r-lg p-4 shadow-sm;
+  }
+
+  .app-prose .callout-title {
+    @apply font-semibold mb-2 text-base;
+  }
+
+  .app-prose .callout-content {
+    @apply mt-2;
+  }
+
+  .app-prose .callout-content > *:first-child {
+    @apply mt-0;
+  }
+
+  .app-prose .callout-content > *:last-child {
+    @apply mb-0;
+  }
+
+  /* Light mode callout styles */
+  .app-prose .callout-note {
+    @apply bg-blue-50 border-l-blue-500 text-blue-900;
+  }
+
+  .app-prose .callout-tip {
+    @apply bg-green-50 border-l-green-500 text-green-900;
+  }
+
+  .app-prose .callout-important {
+    @apply bg-purple-50 border-l-purple-500 text-purple-900;
+  }
+
+  .app-prose .callout-warning {
+    @apply bg-yellow-50 border-l-yellow-500 text-yellow-900;
+  }
+
+  .app-prose .callout-caution {
+    @apply bg-red-50 border-l-red-500 text-red-900;
+  }
+
+  .app-prose .callout-info {
+    @apply bg-cyan-50 border-l-cyan-500 text-cyan-900;
+  }
+
+  .app-prose .callout-success {
+    @apply bg-emerald-50 border-l-emerald-500 text-emerald-900;
+  }
+
+  .app-prose .callout-danger {
+    @apply bg-red-50 border-l-red-500 text-red-900;
+  }
+
+  /* Dark mode callout styles */
+  html[data-theme="dark"] .app-prose .callout-note {
+    @apply bg-blue-950/50 border-l-blue-400 text-blue-200;
+  }
+
+  html[data-theme="dark"] .app-prose .callout-tip {
+    @apply bg-green-950/50 border-l-green-400 text-green-200;
+  }
+
+  html[data-theme="dark"] .app-prose .callout-important {
+    @apply bg-purple-950/50 border-l-purple-400 text-purple-200;
+  }
+
+  html[data-theme="dark"] .app-prose .callout-warning {
+    @apply bg-yellow-950/50 border-l-yellow-400 text-yellow-200;
+  }
+
+  html[data-theme="dark"] .app-prose .callout-caution {
+    @apply bg-red-950/50 border-l-red-400 text-red-200;
+  }
+
+  html[data-theme="dark"] .app-prose .callout-info {
+    @apply bg-cyan-950/50 border-l-cyan-400 text-cyan-200;
+  }
+
+  html[data-theme="dark"] .app-prose .callout-success {
+    @apply bg-emerald-950/50 border-l-emerald-400 text-emerald-200;
+  }
+
+  html[data-theme="dark"] .app-prose .callout-danger {
+    @apply bg-red-950/50 border-l-red-400 text-red-200;
+  }
+
   /* ===== Code Blocks & Syntax Highlighting ===== */
   .astro-code {
     @apply flex border bg-(--shiki-light-bg) text-(--shiki-light) outline-border [&_span]:text-(--shiki-light);

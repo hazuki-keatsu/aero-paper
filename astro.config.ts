@@ -3,6 +3,7 @@ import tailwindcss from "@tailwindcss/vite";
 import sitemap from "@astrojs/sitemap";
 import remarkToc from "remark-toc";
 import remarkCollapse from "remark-collapse";
+import remarkCallouts from "./src/utils/remark-callouts";
 import {
   transformerNotationDiff,
   transformerNotationHighlight,
@@ -25,6 +26,7 @@ export default defineConfig({
   markdown: {
     remarkPlugins: [
       remarkMath,
+      remarkCallouts,
       [
         remarkToc,
         {
