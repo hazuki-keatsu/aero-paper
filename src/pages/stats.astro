@@ -37,7 +37,7 @@ const pageDescription = "展示博客的文章统计信息，包括字数、标�
           </h3>
 
           <div class="overflow-hidden">
-            <div class="relative h-80">
+            <div class="relative md:h-80 h-50">
               <canvas id="monthlyChart" class="h-full w-full"></canvas>
             </div>
             <div
@@ -64,7 +64,7 @@ const pageDescription = "展示博客的文章统计信息，包括字数、标�
         </div>
 
         <!-- 总体统计卡片 -->
-        <div class="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-4">
+        <div class="grid gap-6 grid-cols-2 lg:grid-cols-4">
           <div
             class="content-card group p-6 transition-all duration-300 hover:shadow-lg hover:shadow-black/10 dark:hover:shadow-black/30"
           >
@@ -363,7 +363,7 @@ const pageDescription = "展示博客的文章统计信息，包括字数、标�
                 </svg>
                 热门标签
               </h3>
-              <div class="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
+              <div class="grid gap-4 grid-cols-2 md:grid-cols-3">
                 {stats.tagStats.map(tagStat => (
                   <div class="flex items-center justify-between rounded-lg bg-muted/20 dark:bg-background/20 p-4">
                     <div>
@@ -680,12 +680,20 @@ const pageDescription = "展示博客的文章统计信息，包括字数、标�
   document.addEventListener('astro:page-load', initStats);
   
   // 页面离开前清理所有资源
-  document.addEventListener('astro:before-preparation', cleanupStats);
+  document.addEventListener('astro:before-preparation', () => setTimeout(() => cleanupStats(), 50));
   
-  // 页面隐藏时也清理资源
+  // 页面可见性变化时处理图表
   document.addEventListener('visibilitychange', () => {
     if (document.visibilityState === 'hidden') {
-      cleanupChart();
+      // 页面隐藏时暂停图表动画以节省资源，但不销毁图表
+      if (window.monthlyChart) {
+        window.monthlyChart.stop();
+      }
+    } else if (document.visibilityState === 'visible') {
+      // 页面重新可见时，如果图表不存在则重新创建
+      if (!window.monthlyChart) {
+        createMonthlyChart();
+      }
     }
   });
   
