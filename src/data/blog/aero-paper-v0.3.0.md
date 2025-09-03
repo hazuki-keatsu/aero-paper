@@ -1,7 +1,7 @@
 ---
 title: "Aero Paper v0.3.0 特性"
 description: "新的特性加入！"
-pubDatetime: 2024-09-02T18:39:19+08:00
+pubDatetime: 2025-09-02T18:39:19+08:00
 tags: 
   - AeroPaper
 draft: false
@@ -93,3 +93,7 @@ f(a) & \text{如果 } a \text{ 在 } \gamma \text{ 内部} \\
 $
 
 $G_{\mu\nu} + \Lambda g_{\mu\nu} = \dfrac{8\pi G}{c^4} T_{\mu\nu}$
+
+## 三、新增统计页面
+
+在 Header 部分会展示一个 “统计” 的标签，这个页面有你的文章统计等信息。

@@ -19,6 +19,7 @@
     "@tailwindcss/vite": "^4.1.11",
     "@types/mdast": "^4.0.4",
     "astro": "^5.12.0",
+    "chart.js": "^4.5.0",
     "dayjs": "^1.11.13",
     "katex": "^0.16.22",
     "lodash.kebabcase": "^4.1.1",
