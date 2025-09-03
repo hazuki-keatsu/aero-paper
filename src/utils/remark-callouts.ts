@@ -36,7 +36,7 @@ const defaultCallouts: CalloutConfig = {
 
 const remarkCallouts = (callouts: CalloutConfig = defaultCallouts) => {
   return (tree: Root) => {
-    visit(tree, 'blockquote', (node: Blockquote, index: number | undefined, parent: any) => {
+    visit(tree, 'blockquote', (node: Blockquote) => {
       const firstChild = node.children[0];
       if (firstChild?.type !== 'paragraph') return;
 

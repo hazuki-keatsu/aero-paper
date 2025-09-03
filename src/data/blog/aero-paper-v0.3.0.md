@@ -1,11 +1,12 @@
 ---
+author: Hazuki Keatsu
 title: "Aero Paper v0.3.0 特性"
-description: "新的特性加入！"
 pubDatetime: 2025-09-02T18:39:19+08:00
+featured: true
+draft: false
 tags: 
   - AeroPaper
-draft: false
-feature: true
+description: 新的特性加入！
 ---
 
 ## 目录
