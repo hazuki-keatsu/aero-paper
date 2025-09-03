@@ -45,7 +45,7 @@ html[data-theme="dark"] {
   --color-highlight-text: var(--highlight-text);
   --color-secondary-highlight: var(--secondary-highlight);
   --font-family-mono: var(--font-mono);
-  --font-family-code: var(--font-code)
+  --font-family-code: var(--font-code);
 }
 
 @layer base {

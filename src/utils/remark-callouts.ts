@@ -4,60 +4,33 @@ import type { Root, Blockquote, Paragraph, Text } from 'mdast';
 export interface CalloutConfig {
   [key: string]: {
     icon: string;
-    color: string;
-    bgColor: string;
-    borderColor: string;
   };
 }
 
 const defaultCallouts: CalloutConfig = {
   NOTE: {
     icon: '📝',
-    color: 'text-blue-700',
-    bgColor: 'bg-blue-50',
-    borderColor: 'border-l-blue-500',
   },
   TIP: {
     icon: '💡',
-    color: 'text-green-700',
-    bgColor: 'bg-green-50',
-    borderColor: 'border-l-green-500',
   },
   IMPORTANT: {
     icon: '❗',
-    color: 'text-purple-700',
-    bgColor: 'bg-purple-50',
-    borderColor: 'border-l-purple-500',
   },
   WARNING: {
     icon: '⚠️',
-    color: 'text-yellow-700',
-    bgColor: 'bg-yellow-50',
-    borderColor: 'border-l-yellow-500',
   },
   CAUTION: {
     icon: '🔥',
-    color: 'text-red-700',
-    bgColor: 'bg-red-50',
-    borderColor: 'border-l-red-500',
   },
   INFO: {
     icon: 'ℹ️',
-    color: 'text-cyan-700',
-    bgColor: 'bg-cyan-50',
-    borderColor: 'border-l-cyan-500',
   },
   SUCCESS: {
     icon: '✅',
-    color: 'text-green-700',
-    bgColor: 'bg-green-50',
-    borderColor: 'border-l-green-500',
   },
   DANGER: {
     icon: '🚫',
-    color: 'text-red-700',
-    bgColor: 'bg-red-50',
-    borderColor: 'border-l-red-500',
   },
 };
 
@@ -92,7 +65,7 @@ const remarkCallouts = (callouts: CalloutConfig = defaultCallouts) => {
       (node as any).data = {
         hName: 'div',
         hProperties: {
-          className: `callout callout-${calloutType.toLowerCase()} ${config.bgColor} ${config.borderColor} ${config.color}`,
+          className: `callout callout-${calloutType.toLowerCase()}`,
           'data-callout': calloutType.toLowerCase(),
         },
       };
