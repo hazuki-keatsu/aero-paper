@@ -1,8 +1,11 @@
 ---
 import LinkButton from "./LinkButton.astro";
 import Socials from "./Socials.astro";
+import { SITE } from "../config";
 
 const currentYear = new Date().getFullYear();
+
+const author = SITE.author;
 
 export interface Props {
   noMarginTop?: boolean;
@@ -11,39 +14,48 @@ export interface Props {
 const { noMarginTop = false } = Astro.props;
 ---
 
-<footer class:list={["w-full relative z-10", { "mt-auto": !noMarginTop }]}>
-  <div
-    class="flex flex-col items-center justify-between py-6 lg:flex-row-reverse md:py-4 content-card mb-4 p-6"
-  >
-    <Socials centered />
-    <div class="my-2 flex flex-col items-center whitespace-nowrap lg:flex-row">
-      <span>Copyright &#169; {currentYear}</span>
-      <span class="hidden lg:inline">&nbsp;|&nbsp;</span>
-      <span>由
-        <LinkButton
-          class="underline decoration-dashed underline-offset-4 hover:text-accent"
-          href="https://github.com/hazuki-keatsu/aero-paper">
-          AeroPaper
-        </LinkButton>
-        强力驱动
-      </span>
-      <span class="hidden lg:inline">&nbsp;|&nbsp;</span>
-      <span>
-        文章基于
-        <LinkButton class="underline decoration-dashed underline-offset-4 hover:text-accent" href="https://creativecommons.org/licenses/by-nc/4.0/">
-          CC BY-NC
-        </LinkButton>
-        协议发布
-      </span>
-      <span class="hidden lg:inline">&nbsp;|&nbsp;</span>
-      <span>
-        <LinkButton
-          class="underline decoration-dashed underline-offset-4 hover:text-accent"
-          href="https://beian.miit.gov.cn/">
-          鄂ICP备2025143996号
-        </LinkButton>
-      </span>
+<footer class:list={["relative z-10 w-full pb-2", { "mt-auto": !noMarginTop }]}>
+  <div class="content-card mb-4 p-6">
+    <!-- 社交链接 -->
+    <div class="mb-4 flex justify-center">
+      <Socials centered />
+    </div>
+
+    <div class="space-y-1 flex justify-center flex-col text-center">
+      <div class="flex flex-col md:flex-row justify-center items-center gap-1 md:gap-2">
+        <div class="text-muted-foreground">
+          Copyright &#169; {currentYear}
+          {author}
+        </div>
+        <span class="hidden md:inline">&nbsp;|&nbsp;</span>
+        <div>
+          <LinkButton
+            class="underline decoration-dashed underline-offset-4 hover:text-accent"
+            href="https://beian.miit.gov.cn/"
+          >
+            鄂ICP备2025143996号
+          </LinkButton>
+        </div>
+      </div>
+      <div class="flex flex-col md:flex-row justify-center items-center gap-1 md:gap-2">
+        <div>
+          由 <LinkButton
+            class="underline decoration-dashed underline-offset-4 hover:text-accent"
+            href="https://github.com/hazuki-keatsu/aero-paper"
+          >
+            AeroPaper
+          </LinkButton> 强力驱动
+        </div>
+        <span class="hidden md:inline">&nbsp;|&nbsp;</span>
+        <div>
+          文章基于 <LinkButton
+            class="underline decoration-dashed underline-offset-4 hover:text-accent"
+            href="https://creativecommons.org/licenses/by-nc/4.0/"
+          >
+            CC BY-NC
+          </LinkButton> 协议发布
+        </div>
+      </div>
     </div>
   </div>
-  <div class="h-2"></div>
 </footer>

@@ -4,20 +4,20 @@ import Main from "../layouts/Main.astro";
 import PageContainer from "../components/PageContainer.astro";
 import { getBlogStats } from "../utils/getBlogStats";
 import Header from "../components/Header.astro";
+import { SITE } from "../config"
 
 const stats = await getBlogStats();
 
-const pageTitle = "博客统计";
 const pageDescription = "展示博客的文章统计信息，包括字数、标签分布等数据";
 ---
 
-<Layout title={pageTitle} description={pageDescription}>
+<Layout title={`博客统计 | ${SITE.title}`} description={pageDescription}>
   <Header />
-  <Main pageTitle={pageTitle} pageDesc={pageDescription}>
+  <Main pageTitle={'博客统计'} pageDesc={pageDescription}>
     <PageContainer>
       <div class="space-y-8">
         <!-- 月度字数统计图表 -->
-        <div class="content-card p-6 transition-all duration-300 hover:shadow-lg hover:shadow-black/10 dark:hover:shadow-black/30">
+        <div class="content-card py-6 md:px-6 px-2 transition-all duration-300 hover:shadow-lg hover:shadow-black/10 dark:hover:shadow-black/30">
           <h3 class="mb-6 flex items-center gap-2 text-xl font-semibold">
             <svg
               width="20"
@@ -64,7 +64,7 @@ const pageDescription = "展示博客的文章统计信息，包括字数、标�
         </div>
 
         <!-- 总体统计卡片 -->
-        <div class="grid gap-6 grid-cols-2 lg:grid-cols-4">
+        <div class="grid gap-6 grid-cols-1 md:grid-cols-2 lg:grid-cols-4">
           <div
             class="content-card group p-6 transition-all duration-300 hover:shadow-lg hover:shadow-black/10 dark:hover:shadow-black/30"
           >
@@ -363,7 +363,7 @@ const pageDescription = "展示博客的文章统计信息，包括字数、标�
                 </svg>
                 热门标签
               </h3>
-              <div class="grid gap-4 grid-cols-2 md:grid-cols-3">
+              <div class="grid gap-4 grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
                 {stats.tagStats.map(tagStat => (
                   <div class="flex items-center justify-between rounded-lg bg-muted/20 dark:bg-background/20 p-4">
                     <div>
@@ -680,7 +680,7 @@ const pageDescription = "展示博客的文章统计信息，包括字数、标�
   document.addEventListener('astro:page-load', initStats);
   
   // 页面离开前清理所有资源
-  document.addEventListener('astro:before-preparation', () => setTimeout(() => cleanupStats(), 50));
+  document.addEventListener('astro:before-preparation', () => setTimeout(() => cleanupStats(), 10));
   
   // 页面可见性变化时处理图表
   document.addEventListener('visibilitychange', () => {
