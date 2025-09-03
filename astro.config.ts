@@ -3,6 +3,7 @@ import tailwindcss from "@tailwindcss/vite";
 import sitemap from "@astrojs/sitemap";
 import remarkToc from "remark-toc";
 import remarkCollapse from "remark-collapse";
+import remarkCallouts from "./src/utils/remark-callouts";
 import {
   transformerNotationDiff,
   transformerNotationHighlight,
@@ -10,6 +11,9 @@ import {
 } from "@shikijs/transformers";
 import { transformerFileName } from "./src/utils/transformers/fileName";
 import { SITE } from "./src/config";
+import remarkMath from "remark-math";
+import rehypeKatex from "rehype-katex";
+import path from "path";
 
 // https://astro.build/config
 export default defineConfig({
@@ -21,6 +25,8 @@ export default defineConfig({
   ],
   markdown: {
     remarkPlugins: [
+      remarkMath,
+      remarkCallouts,
       [
         remarkToc,
         {
@@ -33,10 +39,11 @@ export default defineConfig({
         remarkCollapse,
         {
           test: '(table[ -]of[ -]contents?|contents|目录)',
-          summary: 'Toggle table of contents',
+          summary: '目录',
         },
       ],
     ],
+    rehypePlugins: [rehypeKatex],
     shikiConfig: {
       // For more themes, visit https://shiki.style/themes
       themes: { light: "min-light", dark: "night-owl" },
@@ -56,6 +63,11 @@ export default defineConfig({
     // This will be fixed in Astro 6 with Vite 7 support
     // See: https://github.com/withastro/astro/issues/14030
     plugins: [tailwindcss()],
+    resolve: {
+      alias: {
+        "@": path.resolve("./src"),
+      },
+    },
     optimizeDeps: {
       exclude: ["@resvg/resvg-js"],
     },

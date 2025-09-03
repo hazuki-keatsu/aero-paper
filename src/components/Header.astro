@@ -66,7 +66,7 @@ const isFirstLoad = Astro.cookies.get("hasLoaded")?.value !== "true";
       >
         <button
           id="menu-btn"
-          class="focus-outline self-end p-2 sm:hidden"
+          class="focus-outline self-end p-2 md:hidden"
           aria-label="Open Menu"
           aria-expanded="false"
           aria-controls="menu-items"
@@ -80,7 +80,7 @@ const isFirstLoad = Astro.cookies.get("hasLoaded")?.value !== "true";
             "mt-4 grid w-44 grid-cols-2 place-content-center gap-2",
             "[&>li>a]:block [&>li>a]:px-4 [&>li>a]:py-3 [&>li>a]:text-center [&>li>a]:font-medium [&>li>a]:hover:text-accent sm:[&>li>a]:px-2 sm:[&>li>a]:py-1",
             "hidden",
-            "sm:mt-0 sm:flex sm:w-auto sm:gap-x-5 sm:gap-y-0",
+            "sm:mt-0 md:flex sm:w-auto sm:gap-x-5 sm:gap-y-0",
           ]}
         >
           <li class="col-span-2">
@@ -91,6 +91,11 @@ const isFirstLoad = Astro.cookies.get("hasLoaded")?.value !== "true";
           <li class="col-span-2">
             <a href="/tags" class:list={{ "active-nav": isActive("/tags") }}>
               标签
+            </a>
+          </li>
+          <li class="col-span-2">
+            <a href="/stats" class:list={{ "active-nav": isActive("/stats") }}>
+              统计
             </a>
           </li>
           <li class="col-span-2">
@@ -206,7 +211,7 @@ const isFirstLoad = Astro.cookies.get("hasLoaded")?.value !== "true";
           window.addEventListener("load", hideLoadingIndicator, { once: true });
         }
 
-        // // 超时保护 - 5秒后强制隐藏
+        // 超时保护 - 5秒后强制隐藏
         // setTimeout(hideLoadingIndicator, 5000);
 
         // 设置cookie标记已加载
