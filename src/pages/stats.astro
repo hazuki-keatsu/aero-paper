@@ -373,7 +373,7 @@ const pageDescription = "展示博客的文章统计信息";
                   <div class="flex items-center justify-between rounded-lg bg-muted/20 dark:bg-background/20 p-4">
                     <div class="flex items-center gap-3">
                       <ul class="list-none p-0 m-0">
-                        <Tag tag={tagStat.tag} tagName={tagStat.tag} size="sm" />
+                        <Tag tag={tagStat.tag} tagName={tagStat.tag} size="sm" isTransition={false} />
                       </ul>
                       <div class="text-muted-foreground text-sm">
                         {tagStat.count} 篇 ({tagStat.percentage}%)
