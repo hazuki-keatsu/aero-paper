@@ -20,8 +20,8 @@ const { frontmatter } = Astro.props;
   <PageContainer>
     <Header />
     <Breadcrumb />
-    <main id="main-content" class="mx-auto max-w-app px-4">
-      <section id="about" class="content-card sm:px-8 px-4 py-8 my-6 app-prose mb-12 max-w-app prose-img:border-0">
+    <main id="main-content" class="mx-auto max-w-app sm:px-4 px-0 transition-all duration-300">
+      <section id="about" class="content-card sm:px-8 px-4 py-8 sm:rounded-lg rounded-none app-prose mb-12 max-w-app prose-img:border-0">
         <h1 class="text-2xl tracking-wider sm:text-3xl mb-6">{frontmatter.title}</h1>
         <slot />
       </section>

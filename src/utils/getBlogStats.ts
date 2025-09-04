@@ -1,5 +1,6 @@
 import { getCollection } from "astro:content";
 import postFilter from "./postFilter";
+import { getPath } from "./getPath";
 
 export interface BlogStats {
   totalPosts: number;
@@ -26,21 +27,25 @@ export interface BlogStats {
   longestPost: {
     title: string;
     id: string;
+    path: string;
     words: number;
   } | null;
   shortestPost: {
     title: string;
     id: string;
+    path: string;
     words: number;
   } | null;
   firstPost: {
     title: string;
     id: string;
+    path: string;
     date: Date;
   } | null;
   latestPost: {
     title: string;
     id: string;
+    path: string;
     date: Date;
   } | null;
 }
@@ -113,8 +118,8 @@ export async function getBlogStats(): Promise<BlogStats> {
   const monthlyMap = new Map<string, { year: number; month: number; posts: number; words: number }>();
   const tagMap = new Map<string, number>();
   
-  let longestPost: { title: string; id: string; words: number } | null = null;
-  let shortestPost: { title: string; id: string; words: number } | null = null;
+  let longestPost: { title: string; id: string; path: string; words: number } | null = null;
+  let shortestPost: { title: string; id: string; path: string; words: number } | null = null;
 
   // 按时间排序获取第一篇和最新的文章
   const sortedPosts = posts.sort((a, b) => 
@@ -124,12 +129,14 @@ export async function getBlogStats(): Promise<BlogStats> {
   const firstPost = sortedPosts[0] ? {
     title: sortedPosts[0].data.title,
     id: sortedPosts[0].id,
+    path: getPath(sortedPosts[0].id, sortedPosts[0].filePath),
     date: new Date(sortedPosts[0].data.pubDatetime)
   } : null;
 
   const latestPost = sortedPosts[sortedPosts.length - 1] ? {
     title: sortedPosts[sortedPosts.length - 1].data.title,
     id: sortedPosts[sortedPosts.length - 1].id,
+    path: getPath(sortedPosts[sortedPosts.length - 1].id, sortedPosts[sortedPosts.length - 1].filePath),
     date: new Date(sortedPosts[sortedPosts.length - 1].data.pubDatetime)
   } : null;
 
@@ -143,10 +150,20 @@ export async function getBlogStats(): Promise<BlogStats> {
 
     // 更新最长和最短文章
     if (!longestPost || words > longestPost.words) {
-      longestPost = { title: post.data.title, id: post.id, words };
+      longestPost = { 
+        title: post.data.title, 
+        id: post.id, 
+        path: getPath(post.id, post.filePath),
+        words 
+      };
     }
     if (!shortestPost || words < shortestPost.words) {
-      shortestPost = { title: post.data.title, id: post.id, words };
+      shortestPost = { 
+        title: post.data.title, 
+        id: post.id, 
+        path: getPath(post.id, post.filePath),
+        words 
+      };
     }
 
     // 年度统计

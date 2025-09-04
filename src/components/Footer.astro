@@ -14,8 +14,8 @@ export interface Props {
 const { noMarginTop = false } = Astro.props;
 ---
 
-<footer class:list={["relative z-10 w-full pb-2", { "mt-auto": !noMarginTop }]}>
-  <div class="content-card mb-4 p-6">
+<footer class:list={["relative z-10 w-full pb-4 px-0 sm:px-4 transition-all duration-300", { "mt-auto": !noMarginTop }]}>
+  <div class="content-card sm:mb-4 p-4 rounded-none sm:rounded-lg">
     <!-- 社交链接 -->
     <div class="mb-4 flex justify-center">
       <Socials centered />

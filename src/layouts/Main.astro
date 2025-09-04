@@ -24,9 +24,9 @@ const backUrl = SITE.showBackButton ? Astro.url.pathname : "/";
 <main
   data-backUrl={backUrl}
   id="main-content"
-  class="mx-auto w-full max-w-app px-4 pb-4"
+  class="mx-auto w-full max-w-app sm:px-4 px-0 sm:pb-4 pb-0 transition-all duration-300"
 >
-  <div class="content-card sm:p-8 p-4 my-6">
+  <div class="content-card sm:p-8 sm:rounded-lg rounded-none p-4 my-6 transition-all duration-300">
     {
       "titleTransition" in props ? (
         <h1 class="text-2xl font-semibold sm:text-3xl">

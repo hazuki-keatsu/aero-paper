@@ -10,6 +10,7 @@ import Pagination from "@/components/Pagination.astro";
 import getUniqueTags from "@/utils/getUniqueTags";
 import getPostsByTag from "@/utils/getPostsByTag";
 import { SITE } from "@/config";
+import PageContainer from "@/components/PageContainer.astro";
 
 export async function getStaticPaths({ paginate }: GetStaticPathsOptions) {
   const posts = await getCollection("blog");
@@ -32,19 +33,21 @@ const { page, tagName } = Astro.props;
 ---
 
 <Layout title={`Tag: ${tagName} | ${SITE.title}`}>
-  <Header />
-  <Main
-    pageTitle={[`Tag:`, `${tagName}`]}
-    titleTransition={tag}
-    pageDesc={`All the articles with the tag "${tagName}".`}
-  >
-    <h1 slot="title" transition:name={tag}>{`Tag:${tag}`}</h1>
-    <ul>
-      {page.data.map(data => <Card {...data} />)}
-    </ul>
-  </Main>
+  <PageContainer>
+    <Header />
+    <Main
+      pageTitle={[`Tag:`, `${tagName}`]}
+      titleTransition={tag}
+      pageDesc={`All the articles with the tag "${tagName}".`}
+    >
+      <h1 slot="title" transition:name={tag}>{`Tag:${tag}`}</h1>
+      <ul>
+        {page.data.map(data => <Card {...data} />)}
+      </ul>
+    </Main>
 
-  <Pagination {page} />
+    <Pagination {page} />
 
-  <Footer noMarginTop={page.lastPage > 1} />
+    <Footer noMarginTop={page.lastPage > 1} />
+  </PageContainer>
 </Layout>

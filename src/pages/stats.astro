@@ -4,20 +4,23 @@ import Main from "../layouts/Main.astro";
 import PageContainer from "../components/PageContainer.astro";
 import { getBlogStats } from "../utils/getBlogStats";
 import Header from "../components/Header.astro";
-import { SITE } from "../config"
+import { SITE } from "../config";
+import Tag from "../components/Tag.astro";
+import { slugifyStr } from "@/utils/slugify";
+import Footer from "@/components/Footer.astro";
 
 const stats = await getBlogStats();
 
-const pageDescription = "展示博客的文章统计信息，包括字数、标签分布等数据";
+const pageDescription = "展示博客的文章统计信息";
 ---
 
 <Layout title={`博客统计 | ${SITE.title}`} description={pageDescription}>
-  <Header />
-  <Main pageTitle={'博客统计'} pageDesc={pageDescription}>
-    <PageContainer>
+  <PageContainer>
+    <Header />
+    <Main pageTitle="博客统计" pageDesc={pageDescription}>
       <div class="space-y-8">
         <!-- 月度字数统计图表 -->
-        <div class="content-card py-6 md:px-6 px-2 transition-all duration-300 hover:shadow-lg hover:shadow-black/10 dark:hover:shadow-black/30">
+        <div class="content-card rounded-lg bg-muted/20 dark:bg-background/20 sm:p-8 p-4 my-6 transition-all duration-300 hover:shadow-lg hover:shadow-black/10 dark:hover:shadow-black/30">
           <h3 class="mb-6 flex items-center gap-2 text-xl font-semibold">
             <svg
               width="20"
@@ -66,7 +69,7 @@ const pageDescription = "展示博客的文章统计信息，包括字数、标�
         <!-- 总体统计卡片 -->
         <div class="grid gap-6 grid-cols-1 md:grid-cols-2 lg:grid-cols-4">
           <div
-            class="content-card group p-6 transition-all duration-300 hover:shadow-lg hover:shadow-black/10 dark:hover:shadow-black/30"
+            class="content-card rounded-lg bg-muted/20 dark:bg-background/20 group sm:p-8 p-4 transition-all duration-300 hover:shadow-lg hover:shadow-black/10 dark:hover:shadow-black/30"
           >
             <div class="flex items-center justify-between">
               <div>
@@ -102,7 +105,7 @@ const pageDescription = "展示博客的文章统计信息，包括字数、标�
           </div>
 
           <div
-            class="content-card group p-6 transition-all duration-300 hover:shadow-lg hover:shadow-black/10 dark:hover:shadow-black/30"
+            class="content-card rounded-lg bg-muted/20 dark:bg-background/20 group sm:p-8 p-4 transition-all duration-300 hover:shadow-lg hover:shadow-black/10 dark:hover:shadow-black/30"
           >
             <div class="flex items-center justify-between">
               <div>
@@ -140,7 +143,7 @@ const pageDescription = "展示博客的文章统计信息，包括字数、标�
           </div>
 
           <div
-            class="content-card group p-6 transition-all duration-300 hover:shadow-lg hover:shadow-black/10 dark:hover:shadow-black/30"
+            class="content-card rounded-lg bg-muted/20 dark:bg-background/20 group sm:p-8 p-4 transition-all duration-300 hover:shadow-lg hover:shadow-black/10 dark:hover:shadow-black/30"
           >
             <div class="flex items-center justify-between">
               <div>
@@ -177,7 +180,7 @@ const pageDescription = "展示博客的文章统计信息，包括字数、标�
           </div>
 
           <div
-            class="content-card group p-6 transition-all duration-300 hover:shadow-lg hover:shadow-black/10 dark:hover:shadow-black/30"
+            class="content-card rounded-lg bg-muted/20 dark:bg-background/20 group sm:p-8 p-4 transition-all duration-300 hover:shadow-lg hover:shadow-black/10 dark:hover:shadow-black/30"
           >
             <div class="flex items-center justify-between">
               <div>
@@ -216,7 +219,7 @@ const pageDescription = "展示博客的文章统计信息，包括字数、标�
           <!-- 最长文章 -->
           {
             stats.longestPost && (
-              <div class="content-card p-6 transition-all duration-300 hover:shadow-lg hover:shadow-black/10 dark:hover:shadow-black/30">
+              <div class="content-card rounded-lg bg-muted/20 dark:bg-background/20 sm:p-8 p-4 transition-all duration-300 hover:shadow-lg hover:shadow-black/10 dark:hover:shadow-black/30">
                 <h3 class="mb-4 flex items-center gap-2 text-lg font-semibold">
                   <svg
                     width="20"
@@ -236,8 +239,9 @@ const pageDescription = "展示博客的文章统计信息，包括字数、标�
                 </h3>
                 <div class="space-y-2">
                   <a
-                    href={`/posts/${stats.longestPost.id}`}
-                    class="block text-lg font-medium text-accent underline-offset-4 hover:text-accent/80 hover:underline"
+                    transition:name={slugifyStr(stats.longestPost.title)}
+                    href={stats.longestPost.path}
+                    class="block text-lg font-medium text-accent decoration-dashed underline-offset-4 hover:text-highlight-text hover:underline transition-colors"
                   >
                     {stats.longestPost.title}
                   </a>
@@ -252,7 +256,7 @@ const pageDescription = "展示博客的文章统计信息，包括字数、标�
           <!-- 最新文章 -->
           {
             stats.latestPost && (
-              <div class="content-card p-6 transition-all duration-300 hover:shadow-lg hover:shadow-black/10 dark:hover:shadow-black/30">
+              <div class="content-card rounded-lg bg-muted/20 dark:bg-background/20 sm:p-8 p-4 transition-all duration-300 hover:shadow-lg hover:shadow-black/10 dark:hover:shadow-black/30">
                 <h3 class="mb-4 flex items-center gap-2 text-lg font-semibold">
                   <svg
                     width="20"
@@ -271,8 +275,9 @@ const pageDescription = "展示博客的文章统计信息，包括字数、标�
                 </h3>
                 <div class="space-y-2">
                   <a
-                    href={`/posts/${stats.latestPost.id}`}
-                    class="block text-lg font-medium text-accent underline-offset-4 hover:text-accent/80 hover:underline"
+                    transition:name={slugifyStr(stats.latestPost.title)}
+                    href={stats.latestPost.path}
+                    class="block text-lg font-medium text-accent decoration-dashed underline-offset-4 hover:text-highlight-text hover:underline transition-colors"
                   >
                     {stats.latestPost.title}
                   </a>
@@ -292,7 +297,7 @@ const pageDescription = "展示博客的文章统计信息，包括字数、标�
         <!-- 年度统计 -->
         {
           stats.yearlyStats.length > 0 && (
-            <div class="content-card p-6 transition-all duration-300 hover:shadow-lg hover:shadow-black/10 dark:hover:shadow-black/30">
+            <div class="content-card rounded-lg bg-muted/10 dark:bg-background/20 sm:p-8 p-4 transition-all duration-300 hover:shadow-lg hover:shadow-black/10 dark:hover:shadow-black/30">
               <h3 class="mb-6 flex items-center gap-2 text-xl font-semibold">
                 <svg
                   width="20"
@@ -345,7 +350,7 @@ const pageDescription = "展示博客的文章统计信息，包括字数、标�
         <!-- 标签统计 -->
         {
           stats.tagStats.length > 0 && (
-            <div class="content-card p-6 transition-all duration-300 hover:shadow-lg hover:shadow-black/10 dark:hover:shadow-black/30">
+            <div class="content-card rounded-lg bg-muted/10 dark:bg-background/20 sm:p-8 p-4 transition-all duration-300 hover:shadow-lg hover:shadow-black/10 dark:hover:shadow-black/30">
               <h3 class="mb-6 flex items-center gap-2 text-xl font-semibold">
                 <svg
                   width="20"
@@ -366,13 +371,10 @@ const pageDescription = "展示博客的文章统计信息，包括字数、标�
               <div class="grid gap-4 grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
                 {stats.tagStats.map(tagStat => (
                   <div class="flex items-center justify-between rounded-lg bg-muted/20 dark:bg-background/20 p-4">
-                    <div>
-                      <a
-                        href={`/tags/${tagStat.tag}`}
-                        class="font-medium text-secondary-highlight underline-offset-4 hover:text-secondary-highlight/80 hover:underline"
-                      >
-                        #{tagStat.tag}
-                      </a>
+                    <div class="flex items-center gap-3">
+                      <ul class="list-none p-0 m-0">
+                        <Tag tag={tagStat.tag} tagName={tagStat.tag} size="sm" />
+                      </ul>
                       <div class="text-muted-foreground text-sm">
                         {tagStat.count} 篇 ({tagStat.percentage}%)
                       </div>
@@ -390,8 +392,9 @@ const pageDescription = "展示博客的文章统计信息，包括字数、标�
           )
         }
       </div>
-    </PageContainer>
-  </Main>
+    </Main>
+    <Footer />
+  </PageContainer>
 </Layout>
 
 <script>

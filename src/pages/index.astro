@@ -24,8 +24,8 @@ const recentPosts = sortedPosts.filter(({ data }) => !data.featured);
 <Layout>
   <PageContainer>
     <Header />
-    <main id="main-content" data-layout="index" class="mx-auto max-w-app px-4">
-      <section id="hero" class="pt-8 pb-6 content-card p-8 my-6">
+    <main id="main-content" data-layout="index" class="mx-auto max-w-app sm:px-4 px-0 transition-all duration-300">
+      <section id="hero" class="pt-8 pb-6 content-card sm:rounded-lg rounded-none p-8 my-6 transition-all duration-300">
         <h1 class="my-4 inline-block text-4xl font-bold sm:my-8 sm:text-5xl">
           <span class="text-highlight-text font-semibold">Ha</span>zuki <span class="text-secondary-highlight font-semibold">Kea</span>tsu
         </h1>
@@ -62,7 +62,7 @@ const recentPosts = sortedPosts.filter(({ data }) => !data.featured);
 
       {
         featuredPosts.length > 0 && (
-          <section id="featured" class="sm:py-6 py-4 content-card sm:p-8 my-6 p-4">
+          <section id="featured" class="sm:py-6 py-4 content-card sm:p-8 my-6 p-4 sm:rounded-lg rounded-none">
             <h2 class="text-2xl font-semibold tracking-wide mb-6">置顶</h2>
             <ul class="space-y-4">
               {featuredPosts.map(data => (
@@ -75,7 +75,7 @@ const recentPosts = sortedPosts.filter(({ data }) => !data.featured);
 
       {
         recentPosts.length > 0 && (
-          <section id="recent-posts" class="sm:py-6 py-4 content-card sm:p-8 my-6 p-4">
+          <section id="recent-posts" class="sm:py-6 py-4 content-card sm:p-8 my-6 p-4 sm:rounded-lg rounded-none">
             <h2 class="text-2xl font-semibold tracking-wide mb-6">最近发布</h2>
             <ul class="space-y-4">
               {recentPosts.map(
