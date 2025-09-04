@@ -16,6 +16,17 @@ description: 模态知识专家混合模型（MoMKE）尝试解决了，在多�
 
 在多模态情感识别（MER）领域，传感器损坏、隐私保护等现实问题常导致模态数据不完整，而现有方法在这类场景下，要么因数据填补质量不稳定、计算成本高难以满足实时需求，要么因忽视单模态表示学习，在单模态等严重不完整场景下性能拉胯。近期，来自西安电子科技大学的研究团队提出了“模态知识专家混合模型（MoMKE）”，为解决这些难题提供了新思路，接下来我们就深入剖析这一创新框架。
 
+> [!INFO]
+> 论文标题：Leveraging Knowledge of Modality Experts for Incomplete Multimodal Learning
+>
+> 发布时间：2024
+>
+> 引用次数：7
+>
+> 论文来源：Proceedings of the 32nd ACM International Conference on Multimedia
+>
+> 代码仓库：http://github.com/wxxv/MoMKE
+
 ## 一、MoMKE框架：核心设计与原理
 MoMKE的核心突破在于**明确区分并同时学习强判别性单模态表示与跨模态一致的联合表示**，通过两阶段训练机制与动态融合策略，实现对不完整多模态场景的鲁棒适应。
 
