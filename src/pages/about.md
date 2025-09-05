@@ -21,19 +21,19 @@ title: "关于"
 我是一位充满热情的软件工程师，热爱探索新技术，分享知识，并通过代码创造有意义的项目。在这个博客中，你会发现：
 
 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mt-6">
-    <div class="p-4 bg-gradient-to-br from-red-100/50 to-red-200/50 rounded-lg border-l-4 border-highlight-text/75 hover:scale-105 hover:shadow-lg transition-all duration-300">
-        <strong class="text-highlight-text">💻 技术分享</strong><br>
+    <div class="p-4 bg-gradient-to-br from-red-100/50 to-red-200/50 rounded-lg border-l-4 border-red-400/75 hover:scale-105 hover:shadow-lg transition-all duration-300">
+        <strong class="text-red-600">💻 技术分享</strong><br>
         编程经验与技术文章
     </div>
-    <div class="p-4 bg-gradient-to-br from-teal-100/50 to-teal-200/50  rounded-lg border-l-4 border-secondary-highlight/75 hover:scale-105 hover:shadow-lg transition-all duration-300">
-        <strong class="text-secondary-highlight">🚀 项目总结</strong><br>
+    <div class="p-4 bg-gradient-to-br from-teal-100/50 to-teal-200/50  rounded-lg border-l-4 border-teal-400/75 hover:scale-105 hover:shadow-lg transition-all duration-300">
+        <strong class="text-teal-600">🚀 项目总结</strong><br>
         开发过程中的思考与总结
     </div>
-    <div class="p-4 bg-gradient-to-br from-orange-100/50 to-orange-200/50 rounded-lg border-l-4 border-accent/75 hover:scale-105 hover:shadow-lg transition-all duration-300">
-        <strong class="text-accent">📚 学习笔记</strong><br>
+    <div class="p-4 bg-gradient-to-br from-orange-100/50 to-orange-200/50 rounded-lg border-l-4 border-orange-400/75 hover:scale-105 hover:shadow-lg transition-all duration-300">
+        <strong class="text-orange-600">📚 学习笔记</strong><br>
         技术调研与知识整理
     </div>
-    <div class="p-4 bg-gradient-to-br from-purple-100/50 to-purple-200/50 rounded-lg border-l-4 border-purple-600/75 hover:scale-105 hover:shadow-lg transition-all duration-300">
+    <div class="p-4 bg-gradient-to-br from-purple-100/50 to-purple-200/50 rounded-lg border-l-4 border-purple-400/75 hover:scale-105 hover:shadow-lg transition-all duration-300">
         <strong class="text-purple-600">🌱 成长感悟</strong><br>
         个人成长和生活思考
     </div>
@@ -144,21 +144,16 @@ title: "关于"
 
 ## 🎵 个人爱好
 
-<div class="grid grid-cols-1 md:grid-cols-3 gap-6 my-8">
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6 my-8">
     <div class="bg-gradient-to-br from-red-100/25 to-red-200/25 p-6 rounded-2xl border border-red-200/20 text-center shadow-md hover:shadow-lg transition-shadow duration-300">
         <div class="text-4xl mb-4">🎸</div>
-        <h4 class="text-red-500 mb-2 font-semibold">音乐创作</h4>
-        <p class="m-0 opacity-80">电吉他演奏 & 电声乐队</p>
+        <h4 class="text-red-500 mb-2 font-semibold">音乐</h4>
+        <p class="m-0 opacity-80">电吉他演奏</p>
         <small class="text-red-500 font-medium">Tele 是正确的！！</small>
-    </div>
-    <div class="bg-gradient-to-br from-orange-100/25 to-orange-200/25 p-6 rounded-2xl border border-orange-200/20 text-center shadow-md hover:shadow-lg transition-shadow duration-300">
-        <div class="text-4xl mb-4">🎵</div>
-        <h4 class="text-orange-500 mb-2 font-semibold">编曲制作</h4>
-        <p class="m-0 opacity-80">音乐创作 & 后期制作</p>
     </div>
     <div class="bg-gradient-to-br from-pink-100/25 to-pink-200/25 p-6 rounded-2xl border border-pink-200/20 text-center shadow-md hover:shadow-lg transition-shadow duration-300">
         <div class="text-4xl mb-4">🎮</div>
-        <h4 class="text-pink-600 mb-2 font-semibold">游戏娱乐</h4>
+        <h4 class="text-pink-600 mb-2 font-semibold">游戏</h4>
         <p class="m-0 opacity-80">GalGame & Counter-Strike 2</p>
         <small class="text-pink-600 font-medium"><a href="https://sprite.net/aokana" class="text-inherit underline-dashed hover:text-accent transition-colors duration-300">Aokana</a> 是神作！！</small>
     </div>
@@ -174,13 +169,13 @@ title: "关于"
 
 <div class="flex justify-center gap-4 mt-6 flex-wrap">
     <a href="https://space.bilibili.com/392082366" class="inline-block transition-transform duration-300 hover:scale-105">
-        <img src="https://img.shields.io/badge/dynamic/json?style=flat-square&label=Bilibili+Follows&labelColor=FE7398&color=282C34&query=$.data.follower&url=https://api.bilibili.com/x/relation/stat?vmid=392082366&longCache=true&logo=bilibili&logoColor=white" alt="Bilibili" class="rounded-sm shadow-md hover:shadow-lg transition-shadow duration-300">
+        <img src="https://img.shields.io/badge/dynamic/json?style=flat-square&label=Bilibili+Follows&labelColor=FE7398&color=282C34&query=$.data.follower&url=https://api.bilibili.com/x/relation/stat?vmid=392082366&longCache=true&logo=bilibili&logoColor=white" alt="Bilibili" class="rounded-sm shadow-md hover:shadow-lg transition-shadow duration-300 my-2">
     </a>
     <a href="https://github.com/hazuki-keatsu" class="inline-block transition-transform duration-300 hover:scale-105">
-        <img src="https://img.shields.io/badge/dynamic/json?style=flat-square&label=GitHub+Followers&suffix=%20&query=%24.data.totalSubs&url=https%3A%2F%2Fapi.spencerwoo.com%2Fsubstats%2F%3Fsource%3Dgithub%26queryKey%3Dhazuki-keatsu&labelColor=282c34&color=353940&logo=github&longCache=true" alt="Github" class="rounded-sm shadow-md hover:shadow-lg transition-shadow duration-300">
+        <img src="https://img.shields.io/badge/dynamic/json?style=flat-square&label=GitHub+Followers&suffix=%20&query=%24.data.totalSubs&url=https%3A%2F%2Fapi.spencerwoo.com%2Fsubstats%2F%3Fsource%3Dgithub%26queryKey%3Dhazuki-keatsu&labelColor=282c34&color=353940&logo=github&longCache=true" alt="Github" class="rounded-sm shadow-md hover:shadow-lg transition-shadow duration-300 my-2">
     </a>
     <a href="mailto:yeyuefeng699@outlook.com" class="inline-block transition-transform duration-300 hover:scale-105">
-        <img src="https://img.shields.io/badge/Outlook-Mail_to_Me-0F6CBD?style=flat-square&logo=gmail&logoColor=FFFFFF&logoSize=auto" alt="Outlook" class="rounded-sm shadow-md hover:shadow-lg transition-shadow duration-300">
+        <img src="https://img.shields.io/badge/Outlook-Mail_to_Me-0F6CBD?style=flat-square&logo=gmail&logoColor=FFFFFF&logoSize=auto" alt="Outlook" class="rounded-sm shadow-md hover:shadow-lg transition-shadow duration-300 my-2">
     </a>
 </div>
 
