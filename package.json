@@ -10,8 +10,7 @@
     "astro": "astro",
     "format:check": "prettier --check .",
     "format": "prettier --write .",
-    "lint": "eslint .",
-    "release": "astro check && astro build && pagefind --site dist && cp -r dist/pagefind public/ && ossutil sync ./dist oss://keatsu-top -r -f"
+    "lint": "eslint ."
   },
   "dependencies": {
     "@astrojs/rss": "^4.0.12",
