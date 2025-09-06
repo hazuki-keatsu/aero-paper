@@ -42,9 +42,13 @@ const date = datetime.format("D MMM, YYYY"); // e.g., '22 Mar, 2025'
     ]}
   />
   {
-    isModified && (
+    isModified ? (
       <span class:list={["text-sm", { "sm:text-base": size === "lg" }]}>
         更新:
+      </span>
+    ) : (
+      <span class:list={["text-sm", { "sm:text-base": size === "lg" }]}>
+        发布:
       </span>
     )
   }

@@ -2,7 +2,7 @@
 author: Hazuki Keatsu
 title: "Aero Paper v0.3.0 特性"
 pubDatetime: 2025-09-02T18:39:19+08:00
-featured: true
+featured: false
 draft: false
 tags: 
   - AeroPaper
