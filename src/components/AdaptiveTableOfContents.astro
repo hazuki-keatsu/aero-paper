@@ -759,4 +759,5 @@ const { class: className } = Astro.props;
 
   // 支持 Astro 的页面转换
   document.addEventListener("astro:after-swap", initAdaptiveTableOfContents);
+  document.addEventListener("astro:page-load", initAdaptiveTableOfContents);
 </script>
