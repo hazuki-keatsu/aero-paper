@@ -51,7 +51,7 @@ export interface BlogStats {
 }
 
 // 计算中文和英文字数
-function countWords(text: string): number {
+export function countWords(text: string): number {
   // 移除 Markdown 语法
   const cleanText = text
     .replace(/```[\s\S]*?```/g, '') // 移除代码块
