@@ -492,7 +492,7 @@ const { class: className } = Astro.props;
           <li class="transition-all duration-200 toc-item relative" data-level="${item.level}">
             <a 
               href="#${item.id}" 
-              class="block ${getIndentClass(item.level)} py-2 px-3 text-muted-foreground no-underline rounded-md transition-all duration-200 hover:text-accent toc-link relative z-10" 
+              class="block ${getIndentClass(item.level)} py-2 px-3 text-muted-foreground no-underline rounded-md transition-all duration-50 hover:text-accent toc-link relative z-10" 
               data-target="${item.id}"
             >
               ${item.text}

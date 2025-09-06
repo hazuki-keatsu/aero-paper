@@ -54,6 +54,7 @@ html[data-theme="dark"] {
     scrollbar-width: auto;
     scrollbar-color: var(--color-muted) transparent;
     transition: background-color 0.3s ease;
+    
   }
   html {
     @apply overflow-y-scroll scroll-smooth;
