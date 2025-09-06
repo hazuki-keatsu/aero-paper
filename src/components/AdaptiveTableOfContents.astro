@@ -304,29 +304,6 @@ const { class: className } = Astro.props;
       transform: translateY(0);
     }
   }
-
-  /* 自定义滚动条 */
-  .toc-scrollbar {
-    scrollbar-width: thin;
-    scrollbar-color: hsl(var(--muted) / 0.3) transparent;
-  }
-
-  .toc-scrollbar::-webkit-scrollbar {
-    width: 4px;
-  }
-
-  .toc-scrollbar::-webkit-scrollbar-track {
-    background: transparent;
-  }
-
-  .toc-scrollbar::-webkit-scrollbar-thumb {
-    background: hsl(var(--muted) / 0.3);
-    border-radius: 2px;
-  }
-
-  .toc-scrollbar::-webkit-scrollbar-thumb:hover {
-    background: hsl(var(--muted) / 0.5);
-  }
 </style>
 
 <script>
@@ -622,7 +599,7 @@ const { class: className } = Astro.props;
       if (!tocList) return;
 
       const windowHeight = window.innerHeight;
-      const activationPoint = windowHeight / 3; // 窗口高度的1/3处
+      const activationPoint = windowHeight / 3 + 4; // 窗口高度的1/3处
       const documentHeight = document.documentElement.scrollHeight;
       const scrollTop = window.scrollY;
       let activeId = "";
