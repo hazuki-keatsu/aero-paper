@@ -1,8 +1,6 @@
 import { defineConfig, envField } from "astro/config";
 import tailwindcss from "@tailwindcss/vite";
 import sitemap from "@astrojs/sitemap";
-import remarkToc from "remark-toc";
-import remarkCollapse from "remark-collapse";
 import remarkCallouts from "./src/utils/remark-callouts";
 import {
   transformerNotationDiff,
@@ -27,21 +25,6 @@ export default defineConfig({
     remarkPlugins: [
       remarkMath,
       remarkCallouts,
-      [
-        remarkToc,
-        {
-          heading: '(table[ -]of[ -]contents?|contents|目录)',
-          maxDepth: 4,
-          tight: true,
-        },
-      ],
-      [
-        remarkCollapse,
-        {
-          test: '(table[ -]of[ -]contents?|contents|目录)',
-          summary: '目录',
-        },
-      ],
     ],
     rehypePlugins: [rehypeKatex],
     shikiConfig: {
