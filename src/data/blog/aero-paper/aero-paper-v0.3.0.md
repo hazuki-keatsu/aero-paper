@@ -9,8 +9,6 @@ tags:
 description: 新的特性加入！
 ---
 
-## 目录
-
 ## 前言
 
 ## 一、特色 Markdown 标签支持

@@ -1,0 +1,762 @@
+---
+// AdaptiveTableOfContents.astro - 自适应目录组件
+export interface Props {
+  class?: string;
+}
+
+const { class: className } = Astro.props;
+---
+
+<!-- 桌面端侧边目录 -->
+<aside
+  id="table-of-contents"
+  class:list={[
+    "block", // 响应式显示：只在大屏幕显示
+    "fixed z-40", // 固定定位
+    "max-h-[calc(100vh-6rem)]", // 固定宽度和最大高度
+    "content-card rounded-lg p-4", // 卡片样式
+    "transition-all duration-200 ease-out", // 基础过渡
+    "shadow-md hover:shadow-lg", // 悬停阴影
+    "translate-y-4 opacity-0", // 初始状态
+    "will-change-transform", // 性能优化
+    className,
+  ]}
+  style="width: 18rem;"
+>
+  <p class="mb-4 flex items-center gap-2 text-lg font-semibold text-accent">
+    <svg
+      class="h-5 w-5 text-accent"
+      fill="none"
+      stroke="currentColor"
+      viewBox="0 0 24 24"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <path
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        stroke-width="2"
+        d="M8 6h13M8 12h13M8 18h13M3 6h.01M3 12h.01M3 18h.01"></path>
+    </svg>
+    目录
+  </p>
+  <nav class="toc-scrollbar relative max-h-[calc(100vh-12rem)] overflow-y-auto">
+    <!-- 移动的激活指示器 -->
+    <div
+      id="toc-active-indicator"
+      class="pointer-events-none absolute left-0 z-0 w-full rounded-md border-l-2 border-accent/40 bg-accent/20 opacity-0 transition-all duration-300 ease-out"
+      style="height: 0px; top: 0px;"
+    >
+    </div>
+    <ul id="toc-list" class="relative z-10 space-y-1 text-sm">
+      <!-- 加载状态 -->
+      <li class="toc-loading animate-pulse">
+        <div class="mb-2 h-4 w-3/4 rounded bg-muted/30"></div>
+        <div class="mb-2 h-4 w-1/2 rounded bg-muted/20"></div>
+        <div class="h-4 w-2/3 rounded bg-muted/30"></div>
+      </li>
+    </ul>
+  </nav>
+</aside>
+
+<!-- 移动端浮动目录 -->
+<div
+  id="mobile-toc-float"
+  class:list={[
+    "block", // 只在小屏显示
+    "fixed bottom-5 right-5 z-50", // 固定在右下角
+    "backdrop-blur-lg rounded-xl", // 样式
+    "text-foreground font-mono shadow-2xl", // 文字和阴影
+    "transition-all duration-200 ease-in-out", // 动画
+    "overflow-hidden minimized", // 初始最小化状态
+    "opacity-0 translate-y-4", // 初始隐藏
+    "flex flex-row-reverse items-end",
+  ]}
+>
+  <!-- 最小化状态的按钮 -->
+  <div 
+    id="toc-button" 
+    class="content-card flex items-center justify-center cursor-pointer rounded-xl transition-all duration-200 hover:bg-accent/20 group"
+    style="width: 3.5rem; height: 3.5rem;"
+  >
+    <svg 
+      class="text-accent group-hover:scale-110 transition-transform duration-200" 
+      style="width: 1.5rem; height: 1.5rem;" 
+      viewBox="0 0 24 24" 
+      fill="none"
+      stroke="currentColor"
+    >
+      <path
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        stroke-width="2"
+        d="M8 6h13M8 12h13M8 18h13M3 6h.01M3 12h.01M3 18h.01"
+      />
+    </svg>
+  </div>
+
+  <!-- 展开状态的目录 -->
+  <div 
+    id="toc-expanded" 
+    class="p-4 hidden content-card"
+    style="width: 18rem; max-height: 70vh;"
+  >
+    <!-- 头部控制区域 -->
+    <div class="flex items-center justify-between mb-4">
+      <div class="flex items-center gap-2">
+        <svg
+          class="h-5 w-5 text-accent"
+          fill="none"
+          stroke="currentColor"
+          viewBox="0 0 24 24"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            d="M8 6h13M8 12h13M8 18h13M3 6h.01M3 12h.01M3 18h.01"/>
+        </svg>
+        <span class="text-lg font-semibold text-accent">目录</span>
+      </div>
+      <button 
+        id="toc-minimize-btn" 
+        class="flex items-center justify-center rounded-full bg-transparent hover:bg-accent/20 transition-all duration-200 opacity-70 hover:opacity-100"
+        style="width: 2rem; height: 2rem;"
+        aria-label="最小化目录"
+      >
+        <svg style="width: 1rem; height: 1rem;" viewBox="0 0 24 24" fill="currentColor">
+          <path d="M19 13H5v-2h14v2z"/>
+        </svg>
+      </button>
+    </div>
+    
+    <!-- 目录内容 -->
+    <nav class="toc-scrollbar relative overflow-y-auto" style="max-height: calc(70vh - 6rem);">
+      <!-- 移动端激活指示器 -->
+      <div
+        id="mobile-toc-active-indicator"
+        class="pointer-events-none absolute left-0 z-0 w-full rounded-md border-l-2 border-accent/40 bg-accent/20 opacity-0 transition-all duration-300 ease-out"
+        style="height: 0px; top: 0px;"
+      >
+      </div>
+      <ul id="mobile-toc-list" class="relative z-10 space-y-1 text-sm">
+        <!-- 移动端加载状态 -->
+        <li class="mobile-toc-loading animate-pulse">
+          <div class="mb-2 h-4 w-3/4 rounded bg-muted/30"></div>
+          <div class="mb-2 h-4 w-1/2 rounded bg-muted/20"></div>
+          <div class="h-4 w-2/3 rounded bg-muted/30"></div>
+        </li>
+      </ul>
+    </nav>
+  </div>
+</div>
+
+<style>
+  /* 浮动目录容器样式 - 参考MusicPlayer */
+  #mobile-toc-float {
+    background: rgba(var(--color-background) / 0.85);
+    backdrop-filter: blur(12px);
+    border: 1px solid rgba(var(--color-border) / 0.3);
+  }
+  
+  @media (prefers-color-scheme: dark) {
+    html[data-theme="dark"] #mobile-toc-float {
+      background: rgba(52, 63, 96, 0.85);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+    }
+  }
+
+  /* 最小化状态样式 */
+  #mobile-toc-float.minimized {
+    width: 3.5rem;
+    height: 3.5rem;
+  }
+  
+  #mobile-toc-float.minimized #toc-button {
+    display: flex;
+  }
+  
+  #mobile-toc-float.minimized #toc-expanded {
+    display: none;
+  }
+  
+  /* 展开状态样式 */
+  #mobile-toc-float.expanded {
+    width: 18rem;
+    height: auto;
+    max-height: 70vh;
+  }
+  
+  #mobile-toc-float.expanded #toc-button {
+    display: none;
+  }
+  
+  #mobile-toc-float.expanded #toc-expanded {
+    display: block;
+  }
+
+  /* 按钮尺寸 */
+  .toc-button-size {
+    width: 3.5rem;
+    height: 3.5rem;
+  }
+  
+  .toc-expanded-width {
+    width: 18rem;
+  }
+
+  /* 展开动画增强 */
+  #mobile-toc-float {
+    transform-origin: bottom right;
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  /* 按钮悬停效果增强 */
+  #toc-button {
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+  
+  #toc-button:hover {
+    transform: scale(1.05);
+    box-shadow: 0 8px 25px rgba(var(--color-accent) / 0.3);
+  }
+  
+  #toc-button:active {
+    transform: scale(0.95);
+  }
+
+  /* 最小化按钮样式 */
+  #toc-minimize-btn {
+    transition: all 0.2s ease-out;
+  }
+  
+  #toc-minimize-btn:hover {
+    transform: scale(1.1);
+    background: rgba(var(--color-accent) / 0.2) !important;
+  }
+  
+  #toc-minimize-btn:active {
+    transform: scale(0.9);
+  }
+
+  /* 目录内容过渡动画 - 参考MusicPlayer播放列表 */
+  #toc-expanded {
+    opacity: 0;
+    transform: scale(0.9) translateY(10px);
+    transition: all 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+  }
+  
+  #mobile-toc-float.expanded #toc-expanded {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+
+  /* 目录项延迟动画 */
+  .toc-item {
+    transform: translateY(-10px);
+    opacity: 0;
+    transition: all 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+  }
+  
+  #mobile-toc-float.expanded .toc-item {
+    transform: translateY(0);
+    opacity: 1;
+  }
+  
+  /* 目录项延迟动画 - 逐个显示效果 */
+  #mobile-toc-float.expanded .toc-item:nth-child(1) { transition-delay: 0.1s; }
+  #mobile-toc-float.expanded .toc-item:nth-child(2) { transition-delay: 0.15s; }
+  #mobile-toc-float.expanded .toc-item:nth-child(3) { transition-delay: 0.2s; }
+  #mobile-toc-float.expanded .toc-item:nth-child(4) { transition-delay: 0.25s; }
+  #mobile-toc-float.expanded .toc-item:nth-child(5) { transition-delay: 0.3s; }
+  #mobile-toc-float.expanded .toc-item:nth-child(6) { transition-delay: 0.35s; }
+  #mobile-toc-float.expanded .toc-item:nth-child(7) { transition-delay: 0.4s; }
+  #mobile-toc-float.expanded .toc-item:nth-child(8) { transition-delay: 0.45s; }
+
+  /* 脉冲效果 - 当有新内容时 */
+  @keyframes pulse-glow {
+    0% { 
+      box-shadow: 0 0 0 0 rgba(var(--color-accent) / 0.4);
+    }
+    70% { 
+      box-shadow: 0 0 0 10px rgba(var(--color-accent) / 0);
+    }
+    100% { 
+      box-shadow: 0 0 0 0 rgba(var(--color-accent) / 0);
+    }
+  }
+  
+  #toc-button.pulse {
+    animation: pulse-glow 1.5s infinite;
+  }
+
+  /* 入场动画 */
+  .animate-fadeInUp {
+    animation: fadeInUp 0.6s ease-out forwards;
+  }
+
+  @keyframes fadeInUp {
+    from {
+      opacity: 0;
+      transform: translateY(1rem);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  /* 自定义滚动条 */
+  .toc-scrollbar {
+    scrollbar-width: thin;
+    scrollbar-color: hsl(var(--muted) / 0.3) transparent;
+  }
+
+  .toc-scrollbar::-webkit-scrollbar {
+    width: 4px;
+  }
+
+  .toc-scrollbar::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  .toc-scrollbar::-webkit-scrollbar-thumb {
+    background: hsl(var(--muted) / 0.3);
+    border-radius: 2px;
+  }
+
+  .toc-scrollbar::-webkit-scrollbar-thumb:hover {
+    background: hsl(var(--muted) / 0.5);
+  }
+</style>
+
+<script>
+  function initAdaptiveTableOfContents() {
+    const tocContainer = document.getElementById("table-of-contents");
+    const tocList = document.getElementById("toc-list");
+    
+    // 移动端元素
+    const mobileFloat = document.getElementById("mobile-toc-float");
+    const tocButton = document.getElementById("toc-button");
+    const tocExpanded = document.getElementById("toc-expanded");
+    const minimizeBtn = document.getElementById("toc-minimize-btn");
+    const mobileTocList = document.getElementById("mobile-toc-list");
+
+    if (!tocContainer || !tocList || !mobileFloat) return;
+
+    // 移动端浮动控制 - 参考MusicPlayer的展开关闭逻辑
+    if (mobileFloat && tocButton && tocExpanded && minimizeBtn) {
+      // 展开目录函数
+      const expandToc = () => {
+        mobileFloat.classList.remove("minimized");
+        mobileFloat.classList.add("expanded");
+        setTimeout(() => {updateActiveHeading()}, 300);
+        
+        // 添加目录项的延迟动画
+        setTimeout(() => {
+          const tocItems = mobileTocList?.querySelectorAll('.toc-item');
+          tocItems?.forEach((item, index) => {
+            (item as HTMLElement).style.transitionDelay = `${0.1 + index * 0.05}s`;
+          });
+        }, 50);
+      };
+
+      // 最小化目录函数
+      const minimizeToc = () => {
+        mobileFloat.classList.remove("expanded");
+        mobileFloat.classList.add("minimized");
+        
+        // 清除延迟动画
+        const tocItems = mobileTocList?.querySelectorAll('.toc-item');
+        tocItems?.forEach((item) => {
+          (item as HTMLElement).style.transitionDelay = '0s';
+        });
+      };
+
+      // 展开目录
+      tocButton.addEventListener("click", (e) => {
+        e.stopPropagation();
+        expandToc();
+      });
+
+      // 最小化目录
+      minimizeBtn.addEventListener("click", (e) => {
+        e.stopPropagation();
+        minimizeToc();
+      });
+
+      // 点击外部区域最小化
+      document.addEventListener("click", (e) => {
+        if (!mobileFloat.contains(e.target as Node) && 
+            mobileFloat.classList.contains("expanded")) {
+          minimizeToc();
+        }
+      });
+
+      // ESC键最小化
+      document.addEventListener("keydown", (e) => {
+        if (e.key === "Escape" && mobileFloat.classList.contains("expanded")) {
+          minimizeToc();
+        }
+      });
+
+      // 添加脉冲效果（当目录更新时）
+      const addPulseEffect = () => {
+        tocButton.classList.add("pulse");
+        setTimeout(() => {
+          tocButton.classList.remove("pulse");
+        }, 3000);
+      };
+
+      // 目录内容变化时添加脉冲效果
+      const observer = new MutationObserver(() => {
+        if (mobileFloat.classList.contains("minimized")) {
+          addPulseEffect();
+        }
+      });
+
+      if (mobileTocList) {
+        observer.observe(mobileTocList, { 
+          childList: true, 
+          subtree: true 
+        });
+      }
+    }
+
+    // 获取文章内容区域的所有标题
+    const article = document.getElementById("article");
+    if (!article) return;
+
+    const headings = article.querySelectorAll("h2, h3, h4, h5, h6");
+
+    // 隐藏加载状态
+    const loadingElement = tocList.querySelector(".toc-loading");
+    if (loadingElement) {
+      loadingElement.remove();
+    }
+    
+    // 移动端隐藏加载状态
+    if (mobileTocList) {
+      const mobileLoadingElement = mobileTocList.querySelector(".mobile-toc-loading");
+      if (mobileLoadingElement) {
+        mobileLoadingElement.remove();
+      }
+    }
+
+    if (headings.length === 0) {
+      tocContainer.style.display = "none";
+      if (mobileFloat) mobileFloat.style.display = "none";
+      return;
+    }
+
+    // 生成目录结构
+    const tocItems = Array.from(headings).map((heading, index) => {
+      const level = parseInt(heading.tagName.charAt(1));
+      
+      // 获取标题文本，排除链接元素（如#符号链接）
+      let text = "";
+      for (const node of heading.childNodes) {
+        if (node.nodeType === Node.TEXT_NODE) {
+          text += node.textContent || "";
+        } else if (node.nodeType === Node.ELEMENT_NODE) {
+          const element = node as Element;
+          if (element.tagName && element.tagName.toLowerCase() !== "a") {
+            // 包含非链接元素的文本，但排除<a>标签
+            text += element.textContent || "";
+          }
+        }
+      }
+      text = text.trim();
+      
+      // 如果还是获取不到文本，fallback到完整的textContent并移除最后的#
+      if (!text) {
+        text = heading.textContent?.trim() || "";
+        // 移除末尾的#符号（来自heading links）
+        text = text.replace(/\s*#\s*$/, "");
+      }
+      
+      const id = heading.id || `heading-${index}`;
+
+      // 确保标题有 ID
+      if (!heading.id) {
+        heading.id = id;
+      }
+
+      return {
+        level,
+        text,
+        id,
+        element: heading,
+      };
+    });
+
+    // 根据标题层级计算缩进的Tailwind类
+    const getIndentClass = (level: number) => {
+      switch (level) {
+        case 2:
+          return "pl-3";
+        case 3:
+          return "pl-6";
+        case 4:
+          return "pl-9";
+        case 5:
+          return "pl-12";
+        case 6:
+          return "pl-15";
+        default:
+          return "pl-3";
+      }
+    };
+
+    // 生成目录HTML的函数
+    const generateTocHTML = () => {
+      return tocItems
+        .map(
+          item => `
+          <li class="transition-all duration-200 toc-item relative" data-level="${item.level}">
+            <a 
+              href="#${item.id}" 
+              class="block ${getIndentClass(item.level)} py-2 px-3 text-muted-foreground no-underline rounded-md transition-all duration-200 hover:text-accent toc-link relative z-10" 
+              data-target="${item.id}"
+            >
+              ${item.text}
+            </a>
+          </li>
+        `
+        )
+        .join("");
+    };
+
+    // 渲染桌面端目录
+    tocList.innerHTML = generateTocHTML();
+    
+    // 渲染移动端目录
+    if (mobileTocList) {
+      mobileTocList.innerHTML = generateTocHTML();
+    }
+
+    // 添加点击事件的函数
+    const addClickEvents = (container: Element, shouldMinimize = false) => {
+      const tocLinks = container.querySelectorAll(".toc-link");
+      tocLinks.forEach(link => {
+        link.addEventListener("click", e => {
+          e.preventDefault();
+          const targetId = link.getAttribute("data-target");
+          const targetElement = document.getElementById(targetId || "");
+
+          if (targetElement) {
+            // 如果是移动端，先最小化浮动组件
+            if (shouldMinimize && mobileFloat) {
+              mobileFloat.classList.remove("expanded");
+              mobileFloat.classList.add("minimized");
+            }
+
+            // 计算目标位置，让标题出现在窗口1/3处
+            const windowHeight = window.innerHeight;
+            const targetTop = targetElement.getBoundingClientRect().top + window.scrollY;
+            const offsetTop = targetTop - (windowHeight / 3);
+            
+            // 平滑滚动到目标位置
+            setTimeout(() => {
+              window.scrollTo({
+                top: Math.max(0, offsetTop), // 确保不会滚动到负值
+                behavior: "smooth",
+              });
+            }, shouldMinimize ? 200 : 0);
+
+            // 更新 URL hash
+            setTimeout(() => {
+              history.pushState(null, "", `#${targetId}`);
+            }, shouldMinimize ? 300 : 100);
+          }
+        });
+      });
+    };
+
+    // 为桌面端和移动端添加点击事件
+    addClickEvents(tocList, false);
+    if (mobileTocList) {
+      addClickEvents(mobileTocList, true);
+    }
+
+    // 更新TOC激活状态的通用函数
+    function updateTocActiveState(container: Element, indicatorId: string, activeId: string) {
+      const indicator = document.getElementById(indicatorId);
+      const tocLinks = container.querySelectorAll(".toc-link");
+      let activeLiElement: HTMLElement | null = null;
+
+      // 更新活跃状态
+      tocLinks.forEach((link: Element) => {
+        const targetId = link.getAttribute("data-target");
+
+        if (targetId === activeId) {
+          // 激活状态：只改变文字颜色和边框，背景由指示器处理
+          link.classList.remove("text-muted-foreground");
+          link.classList.add("text-accent", "font-medium");
+          activeLiElement = link.parentElement as HTMLElement;
+        } else {
+          // 非激活状态
+          link.classList.add("text-muted-foreground");
+          link.classList.remove("text-accent", "font-medium");
+        }
+      });
+
+      // 移动指示器到激活的链接位置
+      if (indicator && activeLiElement && tocLinks.length > 0) {
+        const firstLi = (tocLinks[0] as Element).parentElement as HTMLElement;
+        const liRect = (activeLiElement as HTMLElement).getBoundingClientRect();
+        const firstLiRect = firstLi.getBoundingClientRect();
+        
+        const relativeTop = liRect.top - firstLiRect.top;
+        const height = liRect.height;
+        
+        indicator.style.top = `${relativeTop}px`;
+        indicator.style.height = `${height}px`;
+        indicator.style.opacity = "1";
+      } else if (indicator) {
+        indicator.style.opacity = "0";
+      }
+    }
+
+    // 监听滚动事件，高亮当前区域
+    function updateActiveHeading() {
+      if (!tocList) return;
+
+      const windowHeight = window.innerHeight;
+      const activationPoint = windowHeight / 3; // 窗口高度的1/3处
+      const documentHeight = document.documentElement.scrollHeight;
+      const scrollTop = window.scrollY;
+      let activeId = "";
+
+      // 检查是否接近页面底部（最后100px）
+      const isNearBottom = scrollTop + windowHeight >= documentHeight - 100;
+
+      // 找到当前在激活点的标题
+      for (let i = 0; i < tocItems.length; i++) {
+        const item = tocItems[i];
+        const element = item.element;
+        const rect = element.getBoundingClientRect();
+        
+        // 检查标题是否已经通过了激活点
+        if (rect.top <= activationPoint) {
+          activeId = item.id;
+        } else {
+          // 如果当前标题还没到激活点，停止检查
+          break;
+        }
+      }
+
+      // 如果接近底部且没有激活任何标题，激活最后一个可见的标题
+      if (isNearBottom && !activeId && tocItems.length > 0) {
+        // 从后往前找第一个在视窗内的标题
+        for (let i = tocItems.length - 1; i >= 0; i--) {
+          const item = tocItems[i];
+          const element = item.element;
+          const rect = element.getBoundingClientRect();
+          
+          if (rect.top < windowHeight) {
+            activeId = item.id;
+            break;
+          }
+        }
+      }
+
+      // 更新桌面端激活状态
+      updateTocActiveState(tocList, "toc-active-indicator", activeId);
+      
+      // 更新移动端激活状态
+      if (mobileTocList) {
+        updateTocActiveState(mobileTocList, "mobile-toc-active-indicator", activeId);
+      }
+    }
+
+    // 初始化时更新一次
+    setTimeout(updateActiveHeading, 100);
+
+    // 动态调整桌面端目录位置
+    function adjustTocPosition() {
+      const article = document.querySelector('article.content-card');
+      if (article && tocContainer) {
+        const articleRect = article.getBoundingClientRect();
+        const windowWidth = window.innerWidth;
+        const windowHeight = window.innerHeight;
+        
+        // 计算文章右边的位置
+        const articleRight = articleRect.right;
+        const availableSpace = windowWidth - articleRight;
+        
+        // 水平位置：如果右侧空间足够，就贴着文章放置
+        if (availableSpace >= 280 + 16) { // 264px宽度 + 16px间距
+          tocContainer.style.left = `${articleRight + 16}px`;
+          tocContainer.style.right = 'auto';
+          tocContainer.style.opacity = "100";
+          if (mobileFloat) mobileFloat.style.opacity = "0";
+        } else {
+          tocContainer.style.opacity = "0";
+          if (mobileFloat) mobileFloat.style.opacity = "100";
+        }
+        
+        // 垂直位置：根据文章顶部可见性调整
+        const articleTop = articleRect.top;
+        
+        let targetTop;
+        if (articleTop >= 16) {
+          // 文章顶部可见，目录与文章顶部对齐
+          targetTop = articleTop;
+        } else {
+          // 文章顶部不可见，目录吸附在窗口顶部
+          targetTop = 16;
+        }
+        
+        // 确保目录不会超出窗口底部
+        const tocHeight = tocContainer.offsetHeight;
+        const maxTop = windowHeight - tocHeight - 20; // 底部留20px间距
+        targetTop = Math.min(targetTop, maxTop);
+        
+        // 应用位置
+        tocContainer.style.top = `${targetTop}px`;
+        tocContainer.style.position = 'fixed';
+      }
+    }
+
+    // 监听窗口大小变化
+    window.addEventListener('resize', adjustTocPosition);
+    
+    // 监听滚动事件，更新激活状态和位置
+    window.addEventListener(
+      "scroll",
+      () => {
+          updateActiveHeading();
+          adjustTocPosition();
+      },
+      { passive: true }
+    );
+
+    // 显示目录的入场动画
+    setTimeout(() => {
+      // 桌面端目录显示
+      tocContainer.classList.remove("opacity-0", "translate-y-4");
+      tocContainer.classList.add("opacity-100", "translate-y-0");
+      adjustTocPosition();
+      
+      // 移动端浮动组件显示 - 添加弹跳动画
+      if (mobileFloat) {
+        mobileFloat.classList.remove("opacity-0", "translate-y-4");
+        mobileFloat.classList.add("opacity-100", "translate-y-0", "animate-bounce-in");
+        
+        // 移除弹跳动画类，避免重复触发
+        setTimeout(() => {
+          mobileFloat.classList.remove("animate-bounce-in");
+        }, 600);
+      }
+      
+      // 初始化指示器位置
+      setTimeout(updateActiveHeading, 200);
+    }, 50);
+  }
+
+  // 页面加载完成后初始化
+  document.addEventListener("DOMContentLoaded", initAdaptiveTableOfContents);
+
+  // 支持 Astro 的页面转换
+  document.addEventListener("astro:after-swap", initAdaptiveTableOfContents);
+</script>

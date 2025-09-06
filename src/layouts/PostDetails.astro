@@ -10,6 +10,7 @@ import EditPost from "@/components/EditPost.astro";
 import ShareLinks from "@/components/ShareLinks.astro";
 import BackButton from "@/components/BackButton.astro";
 import BackToTopButton from "@/components/BackToTopButton.astro";
+import AdaptiveTableOfContents from "@/components/AdaptiveTableOfContents.astro";
 import { getPath } from "@/utils/getPath";
 import { slugifyStr } from "@/utils/slugify";
 import IconChevronLeft from "@/assets/icons/IconChevronLeft.svg";
@@ -95,15 +96,17 @@ const nextPost =
     <main
       id="main-content"
       class:list={[
-        "mx-auto w-full max-w-app sm:px-4 px-0 pb-12 transition-all duration-300",
+        "mx-auto w-full max-w-app px-0 pb-12 transition-all duration-300 sm:px-4",
         { "mt-8": !SITE.showBackButton },
       ]}
       data-pagefind-body
     >
-      <article class="content-card sm:px-8 px-4 py-8 my-6 sm:rounded-lg rounded-none transition-all duration-300">
+      <article
+        class="content-card mx-auto my-6 rounded-none px-4 py-8 transition-all duration-300 sm:rounded-lg sm:px-8"
+      >
         <h1
           transition:name={slugifyStr(title)}
-          class="inline-block text-2xl font-bold text-accent sm:text-3xl mb-4"
+          class="mb-4 inline-block text-2xl font-bold text-accent sm:text-3xl"
         >
           {title}
         </h1>
@@ -119,7 +122,7 @@ const nextPost =
           >
           <EditPost {hideEditPost} {post} class="max-sm:hidden" />
         </div>
-        
+
         <div
           id="article"
           class="app-prose mx-auto mt-8 max-w-app prose-pre:bg-(--shiki-light-bg) dark:prose-pre:bg-(--shiki-dark-bg)"
@@ -131,7 +134,7 @@ const nextPost =
 
         <EditPost class="sm:hidden" {hideEditPost} {post} />
 
-        <ul class="mt-4 mb-8 sm:my-8 flex flex-wrap gap-2">
+        <ul class="mt-4 mb-8 flex flex-wrap gap-2 sm:my-8">
           {tags.map(tag => <Tag tag={slugifyStr(tag)} tagName={tag} />)}
         </ul>
 
@@ -140,14 +143,16 @@ const nextPost =
         <ShareLinks />
       </article>
 
-      <div class="content-card sm:rounded-lg rounded-none p-6 my-6 transition-all duration-300">
+      <div
+        class="content-card mx-auto my-6 rounded-none p-6 transition-all duration-300 sm:rounded-lg"
+      >
         <!-- Previous/Next Post Buttons -->
         <div data-pagefind-ignore class="grid grid-cols-1 gap-6 sm:grid-cols-2">
           {
             prevPost && (
               <a
                 href={getPath(prevPost.id, prevPost.filePath)}
-                class="flex w-full gap-1 hover:opacity-75 p-4 rounded-lg transition-all hover:bg-muted/50"
+                class="flex w-full gap-1 rounded-lg p-4 transition-all hover:bg-muted/50 hover:opacity-75"
               >
                 <IconChevronLeft class="inline-block flex-none rtl:rotate-180" />
                 <div>
@@ -161,7 +166,7 @@ const nextPost =
             nextPost && (
               <a
                 href={getPath(nextPost.id, nextPost.filePath)}
-                class="flex w-full justify-end gap-1 text-end hover:opacity-75 sm:col-start-2 p-4 rounded-lg transition-all hover:bg-muted/50"
+                class="flex w-full justify-end gap-1 rounded-lg p-4 text-end transition-all hover:bg-muted/50 hover:opacity-75 sm:col-start-2"
               >
                 <div>
                   <span>下一个</span>
@@ -175,6 +180,7 @@ const nextPost =
       </div>
     </main>
     <Footer />
+    <AdaptiveTableOfContents />
   </PageContainer>
 </Layout>
 
@@ -284,7 +290,7 @@ const nextPost =
       await navigator.clipboard.writeText(text ?? "");
 
       // visual feedback that task is completed
-      button.innerText = "Copied";
+      button.innerText = "已复制";
 
       setTimeout(() => {
         button.innerText = copyButtonLabel;
@@ -297,5 +303,4 @@ const nextPost =
   document.addEventListener("astro:after-swap", () =>
     window.scrollTo({ left: 0, top: 0, behavior: "instant" })
   );
-
 </script>
