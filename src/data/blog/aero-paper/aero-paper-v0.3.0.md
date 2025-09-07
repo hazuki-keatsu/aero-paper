@@ -2,16 +2,25 @@
 author: Hazuki Keatsu
 title: "Aero Paper v0.3.0 特性"
 pubDatetime: 2025-09-02T18:39:19+08:00
+modDatetime: 2025-09-07T10:07:21+08:00
 featured: false
 draft: false
 tags: 
   - AeroPaper
-description: 新的特性加入！
+description: Aero Paper v0.3.0 带来了令人兴奋的新功能，包括特色 Markdown 标签支持、LaTeX 数学公式支持和全新的统计页面。
 ---
 
 ## 前言
 
+欢迎使用 Aero Paper v0.3.0！这个版本带来了许多令人兴奋的新功能和改进，旨在提升您的写作和阅读体验。
+
+在本次更新中，我们重点关注于丰富内容表达形式，新增了特色 Markdown 标签支持和强大的 LaTeX 数学公式支持，同时为博客添加了一个全新的统计页面，让您更好地了解博客的整体情况。
+
 ## 一、特色 Markdown 标签支持
+
+为了丰富内容的表现形式，我们在 v0.3.0 版本中引入了特色 Markdown 标签支持。这些标签不仅美观，还能帮助您更好地组织和传达信息。
+
+### 各类标签展示
 
 > [!NOTE]
 > 这是一个笔记标签，用于提供额外的信息或说明。
@@ -37,31 +46,39 @@ description: 新的特性加入！
 > [!DANGER]
 > 这是一个危险标签，用于警告严重的风险或错误。
 
+### 使用方法
+
+只需在 Markdown 文件中使用以下语法即可创建特色标签：
+
+```markdown
+> [!NOTE]
+> 您的内容放在这里
+```
+
+将 `NOTE` 替换为您需要的标签类型即可。
+
 ## 二、LaTeX 公式数学支持
+
+对于技术博客和学术内容，数学公式的支持至关重要。Aero Paper v0.3.0 现在原生支持 LaTeX 数学公式，让您可以轻松地在文章中插入复杂的数学表达式。
 
 ### 1. 基本运算
 
-$a + b = c$
+无论是简单的加减乘除还是复杂的三角函数，都能轻松表达：
 
-$x \times y = z$
+- 线性方程: $a + b = c$
+- 乘法运算: $x \times y = z$
+- 分数表达: $\frac{a}{b} = c$
+- 平方和: $a^2 + b^2 = c^2$
+- 幂运算: $x^n + y^n = z^n$
+- 开方运算: $\sqrt{x} + \sqrt{y} = \sqrt{z}$
+- n次方根: $\sqrt[n]{x} = y$
+- 三角恒等式: $\sin^2\theta + \cos^2\theta = 1$
+- 正切函数: $\tan\alpha = \frac{\sin\alpha}{\cos\alpha}$
+- 和角公式: $\sin(A+B) = \sin A \cos B + \cos A \sin B$
 
-$\frac{a}{b} = c$
+### 2. 矩阵表示
 
-$a^2 + b^2 = c^2$
-
-$x^n + y^n = z^n$
-
-$\sqrt{x} + \sqrt{y} = \sqrt{z}$
-
-$\sqrt[n]{x} = y$
-
-$\sin^2\theta + \cos^2\theta = 1$
-
-$\tan\alpha = \frac{\sin\alpha}{\cos\alpha}$
-
-$\sin(A+B) = \sin A \cos B + \cos A \sin B$
-
-### 2. 矩阵
+复杂的矩阵运算也能轻松展示：
 
 $
 \begin{bmatrix}
@@ -73,16 +90,18 @@ $
 
 ### 3. 积分与极限
 
-$\int_{a}^{b} f(x) \, dx$
+微积分中的常见表达式：
 
-$\int f(x) \, dx = F(x) + C$
+- 定积分: $\int_{a}^{b} f(x) \, dx$
+- 不定积分: $\int f(x) \, dx = F(x) + C$
+- 重要极限: $\lim_{n \to \infty} \left(1 + \frac{1}{n}\right)^n = e$
+- 基本极限: $\lim_{x \to 0} \frac{\sin x}{x} = 1$
 
-$\lim_{n \to \infty} \left(1 + \frac{1}{n}\right)^n = e$
+### 4. 复杂公式示例
 
-$\lim_{x \to 0} \frac{\sin x}{x} = 1$
+更高级的数学公式也能完美渲染：
 
-### 4. 复杂公式
-
+复分析中的留数定理：
 $
 \dfrac{1}{2\pi i} \displaystyle \oint_{\gamma} \dfrac{f(z)}{z - a} dz = 
 \begin{cases} 
@@ -91,8 +110,28 @@ f(a) & \text{如果 } a \text{ 在 } \gamma \text{ 内部} \\
 \end{cases}
 $
 
-$G_{\mu\nu} + \Lambda g_{\mu\nu} = \dfrac{8\pi G}{c^4} T_{\mu\nu}$
+爱因斯坦场方程：
+$$G_{\mu\nu} + \Lambda g_{\mu\nu} = \dfrac{8\pi G}{c^4} T_{\mu\nu}$$
 
 ## 三、新增统计页面
 
-在 Header 部分会展示一个 “[统计](/stats)” 的标签，这个页面有你的文章统计等信息。
+在 Header 部分会展示一个`统计`的标签，这个页面有你的文章统计等信息。
+
+> [!TIP]
+> 统计页面提供了丰富的数据可视化，帮助您更好地了解博客的整体表现。
+
+[跳转到统计页面](/stats)
+
+### 统计页面功能亮点
+
+- **文章概览**: 显示总文章数、总字数等基本信息
+- **时间分布**: 按年份和月份展示文章发布情况
+- **标签分析**: 展示最常用标签和内容分类情况
+- **内容长度**: 显示最长和最短文章的统计信息
+- **历史记录**: 展示首篇和最新发布的文章信息
+
+## 总结
+
+Aero Paper v0.3.0 通过引入特色 Markdown 标签、LaTeX 数学公式支持和统计页面，极大地增强了博客的功能性和表现力。无论您是撰写技术文档、学术论文还是日常博客，这些新功能都能帮助您创建更丰富、更专业的内容。
+
+我们期待看到您使用这些新功能创作出的精彩内容！如果您有任何反馈或建议，请随时与我们联系。

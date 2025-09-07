@@ -2,7 +2,6 @@
 author: Hazuki Keatsu
 title: 《软件工程理论与实践》学习笔记：解密程序与软件的核心奥秘
 pubDatetime: 2025-09-06T00:12:21+08:00
-modDatetime: 2025-09-07T11:03:53+08:00
 featured: false
 draft: false
 tags: 
