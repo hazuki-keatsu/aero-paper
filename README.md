@@ -1,8 +1,8 @@
 # Aero Paper
 
-🌸 基于 [AstroPaper](https://github.com/satnaing/astro-paper) 的自定义博客主题，为 Hazuki Keatsu 的个人博客设计。
+:cherry_blossom: 基于 [AstroPaper](https://github.com/satnaing/astro-paper) 的自定义博客主题，为 Hazuki Keatsu 的个人博客设计。
 
-📃 [Demo](https://aero-paper.vercel.app/)
+:page_with_curl: [Demo](https://aero-paper.vercel.app/)
 
 ![Header](header.jpg)
 
@@ -11,9 +11,9 @@
 ![Typescript](https://img.shields.io/badge/TypeScript-007ACC?style=for-the-badge&logo=typescript&logoColor=white)
 ![Vercel](https://img.shields.io/badge/vercel-%23000000.svg?style=for-the-badge&logo=vercel&logoColor=white)
 
-## ✨ 主要特色
+## :sparkles: 主要特色
 
-### 🎨 视觉增强
+### :art: 视觉增强
 - **动态背景图片**：亮色模式和深色模式使用不同的背景图片
 - **毛玻璃效果**：现代化的半透明卡片设计，保持内容可读性
 - **响应式背景**：桌面端支持视差效果，移动端优化性能
@@ -22,18 +22,31 @@
 - **Og图片**：调整Og图片生成器风格与网页风格相同
 - **标签系统**：美化的标签设计，支持按标签分类
 
-### 🔧 技术特性
+### :wrench: 技术特性
 - **国际化**：支持中文本地化
 - **加载指示器**：添加资源加载指示器
 - **音乐播放器**：新增悬浮的音乐播放器
 
-## 🧪 v0.3.0 加入
+### :microscope: v0.3.0 加入
 
 - [x] LaTeX 支持
 - [x] 特色 Markdown 标签功能
 - [x] 文章统计面板
 
-## 🚀 本地调试
+### :microscope: v0.4.0 加入
+
+- [x] 侧边浮动目录
+- [x] 文章字数计算和阅读时间估计
+- [x] 进一步优化动画效果和响应式设计
+
+### :microscope: v0.5.0 加入
+
+- [ ] 代码块折叠
+- [ ] Mermaid Diagrams支持
+- [ ] 评论区集成（需要服务器支持，待定）
+- [ ] BV 号解析（需要服务器支持，待定）
+
+## :computer: 本地调试
 
 ### 前置要求
 - Node.js 18+ 
@@ -72,7 +85,7 @@ pnpm run build
 pnpm run preview
 ```
 
-## 🧞 `pnpm`所有命令
+## :construction_worker: `pnpm`所有命令
 
 > **_注意_** 对于 `Docker` 命令，必须在你的设备里[安装](https://docs.docker.com/engine/install/)它.
 
@@ -87,7 +100,7 @@ pnpm run preview
 | `pnpm run sync`                      | 为所有的 Astro Module 产生 TypeScript 类型 [了解更多](https://docs.astro.build/en/reference/cli-reference/#astro-sync). |
 | `pnpm run lint`                      | 使用 ESLint 进行静态代码分析                                                                                                                |
 
-## 📁 项目结构
+## :file_folder: 项目结构
 
 ```
 ├── public/                 # 静态资源
@@ -116,31 +129,31 @@ pnpm run preview
 └── src/config.ts          # 站点配置
 ```
 
-## 📝 写作指南
+## :memo: 写作指南
 
 请参考原项目的 [README文件](./README.raw.md)
 
-## 📦 部署
+## :rocket: 部署
 
 - 推荐使用 [Vercel](https://vercel.com/) 直接链接仓库，然后使用国内的域名解析就可以实现国内的访问
 - 同样你也可以使用 [Netlify](https://www.netlify.com/)、[Github Pages](https://docs.github.com/zh/pages/) 来部署
 
-## 📄 许可证
+## :page_facing_up: 许可证
 
 本项目基于 MIT 许可证，详见 [LICENSE](LICENSE) 文件。
 
-## 🙏 致谢
+## :pray: 致谢
 
 - [AstroPaper](https://github.com/satnaing/astro-paper) - 原始主题
 - [Astro](https://astro.build/) - 静态站点生成器
 - [Tailwind CSS](https://tailwindcss.com/) - CSS 框架
 - [Shiki](https://shiki.style/) - 语法高亮
 
-## 📞 联系方式
+## :telephone_receiver: 联系方式
 
 - GitHub：[hazuki-keatsu](https://github.com/hazuki-keatsu)
 - Mail: [Outlook](mailto:yeyuefeng699@outlook.com)
 
 ---
 
-> 💡 **提示**：如果您喜欢这个主题，请给项目点个 ⭐ Star！
+> :bulb: **提示**：如果您喜欢这个主题，请给项目点个 ⭐ Star！
