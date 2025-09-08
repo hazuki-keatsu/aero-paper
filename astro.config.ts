@@ -2,6 +2,7 @@ import { defineConfig, envField } from "astro/config";
 import tailwindcss from "@tailwindcss/vite";
 import sitemap from "@astrojs/sitemap";
 import remarkCallouts from "./src/utils/remark-callouts";
+import { remarkGithubCard } from "./src/utils/githubRepo/remarkGithubRepoCardPlugin";
 import {
   transformerNotationDiff,
   transformerNotationHighlight,
@@ -25,6 +26,7 @@ export default defineConfig({
     remarkPlugins: [
       remarkMath,
       remarkCallouts,
+      remarkGithubCard,
     ],
     rehypePlugins: [rehypeKatex],
     shikiConfig: {
@@ -53,6 +55,9 @@ export default defineConfig({
     },
     optimizeDeps: {
       exclude: ["@resvg/resvg-js"],
+    },
+    define: {
+      'import.meta.env.GITHUB_TOKEN': JSON.stringify(process.env.GITHUB_TOKEN),
     },
   },
   image: {
