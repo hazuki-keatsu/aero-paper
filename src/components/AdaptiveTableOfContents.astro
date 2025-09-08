@@ -63,25 +63,25 @@ const { class: className } = Astro.props;
   id="mobile-toc-float"
   class:list={[
     "block", // 只在小屏显示
-    "fixed bottom-5 right-5 z-50", // 固定在右下角
-    "backdrop-blur-lg rounded-xl", // 样式
-    "text-foreground font-mono shadow-2xl", // 文字和阴影
-    "transition-all duration-200 ease-in-out", // 动画
-    "overflow-hidden minimized", // 初始最小化状态
-    "opacity-0 translate-y-4", // 初始隐藏
+    "fixed right-5 bottom-5 z-50", // 固定在右下角
+    "rounded-xl backdrop-blur-lg", // 样式
+    "font-mono text-foreground shadow-2xl", // 文字和阴影
+    "transition-all duration-300 ease-in-out", // 动画
+    "minimized overflow-hidden", // 初始最小化状态
+    "translate-y-4 opacity-0", // 初始隐藏
     "flex flex-row-reverse items-end",
   ]}
 >
   <!-- 最小化状态的按钮 -->
-  <div 
-    id="toc-button" 
-    class="content-card flex items-center justify-center cursor-pointer rounded-xl transition-all duration-200 hover:bg-accent/20 group"
+  <div
+    id="toc-button"
+    class="content-card group flex cursor-pointer items-center justify-center rounded-xl transition-all duration-200 hover:bg-accent/20"
     style="width: 3.5rem; height: 3.5rem;"
   >
-    <svg 
-      class="text-accent group-hover:scale-110 transition-transform duration-200" 
-      style="width: 1.5rem; height: 1.5rem;" 
-      viewBox="0 0 24 24" 
+    <svg
+      class="text-accent transition-transform duration-200 group-hover:scale-110"
+      style="width: 1.5rem; height: 1.5rem;"
+      viewBox="0 0 24 24"
       fill="none"
       stroke="currentColor"
     >
@@ -89,19 +89,18 @@ const { class: className } = Astro.props;
         stroke-linecap="round"
         stroke-linejoin="round"
         stroke-width="2"
-        d="M8 6h13M8 12h13M8 18h13M3 6h.01M3 12h.01M3 18h.01"
-      />
+        d="M8 6h13M8 12h13M8 18h13M3 6h.01M3 12h.01M3 18h.01"></path>
     </svg>
   </div>
 
   <!-- 展开状态的目录 -->
-  <div 
-    id="toc-expanded" 
-    class="p-4 hidden content-card"
+  <div
+    id="toc-expanded"
+    class="content-card hidden p-4"
     style="width: 18rem; max-height: 70vh;"
   >
     <!-- 头部控制区域 -->
-    <div class="flex items-center justify-between mb-4">
+    <div class="mb-4 flex items-center justify-between">
       <div class="flex items-center gap-2">
         <svg
           class="h-5 w-5 text-accent"
@@ -113,24 +112,31 @@ const { class: className } = Astro.props;
             stroke-linecap="round"
             stroke-linejoin="round"
             stroke-width="2"
-            d="M8 6h13M8 12h13M8 18h13M3 6h.01M3 12h.01M3 18h.01"/>
+            d="M8 6h13M8 12h13M8 18h13M3 6h.01M3 12h.01M3 18h.01"></path>
         </svg>
         <span class="text-lg font-semibold text-accent">目录</span>
       </div>
-      <button 
-        id="toc-minimize-btn" 
-        class="flex items-center justify-center rounded-full bg-transparent hover:bg-accent/20 transition-all duration-200 opacity-70 hover:opacity-100"
+      <button
+        id="toc-minimize-btn"
+        class="flex items-center justify-center rounded-full bg-transparent opacity-70 transition-all duration-200 hover:bg-accent/20 hover:opacity-100"
         style="width: 2rem; height: 2rem;"
         aria-label="最小化目录"
       >
-        <svg style="width: 1rem; height: 1rem;" viewBox="0 0 24 24" fill="currentColor">
-          <path d="M19 13H5v-2h14v2z"/>
+        <svg
+          style="width: 1rem; height: 1rem;"
+          viewBox="0 0 24 24"
+          fill="currentColor"
+        >
+          <path d="M19 13H5v-2h14v2z"></path>
         </svg>
       </button>
     </div>
-    
+
     <!-- 目录内容 -->
-    <nav class="toc-scrollbar relative overflow-y-auto" style="max-height: calc(70vh - 6rem);">
+    <nav
+      class="toc-scrollbar relative overflow-y-auto"
+      style="max-height: calc(70vh - 6rem);"
+    >
       <!-- 移动端激活指示器 -->
       <div
         id="mobile-toc-active-indicator"
@@ -157,7 +163,7 @@ const { class: className } = Astro.props;
     backdrop-filter: blur(12px);
     border: 1px solid rgba(var(--color-border) / 0.3);
   }
-  
+
   @media (prefers-color-scheme: dark) {
     html[data-theme="dark"] #mobile-toc-float {
       background: rgba(52, 63, 96, 0.85);
@@ -170,26 +176,26 @@ const { class: className } = Astro.props;
     width: 3.5rem;
     height: 3.5rem;
   }
-  
+
   #mobile-toc-float.minimized #toc-button {
     display: flex;
   }
-  
+
   #mobile-toc-float.minimized #toc-expanded {
     display: none;
   }
-  
+
   /* 展开状态样式 */
   #mobile-toc-float.expanded {
     width: 18rem;
     height: auto;
     max-height: 70vh;
   }
-  
+
   #mobile-toc-float.expanded #toc-button {
     display: none;
   }
-  
+
   #mobile-toc-float.expanded #toc-expanded {
     display: block;
   }
@@ -199,7 +205,7 @@ const { class: className } = Astro.props;
     width: 3.5rem;
     height: 3.5rem;
   }
-  
+
   .toc-expanded-width {
     width: 18rem;
   }
@@ -214,12 +220,12 @@ const { class: className } = Astro.props;
   #toc-button {
     transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   }
-  
+
   #toc-button:hover {
     transform: scale(1.05);
     box-shadow: 0 8px 25px rgba(var(--color-accent) / 0.3);
   }
-  
+
   #toc-button:active {
     transform: scale(0.95);
   }
@@ -228,12 +234,12 @@ const { class: className } = Astro.props;
   #toc-minimize-btn {
     transition: all 0.2s ease-out;
   }
-  
+
   #toc-minimize-btn:hover {
     transform: scale(1.1);
     background: rgba(var(--color-accent) / 0.2) !important;
   }
-  
+
   #toc-minimize-btn:active {
     transform: scale(0.9);
   }
@@ -244,7 +250,7 @@ const { class: className } = Astro.props;
     transform: scale(0.9) translateY(10px);
     transition: all 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
   }
-  
+
   #mobile-toc-float.expanded #toc-expanded {
     opacity: 1;
     transform: scale(1) translateY(0);
@@ -256,35 +262,51 @@ const { class: className } = Astro.props;
     opacity: 0;
     transition: all 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
   }
-  
+
   #mobile-toc-float.expanded .toc-item {
     transform: translateY(0);
     opacity: 1;
   }
-  
+
   /* 目录项延迟动画 - 逐个显示效果 */
-  #mobile-toc-float.expanded .toc-item:nth-child(1) { transition-delay: 0.1s; }
-  #mobile-toc-float.expanded .toc-item:nth-child(2) { transition-delay: 0.15s; }
-  #mobile-toc-float.expanded .toc-item:nth-child(3) { transition-delay: 0.2s; }
-  #mobile-toc-float.expanded .toc-item:nth-child(4) { transition-delay: 0.25s; }
-  #mobile-toc-float.expanded .toc-item:nth-child(5) { transition-delay: 0.3s; }
-  #mobile-toc-float.expanded .toc-item:nth-child(6) { transition-delay: 0.35s; }
-  #mobile-toc-float.expanded .toc-item:nth-child(7) { transition-delay: 0.4s; }
-  #mobile-toc-float.expanded .toc-item:nth-child(8) { transition-delay: 0.45s; }
+  #mobile-toc-float.expanded .toc-item:nth-child(1) {
+    transition-delay: 0.1s;
+  }
+  #mobile-toc-float.expanded .toc-item:nth-child(2) {
+    transition-delay: 0.15s;
+  }
+  #mobile-toc-float.expanded .toc-item:nth-child(3) {
+    transition-delay: 0.2s;
+  }
+  #mobile-toc-float.expanded .toc-item:nth-child(4) {
+    transition-delay: 0.25s;
+  }
+  #mobile-toc-float.expanded .toc-item:nth-child(5) {
+    transition-delay: 0.3s;
+  }
+  #mobile-toc-float.expanded .toc-item:nth-child(6) {
+    transition-delay: 0.35s;
+  }
+  #mobile-toc-float.expanded .toc-item:nth-child(7) {
+    transition-delay: 0.4s;
+  }
+  #mobile-toc-float.expanded .toc-item:nth-child(8) {
+    transition-delay: 0.45s;
+  }
 
   /* 脉冲效果 - 当有新内容时 */
   @keyframes pulse-glow {
-    0% { 
+    0% {
       box-shadow: 0 0 0 0 rgba(var(--color-accent) / 0.4);
     }
-    70% { 
+    70% {
       box-shadow: 0 0 0 10px rgba(var(--color-accent) / 0);
     }
-    100% { 
+    100% {
       box-shadow: 0 0 0 0 rgba(var(--color-accent) / 0);
     }
   }
-  
+
   #toc-button.pulse {
     animation: pulse-glow 1.5s infinite;
   }
@@ -310,7 +332,7 @@ const { class: className } = Astro.props;
   function initAdaptiveTableOfContents() {
     const tocContainer = document.getElementById("table-of-contents");
     const tocList = document.getElementById("toc-list");
-    
+
     // 移动端元素
     const mobileFloat = document.getElementById("mobile-toc-float");
     const tocButton = document.getElementById("toc-button");
@@ -326,13 +348,16 @@ const { class: className } = Astro.props;
       const expandToc = () => {
         mobileFloat.classList.remove("minimized");
         mobileFloat.classList.add("expanded");
-        setTimeout(() => {updateActiveHeading()}, 300);
-        
+        setTimeout(() => {
+          updateActiveHeading();
+        }, 300);
+
         // 添加目录项的延迟动画
         setTimeout(() => {
-          const tocItems = mobileTocList?.querySelectorAll('.toc-item');
+          const tocItems = mobileTocList?.querySelectorAll(".toc-item");
           tocItems?.forEach((item, index) => {
-            (item as HTMLElement).style.transitionDelay = `${0.1 + index * 0.05}s`;
+            (item as HTMLElement).style.transitionDelay =
+              `${0.1 + index * 0.05}s`;
           });
         }, 50);
       };
@@ -341,36 +366,38 @@ const { class: className } = Astro.props;
       const minimizeToc = () => {
         mobileFloat.classList.remove("expanded");
         mobileFloat.classList.add("minimized");
-        
+
         // 清除延迟动画
-        const tocItems = mobileTocList?.querySelectorAll('.toc-item');
-        tocItems?.forEach((item) => {
-          (item as HTMLElement).style.transitionDelay = '0s';
+        const tocItems = mobileTocList?.querySelectorAll(".toc-item");
+        tocItems?.forEach(item => {
+          (item as HTMLElement).style.transitionDelay = "0s";
         });
       };
 
       // 展开目录
-      tocButton.addEventListener("click", (e) => {
+      tocButton.addEventListener("click", e => {
         e.stopPropagation();
         expandToc();
       });
 
       // 最小化目录
-      minimizeBtn.addEventListener("click", (e) => {
+      minimizeBtn.addEventListener("click", e => {
         e.stopPropagation();
         minimizeToc();
       });
 
       // 点击外部区域最小化
-      document.addEventListener("click", (e) => {
-        if (!mobileFloat.contains(e.target as Node) && 
-            mobileFloat.classList.contains("expanded")) {
+      document.addEventListener("click", e => {
+        if (
+          !mobileFloat.contains(e.target as Node) &&
+          mobileFloat.classList.contains("expanded")
+        ) {
           minimizeToc();
         }
       });
 
       // ESC键最小化
-      document.addEventListener("keydown", (e) => {
+      document.addEventListener("keydown", e => {
         if (e.key === "Escape" && mobileFloat.classList.contains("expanded")) {
           minimizeToc();
         }
@@ -392,9 +419,9 @@ const { class: className } = Astro.props;
       });
 
       if (mobileTocList) {
-        observer.observe(mobileTocList, { 
-          childList: true, 
-          subtree: true 
+        observer.observe(mobileTocList, {
+          childList: true,
+          subtree: true,
         });
       }
     }
@@ -410,10 +437,12 @@ const { class: className } = Astro.props;
     if (loadingElement) {
       loadingElement.remove();
     }
-    
+
     // 移动端隐藏加载状态
     if (mobileTocList) {
-      const mobileLoadingElement = mobileTocList.querySelector(".mobile-toc-loading");
+      const mobileLoadingElement = mobileTocList.querySelector(
+        ".mobile-toc-loading"
+      );
       if (mobileLoadingElement) {
         mobileLoadingElement.remove();
       }
@@ -428,7 +457,7 @@ const { class: className } = Astro.props;
     // 生成目录结构
     const tocItems = Array.from(headings).map((heading, index) => {
       const level = parseInt(heading.tagName.charAt(1));
-      
+
       // 获取标题文本，排除链接元素（如#符号链接）
       let text = "";
       for (const node of heading.childNodes) {
@@ -443,14 +472,14 @@ const { class: className } = Astro.props;
         }
       }
       text = text.trim();
-      
+
       // 如果还是获取不到文本，fallback到完整的textContent并移除最后的#
       if (!text) {
         text = heading.textContent?.trim() || "";
         // 移除末尾的#符号（来自heading links）
         text = text.replace(/\s*#\s*$/, "");
       }
-      
+
       const id = heading.id || `heading-${index}`;
 
       // 确保标题有 ID
@@ -505,7 +534,7 @@ const { class: className } = Astro.props;
 
     // 渲染桌面端目录
     tocList.innerHTML = generateTocHTML();
-    
+
     // 渲染移动端目录
     if (mobileTocList) {
       mobileTocList.innerHTML = generateTocHTML();
@@ -529,21 +558,28 @@ const { class: className } = Astro.props;
 
             // 计算目标位置，让标题出现在窗口1/3处
             const windowHeight = window.innerHeight;
-            const targetTop = targetElement.getBoundingClientRect().top + window.scrollY;
-            const offsetTop = targetTop - (windowHeight / 3);
-            
+            const targetTop =
+              targetElement.getBoundingClientRect().top + window.scrollY;
+            const offsetTop = targetTop - windowHeight / 3;
+
             // 平滑滚动到目标位置
-            setTimeout(() => {
-              window.scrollTo({
-                top: Math.max(0, offsetTop), // 确保不会滚动到负值
-                behavior: "smooth",
-              });
-            }, shouldMinimize ? 200 : 0);
+            setTimeout(
+              () => {
+                window.scrollTo({
+                  top: Math.max(0, offsetTop), // 确保不会滚动到负值
+                  behavior: "smooth",
+                });
+              },
+              shouldMinimize ? 200 : 0
+            );
 
             // 更新 URL hash
-            setTimeout(() => {
-              history.pushState(null, "", `#${targetId}`);
-            }, shouldMinimize ? 300 : 100);
+            setTimeout(
+              () => {
+                history.pushState(null, "", `#${targetId}`);
+              },
+              shouldMinimize ? 300 : 100
+            );
           }
         });
       });
@@ -556,7 +592,11 @@ const { class: className } = Astro.props;
     }
 
     // 更新TOC激活状态的通用函数
-    function updateTocActiveState(container: Element, indicatorId: string, activeId: string) {
+    function updateTocActiveState(
+      container: Element,
+      indicatorId: string,
+      activeId: string
+    ) {
       const indicator = document.getElementById(indicatorId);
       const tocLinks = container.querySelectorAll(".toc-link");
       let activeLiElement: HTMLElement | null = null;
@@ -582,10 +622,10 @@ const { class: className } = Astro.props;
         const firstLi = (tocLinks[0] as Element).parentElement as HTMLElement;
         const liRect = (activeLiElement as HTMLElement).getBoundingClientRect();
         const firstLiRect = firstLi.getBoundingClientRect();
-        
+
         const relativeTop = liRect.top - firstLiRect.top;
         const height = liRect.height;
-        
+
         indicator.style.top = `${relativeTop}px`;
         indicator.style.height = `${height}px`;
         indicator.style.opacity = "1";
@@ -612,7 +652,7 @@ const { class: className } = Astro.props;
         const item = tocItems[i];
         const element = item.element;
         const rect = element.getBoundingClientRect();
-        
+
         // 检查标题是否已经通过了激活点
         if (rect.top <= activationPoint) {
           activeId = item.id;
@@ -629,7 +669,7 @@ const { class: className } = Astro.props;
           const item = tocItems[i];
           const element = item.element;
           const rect = element.getBoundingClientRect();
-          
+
           if (rect.top < windowHeight) {
             activeId = item.id;
             break;
@@ -639,10 +679,14 @@ const { class: className } = Astro.props;
 
       // 更新桌面端激活状态
       updateTocActiveState(tocList, "toc-active-indicator", activeId);
-      
+
       // 更新移动端激活状态
       if (mobileTocList) {
-        updateTocActiveState(mobileTocList, "mobile-toc-active-indicator", activeId);
+        updateTocActiveState(
+          mobileTocList,
+          "mobile-toc-active-indicator",
+          activeId
+        );
       }
     }
 
@@ -651,30 +695,31 @@ const { class: className } = Astro.props;
 
     // 动态调整桌面端目录位置
     function adjustTocPosition() {
-      const article = document.querySelector('article.content-card');
+      const article = document.querySelector("article.content-card");
       if (article && tocContainer) {
         const articleRect = article.getBoundingClientRect();
         const windowWidth = window.innerWidth;
         const windowHeight = window.innerHeight;
-        
+
         // 计算文章右边的位置
         const articleRight = articleRect.right;
         const availableSpace = windowWidth - articleRight;
-        
+
         // 水平位置：如果右侧空间足够，就贴着文章放置
-        if (availableSpace >= 280 + 16) { // 264px宽度 + 16px间距
+        if (availableSpace >= 280 + 16) {
+          // 264px宽度 + 16px间距
           tocContainer.style.left = `${articleRight + 16}px`;
-          tocContainer.style.right = 'auto';
+          tocContainer.style.right = "auto";
           tocContainer.style.opacity = "100";
           if (mobileFloat) mobileFloat.style.opacity = "0";
         } else {
           tocContainer.style.opacity = "0";
           if (mobileFloat) mobileFloat.style.opacity = "100";
         }
-        
+
         // 垂直位置：根据文章顶部可见性调整
         const articleTop = articleRect.top;
-        
+
         let targetTop;
         if (articleTop >= 16) {
           // 文章顶部可见，目录与文章顶部对齐
@@ -683,27 +728,46 @@ const { class: className } = Astro.props;
           // 文章顶部不可见，目录吸附在窗口顶部
           targetTop = 16;
         }
-        
+
         // 确保目录不会超出窗口底部
         const tocHeight = tocContainer.offsetHeight;
         const maxTop = windowHeight - tocHeight - 20; // 底部留20px间距
         targetTop = Math.min(targetTop, maxTop);
-        
+
         // 应用位置
         tocContainer.style.top = `${targetTop}px`;
-        tocContainer.style.position = 'fixed';
+        tocContainer.style.position = "fixed";
       }
     }
 
     // 监听窗口大小变化
-    window.addEventListener('resize', adjustTocPosition);
-    
+    window.addEventListener("resize", adjustTocPosition);
+
+    // 创建ResizeObserver实例，传入回调函数
+    const resizeObserver = new ResizeObserver(entries => {
+      // 遍历所有被观察的元素
+      for (const entry of entries) {
+        // 获取元素的内容区域尺寸（不包括边框）
+        const contentRect = entry.contentRect;
+
+        // 执行自定义回调逻辑
+        adjustTocPosition();
+      }
+    });
+
+    // 监听指定元素（例如ID为"target"的元素）
+    const targetElement = document.querySelector("article.content-card");
+    if (targetElement) {
+      // 开始观察元素
+      resizeObserver.observe(targetElement);
+    }
+
     // 监听滚动事件，更新激活状态和位置
     window.addEventListener(
       "scroll",
       () => {
-          updateActiveHeading();
-          adjustTocPosition();
+        updateActiveHeading();
+        adjustTocPosition();
       },
       { passive: true }
     );
@@ -714,18 +778,22 @@ const { class: className } = Astro.props;
       tocContainer.classList.remove("opacity-0", "translate-y-4");
       tocContainer.classList.add("opacity-100", "translate-y-0");
       adjustTocPosition();
-      
+
       // 移动端浮动组件显示 - 添加弹跳动画
       if (mobileFloat) {
         mobileFloat.classList.remove("opacity-0", "translate-y-4");
-        mobileFloat.classList.add("opacity-100", "translate-y-0", "animate-bounce-in");
-        
+        mobileFloat.classList.add(
+          "opacity-100",
+          "translate-y-0",
+          "animate-bounce-in"
+        );
+
         // 移除弹跳动画类，避免重复触发
         setTimeout(() => {
           mobileFloat.classList.remove("animate-bounce-in");
         }, 600);
       }
-      
+
       // 初始化指示器位置
       setTimeout(updateActiveHeading, 200);
     }, 50);
