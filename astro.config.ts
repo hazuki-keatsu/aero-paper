@@ -2,7 +2,6 @@ import { defineConfig, envField } from "astro/config";
 import tailwindcss from "@tailwindcss/vite";
 import sitemap from "@astrojs/sitemap";
 import remarkCallouts from "./src/utils/remark-callouts";
-import { remarkGithubCard } from "./src/utils/githubRepo/remarkGithubRepoCardPlugin";
 import {
   transformerNotationDiff,
   transformerNotationHighlight,
@@ -13,6 +12,10 @@ import { SITE } from "./src/config";
 import remarkMath from "remark-math";
 import rehypeKatex from "rehype-katex";
 import path from "path";
+import remarkDirective from 'remark-directive';
+import { parseDirectiveNode } from "./src/utils/githubRepo/remark-directive-rehype";
+import { GithubCardComponent } from "./src/utils/githubRepo/rehype-component-github-card";
+import rehypeComponents from "rehype-components";
 
 // https://astro.build/config
 export default defineConfig({
@@ -26,9 +29,20 @@ export default defineConfig({
     remarkPlugins: [
       remarkMath,
       remarkCallouts,
-      remarkGithubCard,
+      remarkDirective,
+      [parseDirectiveNode, {}],
     ],
-    rehypePlugins: [rehypeKatex],
+    rehypePlugins: [
+      rehypeKatex,
+      [
+        rehypeComponents,
+        {
+          components: {
+            github: GithubCardComponent,
+          }
+        }
+      ],
+    ],
     shikiConfig: {
       // For more themes, visit https://shiki.style/themes
       themes: { light: "min-light", dark: "night-owl" },
