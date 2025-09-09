@@ -48,9 +48,14 @@ title: "关于"
 <div class="bg-gradient-to-br from-indigo-100/50 to-purple-100/50 p-6 rounded-xl border border-indigo-200/20 my-6 shadow-md hover:shadow-lg transition-all duration-300">
 
 本博客主题基于 [AstroPaper](https://github.com/satnaing/astro-paper) 深度定制而来，融入了现代化的设计理念和个人美学偏好。
+ 
+🔗 **原项目开源地址**：
 
-🎯 **特色功能**：毛玻璃效果、动态背景、响应式设计、音乐播放器等  
-🔗 **开源地址**：[AeroPaper](http://github.com/hazuki-keatsu/aero-paper)
+::github{repo="satnaing/astro-paper"}
+
+🔗 **本项目开源地址**：
+
+::github{repo="hazuki-keatsu/aero-paper"}
 
 </div>
 
