@@ -63,11 +63,13 @@ export function GithubCardComponent(
 	const nForks = h(`div#${cardUuid}-forks`, { class: "gc-forks" }, "0K");
 	const nLicense = h(`div#${cardUuid}-license`, { class: "gc-license" }, "0K");
 
+	const token = import.meta.env.GITHUB_TOKEN; // Github API Token which can increase the number of access.
+
 	const nScript = h(
 		`script#${cardUuid}-script`,
 		{ type: "text/javascript", defer: true },
 		`
-      fetch('https://api.github.com/repos/${repo}', { referrerPolicy: "no-referrer", cache: "force-cache", next: { revalidate: 3600 } }).then(response => response.json()).then(data => {
+      fetch('https://api.github.com/repos/${repo}', { referrerPolicy: "no-referrer", cache: "force-cache", next: { revalidate: 3600 }, headers: {'Authorization': 'token ${token}', 'Accept': 'application/vnd.github.v3+json'} }).then(response => response.json()).then(data => {
         document.getElementById('${cardUuid}-description').innerText = data.description?.replace(/:[a-zA-Z0-9_]+:/g, '') || "Description not set";
         document.getElementById('${cardUuid}-language').innerText = data.language;
         document.getElementById('${cardUuid}-forks').innerText = Intl.NumberFormat('en-us', { notation: "compact", maximumFractionDigits: 1 }).format(data.forks).replaceAll("\\u202f", '');

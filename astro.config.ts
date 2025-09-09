@@ -13,8 +13,8 @@ import remarkMath from "remark-math";
 import rehypeKatex from "rehype-katex";
 import path from "path";
 import remarkDirective from 'remark-directive';
-import { parseDirectiveNode } from "./src/utils/githubRepo/remark-directive-rehype";
-import { GithubCardComponent } from "./src/utils/githubRepo/rehype-component-github-card";
+import { parseDirectiveNode } from "./src/utils/github-repo-card/remark-directive-rehype";
+import { GithubCardComponent } from "./src/utils/github-repo-card/rehype-component-github-card";
 import rehypeComponents from "rehype-components";
 
 // https://astro.build/config
