@@ -708,12 +708,14 @@ const { class: className } = Astro.props;
         // 水平位置：如果右侧空间足够，就贴着文章放置
         if (availableSpace >= 280 + 16) {
           // 264px宽度 + 16px间距
+          tocContainer.style.visibility = "visible"
           tocContainer.style.left = `${articleRight + 16}px`;
           tocContainer.style.right = "auto";
           tocContainer.style.opacity = "100";
           if (mobileFloat) mobileFloat.style.opacity = "0";
         } else {
           tocContainer.style.opacity = "0";
+          tocContainer.style.visibility = "hidden"
           if (mobileFloat) mobileFloat.style.opacity = "100";
         }
 
@@ -797,6 +799,38 @@ const { class: className } = Astro.props;
       // 初始化指示器位置
       setTimeout(updateActiveHeading, 200);
     }, 50);
+  }
+
+  function debounce<T extends (...args: any[]) => any>(
+    func: T,
+    wait: number,
+    immediate: boolean = false
+  ): (...args: Parameters<T>) => void {
+    let timeoutId: number | null = null;
+
+    return function (this: ThisParameterType<T>, ...args: Parameters<T>): void {
+      const context = this;
+
+      // 清除已有的定时器
+      if (timeoutId) {
+        clearTimeout(timeoutId);
+      }
+
+      // 立即执行模式
+      if (immediate && !timeoutId) {
+        func.apply(context, args);
+      }
+
+      // 设置新的定时器
+      timeoutId = window.setTimeout(() => {
+        // 非立即执行模式，在等待时间后执行
+        if (!immediate) {
+          func.apply(context, args);
+        }
+        // 执行完毕后清除定时器ID
+        timeoutId = null;
+      }, wait);
+    };
   }
 
   // 页面加载完成后初始化

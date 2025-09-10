@@ -3,14 +3,6 @@ import type { Root } from "mdast";
 import { visit } from "unist-util-visit";
 import type { Plugin } from "unified";
 
-// interface DirectiveNode {
-// 	type: "containerDirective" | "leafDirective" | "textDirective";
-// 	name: string;
-// 	attributes: Record<string, string>;
-// 	children: any[];
-// 	data: any;
-// }
-
 export const parseDirectiveNode: Plugin<[], Root> = () => {
 	return (tree: Root) => {
 		visit(tree, (node: any) => {
