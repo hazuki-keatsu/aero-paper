@@ -38,7 +38,7 @@ export default defineConfig({
         rehypeComponents,
         {
           components: {
-            github: GithubCardComponent,
+            github: (props: any, children: any[]) => GithubCardComponent(props, children),
           }
         }
       ],
@@ -69,9 +69,6 @@ export default defineConfig({
     },
     optimizeDeps: {
       exclude: ["@resvg/resvg-js"],
-    },
-    define: {
-      'import.meta.env.GITHUB_TOKEN': JSON.stringify(process.env.GITHUB_TOKEN),
     },
   },
   image: {
