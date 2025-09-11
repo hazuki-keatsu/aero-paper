@@ -748,10 +748,7 @@ const { class: className } = Astro.props;
     // 创建ResizeObserver实例，传入回调函数
     const resizeObserver = new ResizeObserver(entries => {
       // 遍历所有被观察的元素
-      for (const entry of entries) {
-        // 获取元素的内容区域尺寸（不包括边框）
-        const contentRect = entry.contentRect;
-
+      for (const _ of entries) {
         // 执行自定义回调逻辑
         adjustTocPosition();
       }
@@ -799,38 +796,6 @@ const { class: className } = Astro.props;
       // 初始化指示器位置
       setTimeout(updateActiveHeading, 200);
     }, 50);
-  }
-
-  function debounce<T extends (...args: any[]) => any>(
-    func: T,
-    wait: number,
-    immediate: boolean = false
-  ): (...args: Parameters<T>) => void {
-    let timeoutId: number | null = null;
-
-    return function (this: ThisParameterType<T>, ...args: Parameters<T>): void {
-      const context = this;
-
-      // 清除已有的定时器
-      if (timeoutId) {
-        clearTimeout(timeoutId);
-      }
-
-      // 立即执行模式
-      if (immediate && !timeoutId) {
-        func.apply(context, args);
-      }
-
-      // 设置新的定时器
-      timeoutId = window.setTimeout(() => {
-        // 非立即执行模式，在等待时间后执行
-        if (!immediate) {
-          func.apply(context, args);
-        }
-        // 执行完毕后清除定时器ID
-        timeoutId = null;
-      }, wait);
-    };
   }
 
   // 页面加载完成后初始化
