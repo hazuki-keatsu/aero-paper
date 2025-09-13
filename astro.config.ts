@@ -16,6 +16,7 @@ import remarkDirective from 'remark-directive';
 import { parseDirectiveNode } from "./src/utils/github-repo-card/remark-directive-rehype";
 import { GithubCardComponent } from "./src/utils/github-repo-card/rehype-component-github-card";
 import rehypeComponents from "rehype-components";
+// import { foldableCodeBlocks } from "./src/utils/remark-foldable-code";
 
 // https://astro.build/config
 export default defineConfig({
@@ -31,6 +32,7 @@ export default defineConfig({
       remarkCallouts,
       remarkDirective,
       [parseDirectiveNode, {}],
+      // foldableCodeBlocks,
     ],
     rehypePlugins: [
       rehypeKatex,
