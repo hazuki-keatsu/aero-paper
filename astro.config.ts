@@ -16,7 +16,8 @@ import remarkDirective from 'remark-directive';
 import { parseDirectiveNode } from "./src/utils/github-repo-card/remark-directive-rehype";
 import { GithubCardComponent } from "./src/utils/github-repo-card/rehype-component-github-card";
 import rehypeComponents from "rehype-components";
-// import { foldableCodeBlocks } from "./src/utils/remark-foldable-code";
+import expressiveCode from "astro-expressive-code";
+import { pluginLineNumbers } from "@expressive-code/plugin-line-numbers";
 
 // https://astro.build/config
 export default defineConfig({
@@ -25,6 +26,12 @@ export default defineConfig({
     sitemap({
       filter: page => SITE.showArchives || !page.endsWith("/archives"),
     }),
+    expressiveCode({
+      plugins: [pluginLineNumbers()],
+      themes: ['min-light', 'min-dark'],
+      useDarkModeMediaQuery: true,
+      themeCssSelector: (theme) => `[data-ec-theme='${theme.name}']`
+    })
   ],
   markdown: {
     remarkPlugins: [
@@ -32,7 +39,6 @@ export default defineConfig({
       remarkCallouts,
       remarkDirective,
       [parseDirectiveNode, {}],
-      // foldableCodeBlocks,
     ],
     rehypePlugins: [
       rehypeKatex,
@@ -45,18 +51,6 @@ export default defineConfig({
         }
       ],
     ],
-    shikiConfig: {
-      // For more themes, visit https://shiki.style/themes
-      themes: { light: "min-light", dark: "night-owl" },
-      defaultColor: false,
-      wrap: false,
-      transformers: [
-        transformerFileName({ style: "v2", hideDot: false }),
-        transformerNotationHighlight(),
-        transformerNotationWordHighlight(),
-        transformerNotationDiff({ matchAlgorithm: "v3" }),
-      ],
-    },
   },
   vite: {
     // eslint-disable-next-line

@@ -26,6 +26,8 @@ function setPreference() {
 function reflectPreference() {
   document.firstElementChild.setAttribute("data-theme", themeValue);
 
+  document.documentElement.setAttribute('data-ec-theme', themeValue === "dark" ? "min-dark" : "min-light");
+
   document.querySelector("#theme-btn")?.setAttribute("aria-label", themeValue);
 
   // Get a reference to the body element
