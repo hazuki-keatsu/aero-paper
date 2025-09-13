@@ -11,6 +11,7 @@ import { transformerFileName } from "./src/utils/transformers/fileName";
 import { SITE } from "./src/config";
 import remarkMath from "remark-math";
 import rehypeKatex from "rehype-katex";
+import rehypeMermaid from "rehype-mermaid";
 import path from "path";
 import remarkDirective from 'remark-directive';
 import { parseDirectiveNode } from "./src/utils/github-repo-card/remark-directive-rehype";
@@ -42,6 +43,7 @@ export default defineConfig({
     ],
     rehypePlugins: [
       rehypeKatex,
+      rehypeMermaid,
       [
         rehypeComponents,
         {

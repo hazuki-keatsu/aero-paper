@@ -88,6 +88,15 @@
       @apply focus-visible:border-transparent focus-visible:outline-2 focus-visible:outline-accent focus-visible:outline-dashed;
       font-family: var(--font-family-code);
     }
+
+    /* Mermaid diagram styles */
+    .mermaid {
+      @apply mx-auto my-6 max-w-full overflow-x-auto;
+    }
+
+    .mermaid svg {
+      @apply max-w-full h-auto;
+    }
   }
   
   .prose .katex-display {
