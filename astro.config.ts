@@ -19,6 +19,7 @@ import { GithubCardComponent } from "./src/utils/github-repo-card/rehype-compone
 import rehypeComponents from "rehype-components";
 import expressiveCode from "astro-expressive-code";
 import { pluginLineNumbers } from "@expressive-code/plugin-line-numbers";
+import { pluginCollapsibleSections } from "@expressive-code/plugin-collapsible-sections"
 
 // https://astro.build/config
 export default defineConfig({
@@ -28,10 +29,14 @@ export default defineConfig({
       filter: page => SITE.showArchives || !page.endsWith("/archives"),
     }),
     expressiveCode({
-      plugins: [pluginLineNumbers()],
+      plugins: [pluginLineNumbers(), pluginCollapsibleSections()],
       themes: ['min-light', 'min-dark'],
       useDarkModeMediaQuery: true,
-      themeCssSelector: (theme) => `[data-ec-theme='${theme.name}']`
+      themeCssSelector: (theme) => `[data-ec-theme='${theme.name}']`,
+      defaultProps: {
+        // Change the default style of collapsible sections
+        collapseStyle: 'collapsible-auto',
+      },
     })
   ],
   markdown: {
