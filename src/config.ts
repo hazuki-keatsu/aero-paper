@@ -1,9 +1,9 @@
 export const SITE = {
-  website: "https://keatsu.top/", // replace this with your deployed domain
-  author: "Hazuki Keatsu",
+  website: "https://tothestars.wang/", // replace this with your deployed domain
+  author: "To the stars",
   profile: "",
-  desc: "叶月枫",
-  title: "Hazuki Keatsu",
+  desc: "忧蓝",
+  title: "To the stars",
   ogImage: "aeropaper-og.jpg",
   lightAndDarkMode: true,
   postPerIndex: 4,
@@ -14,12 +14,12 @@ export const SITE = {
   editPost: {
     enabled: false,
     text: "编辑页面",
-    url: "https://github.com/hazuki-keatsu/hazuki-blog/edit/main/",
+    url: "",
   },
   dynamicOgImage: true,
   musicPlayer: {
     enabled: true, // 是否启用音乐播放器
-    autoShow: false, // 是否自动展开播放器
+    autoShow: true, // 是否自动展开播放器
     defaultVolume: 50, // 默认音量 (0-100)
     showInPages: ["all"] as string[], // 在哪些页面显示: "all" | "home" | "posts" | ["home", "posts", "about"] 等
   },

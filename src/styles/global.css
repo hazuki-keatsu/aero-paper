@@ -73,7 +73,7 @@ html[data-theme="dark"] {
     left: 0;
     right: 0;
     bottom: 0;
-    background-image: url('../assets/images/backgrounds/mashiro.webp');
+    background-image: url('../assets/images/backgrounds/background1.jpg');
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
@@ -95,7 +95,7 @@ html[data-theme="dark"] {
   
   /* 深色模式下的背景图片 */
   html[data-theme="dark"] body::before {
-    background-image: url('../assets/images/backgrounds/asuka.webp');
+    background-image: url('../assets/images/backgrounds/background2.jpg');
     opacity: 1;
     filter: blur(3px);
   }

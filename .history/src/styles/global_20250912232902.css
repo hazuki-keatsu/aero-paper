@@ -1,0 +1,228 @@
+@import "tailwindcss";
+@import "./typography.css";
+@import "./github-repo-card.css";
+
+@font-face {
+  font-family: "Yozai";
+  src: url("../assets/fonts/Yozai-Regular.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+@custom-variant dark (&:where([data-theme=dark], [data-theme=dark] *));
+
+:root,
+html[data-theme="light"] {
+  --background: #fdfdfd;
+  --foreground: #282728;
+  --accent: #006cac;
+  --muted: #e6e6e6;
+  --border: #ece9e9;
+  --highlight-text: #ff6b6b;
+  --secondary-highlight: #4ecdc4;
+  --font-mono: "Yozai", ui-monospace, SFMono-Regular, "SF Mono", Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+  --font-code: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+}
+
+html[data-theme="dark"] {
+  --background: #212737;
+  --foreground: #eaedf3;
+  --accent: #ff6b01;
+  --muted: #343f60;
+  --border: #ab4b08;
+  --highlight-text: #ff8a8a;
+  --secondary-highlight: #6dd5d1;
+  --font-mono: "Yozai", ui-monospace, SFMono-Regular, "SF Mono", Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+  --font-code: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-accent: var(--accent);
+  --color-muted: var(--muted);
+  --color-border: var(--border);
+  --color-highlight-text: var(--highlight-text);
+  --color-secondary-highlight: var(--secondary-highlight);
+  --font-family-mono: var(--font-mono);
+  --font-family-code: var(--font-code);
+}
+
+@layer base {
+  * {
+    @apply border-border outline-accent/75;
+    scrollbar-width: auto;
+    scrollbar-color: var(--color-muted) transparent;
+    transition: background-color 0.3s ease;
+    
+  }
+  html {
+    @apply overflow-y-scroll scroll-smooth;
+  }
+  body {
+    @apply flex min-h-svh flex-col bg-background font-mono text-foreground selection:bg-accent/75 selection:text-background;
+    position: relative;
+  }
+  
+  /* 背景图片容器 */
+  body::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-image: url('../assets/images/backgrounds/mashiro.webp');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    filter: blur(2px);
+    opacity: 1;
+    z-index: -2;
+    transition: all 0.3s ease;
+  }
+  
+  /* 移动设备优化 */
+  @media (max-width: 768px) {
+    body::before {
+      background-attachment: scroll;
+      filter: blur(1px);
+      opacity: 1;
+    }
+  }
+  
+  /* 深色模式下的背景图片 */
+  html[data-theme="dark"] body::before {
+    background-image: url('../assets/images/backgrounds/asuka.webp');
+    opacity: 1;
+    filter: blur(3px);
+  }
+  
+  @media (max-width: 768px) {
+    html[data-theme="dark"] body::before {
+      filter: blur(2px);
+      opacity: 1;
+    }
+  }
+  
+  /* 内容遮罩层 */
+  body::after {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(253, 253, 253, 0.25);
+    backdrop-filter: blur(6px);
+    z-index: -1;
+  }
+  
+  /* 移动设备优化 */
+  @media (max-width: 768px) {
+    body::after {
+      background: rgba(253, 253, 253, 0.30);
+      backdrop-filter: blur(4px);
+    }
+  }
+  
+  html[data-theme="dark"] body::after {
+    background: rgba(33, 39, 55, 0.58);
+  }
+  
+  @media (max-width: 768px) {
+    html[data-theme="dark"] body::after {
+      background: rgba(33, 39, 55, 0.68);
+    }
+  }
+  a,
+  button {
+    @apply outline-offset-1 outline-accent focus-visible:no-underline focus-visible:outline-2 focus-visible:outline-dashed;
+  }
+  button:not(:disabled),
+  [role="button"]:not(:disabled) {
+    cursor: pointer;
+  }
+  section,
+  footer {
+    @apply mx-auto max-w-app px-4;
+  }
+  
+  /* 主要内容区域的统一样式 */
+  main {
+    position: relative;
+    z-index: 1;
+  }
+  
+  /* 卡片和内容区域的背景 */
+  .content-card {
+    background: rgba(255, 255, 255, 0.85);
+    backdrop-filter: blur(8px);
+    border: 1px solid rgba(255, 255, 255, 0.4);
+    border-radius: 12px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.08);
+  }
+  
+  html[data-theme="dark"] .content-card {
+    background: rgba(52, 63, 96, 0.85);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.25);
+  }
+}
+
+@utility max-w-app {
+  @apply max-w-4xl xl:max-w-5xl;
+}
+
+.active-nav {
+  @apply underline decoration-wavy decoration-2 underline-offset-4;
+}
+
+/* Source: https://piccalil.li/blog/a-more-modern-css-reset/ */
+/* Anything that has been anchored to should have extra scroll margin */
+:target {
+  scroll-margin-block: 1rem;
+}
+
+/* Pagefind 搜索框样式优化 */
+#pagefind-search .pagefind-ui__search-input {
+  background: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(8px);
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  border-radius: 12px;
+  box-shadow: 0 8px 32px rgb(0, 0, 0, 0.08);
+}
+
+html[data-theme="dark"] #pagefind-search .pagefind-ui__search-input {
+  background: rgba(52, 63, 96, 0.85);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.25);
+}
+
+#pagefind-search .pagefind-ui__result {
+  padding: 1.5rem;
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+  background: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(8px);
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  border-radius: 12px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.08);
+  transition: all 0.3s ease;
+}
+
+#pagefind-search .pagefind-ui__result:hover {
+  box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+}
+
+html[data-theme="dark"] #pagefind-search .pagefind-ui__result {
+  background: rgba(52, 63, 96, 0.85);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.25);
+}
+
+html[data-theme="dark"] #pagefind-search .pagefind-ui__result:hover {
+  box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+}

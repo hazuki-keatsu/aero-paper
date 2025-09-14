@@ -1,0 +1,109 @@
+---
+import { getCollection } from "astro:content";
+import Layout from "@/layouts/Layout.astro";
+import Header from "@/components/Header.astro";
+import Footer from "@/components/Footer.astro";
+import PageContainer from "@/components/PageContainer.astro";
+import Socials from "@/components/Socials.astro";
+import LinkButton from "@/components/LinkButton.astro";
+import Card from "@/components/Card.astro";
+import Hr from "@/components/Hr.astro";
+import getSortedPosts from "@/utils/getSortedPosts";
+import IconRss from "@/assets/icons/IconRss.svg";
+import IconArrowRight from "@/assets/icons/IconArrowRight.svg";
+import { SITE } from "@/config";
+import { SOCIALS } from "@/constants";
+
+const posts = await getCollection("blog");
+
+const sortedPosts = getSortedPosts(posts);
+const featuredPosts = sortedPosts.filter(({ data }) => data.featured);
+const recentPosts = sortedPosts.filter(({ data }) => !data.featured);
+---
+
+<Layout>
+  <PageContainer>
+    <Header />
+    <main id="main-content" data-layout="index" class="mx-auto max-w-app sm:px-4 px-0 transition-all duration-300">
+      <section id="hero" class="pt-8 pb-6 content-card sm:rounded-lg rounded-none p-8 my-6 transition-all duration-300">
+        <h1 class="my-4 inline-block text-4xl font-bold sm:my-8 sm:text-5xl">
+          <span class="text-highlight-text font-semibold">To</span>the <span class="text-secondary-highlight font-semibold">star</span>s
+        </h1>
+        <a
+          target="_blank"
+          href="/rss.xml"
+          class="inline-block ml-4"
+          aria-label="rss feed"
+          title="RSS Feed"
+        >
+          <IconRss
+            width={20}
+            height={20}
+            class="scale-125 stroke-accent stroke-3 rtl:-rotate-90"
+          />
+          <span class="sr-only">RSS 种子</span>
+        </a>
+
+        <p class="mt-4 text-lg">
+          <b>你伫立于液态的鲜花中央，为我们的重逢而微笑。</b>
+        </p>
+        {
+          // only display if at least one social link is enabled
+          SOCIALS.length > 0 && (
+            <div class="mt-4 flex flex-col sm:flex-row sm:items-center">
+              <div class="me-2 mb-1 whitespace-nowrap sm:mb-0">社交链接:</div>
+              <Socials />
+            </div>
+          )
+        }
+      </section>
+
+      <Hr />
+
+      {
+        featuredPosts.length > 0 && (
+          <section id="featured" class="sm:py-6 py-4 content-card sm:p-8 my-6 p-4 sm:rounded-lg rounded-none">
+            <h2 class="text-2xl font-semibold tracking-wide mb-6">置顶</h2>
+            <ul class="space-y-4">
+              {featuredPosts.map(data => (
+                <Card variant="h3" {...data} />
+              ))}
+            </ul>
+          </section>
+        )
+      }
+
+      {
+        recentPosts.length > 0 && (
+          <section id="recent-posts" class="sm:py-6 py-4 content-card sm:p-8 my-6 p-4 sm:rounded-lg rounded-none">
+            <h2 class="text-2xl font-semibold tracking-wide mb-6">最近发布</h2>
+            <ul class="space-y-4">
+              {recentPosts.map(
+                (data, index) =>
+                  index < SITE.postPerIndex && <Card variant="h3" {...data} />
+              )}
+            </ul>
+          </section>
+        )
+      }
+
+      <div class="my-4 text-center">
+        <LinkButton href="/posts/" class="content-card px-6 py-3 inline-block">
+          全部
+          <IconArrowRight class="inline-block rtl:-rotate-180" />
+        </LinkButton>
+      </div>
+    </main>
+    <Footer />
+  </PageContainer>
+</Layout>
+
+<script>
+  document.addEventListener("astro:page-load", () => {
+    const indexLayout = (document.querySelector("#main-content") as HTMLElement)
+      ?.dataset?.layout;
+    if (indexLayout) {
+      sessionStorage.setItem("backUrl", "/");
+    }
+  });
+</script>
