@@ -33,7 +33,7 @@ html[data-theme="dark"] {
   --border: #ab4b08;
   --highlight-text: #ff8a8a;
   --secondary-highlight: #6dd5d1;
-  --font-mono: "Yozai", ui-monospace, SFMono-Regular, "SF Mono", Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+  --font-mono: "Sarasa", ui-monospace, SFMono-Regular, "SF Mono", Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
   --font-code: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
 }
 
