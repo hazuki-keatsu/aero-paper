@@ -46,7 +46,7 @@
 
 ### :microscope: v0.5.1将加入
 
--［ ］Xmind图表解析
+- [ ] Xmind图表解析
 
 ## :computer: 本地调试
 
@@ -149,7 +149,7 @@ pnpm run preview
 - [AstroPaper](https://github.com/satnaing/astro-paper) - 原始主题
 - [Astro](https://astro.build/) - 静态站点生成器
 - [Tailwind CSS](https://tailwindcss.com/) - CSS 框架
-- [Expressive Code](https://expressive-code.com/)功能强大的代码块
+- [Expressive Code](https://expressive-code.com/) - 功能强大的代码块
 
 ## :telephone_receiver: 联系方式
 
