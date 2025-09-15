@@ -27,4 +27,4 @@ pnpm-debug.log*
 
 public/pagefind
 
-src/data/blog/.obsidian
+src/data/blog/

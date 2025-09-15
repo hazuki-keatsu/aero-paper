@@ -1,7 +1,7 @@
 import satori from "satori";
 // import { html } from "satori-html";
 import { SITE } from "@/config";
-import loadYozaiFont from "../loadYozaiFont";
+import loadFont from "../loadFont";
 import { getThemeColors } from "../extractCssVariables";
 
 // 获取主题色
@@ -15,7 +15,7 @@ const gradientColors = {
 };
 
 export default async post => {
-  const fonts = await loadYozaiFont();
+  const fonts = await loadFont();
   
   return satori(
     {

@@ -3,8 +3,8 @@
 @import "./github-repo-card.css";
 
 @font-face {
-  font-family: "Yozai";
-  src: url("../assets/fonts/Yozai-Regular.ttf") format("truetype");
+  font-family: "Sarasa";
+  src: url("../assets/fonts/LXGWWenKaiScreen.ttf") format("truetype");
   font-weight: normal;
   font-style: normal;
   font-display: swap;
@@ -21,7 +21,7 @@ html[data-theme="light"] {
   --border: #ece9e9;
   --highlight-text: #ff6b6b;
   --secondary-highlight: #4ecdc4;
-  --font-mono: "Yozai", ui-monospace, SFMono-Regular, "SF Mono", Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+  --font-mono: "Sarasa", ui-monospace, SFMono-Regular, "SF Mono", Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
   --font-code: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
 }
 
