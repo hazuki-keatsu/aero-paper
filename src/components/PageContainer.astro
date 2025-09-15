@@ -1,0 +1,36 @@
+---
+// 统一的页面容器组件，提供一致的布局和背景效果
+export interface Props {
+  class?: string;
+  variant?: "default" | "card" | "transparent";
+}
+
+const { class: className = "", variant = "default" } = Astro.props;
+
+const containerClasses = {
+  default: "min-h-screen relative z-1",
+  card: "min-h-screen relative z-1 content-card mx-4 my-8 p-6",
+  transparent: "min-h-screen relative z-1"
+};
+---
+
+<div class={`${containerClasses[variant]} ${className}`}>
+  <slot />
+</div>
+
+<style>
+  /* 确保页面容器的层级正确 */
+  .content-card {
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    border-radius: 12px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+  }
+  
+  html[data-theme="dark"] .content-card {
+    background: rgba(52, 63, 96, 0.95);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+  }
+</style>
