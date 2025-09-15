@@ -5,7 +5,10 @@ import { SITE } from "@/config";
 export const BLOG_PATH = "src/data/blog";
 
 const blog = defineCollection({
-  loader: glob({ pattern: "!(_{**,*})/**/*.md", base: `./${BLOG_PATH}` }),
+  loader: glob({ 
+    pattern: ["**/*.md", "!_obsidian/**", "!.obsidian/**", "!blog-assets/**"], 
+    base: `./${BLOG_PATH}` 
+  }),
   schema: ({ image }) =>
     z.object({
       author: z.string().default(SITE.author),

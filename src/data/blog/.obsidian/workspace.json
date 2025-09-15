@@ -11,12 +11,14 @@
             "id": "ecf340a032c04fb3",
             "type": "leaf",
             "state": {
-              "type": "excalidraw",
+              "type": "markdown",
               "state": {
-                "file": "_obsidian/Excalidraw/Drawing 2025-09-15 18.46.16.excalidraw.md"
+                "file": "reflection-after-watching-lain.md",
+                "mode": "source",
+                "source": false
               },
-              "icon": "excalidraw-icon",
-              "title": "Drawing 2025-09-15 18.46.16.excalidraw"
+              "icon": "lucide-file",
+              "title": "reflection-after-watching-lain"
             }
           }
         ]
@@ -170,15 +172,17 @@
   },
   "active": "ecf340a032c04fb3",
   "lastOpenFiles": [
-    "_obsidian/Excalidraw/Drawing 2025-09-14 22.03.59.excalidraw.md",
+    "deployment-of-the-site.md",
+    "paper-reading/transformer.md",
     "paper-reading/leveraging-knowledge-of-modality-experts-for-incomplete-multimodal-learning.md",
+    "_obsidian/Excalidraw/Drawing 2025-09-15 18.46.16.excalidraw.md",
+    "_obsidian/Excalidraw/Drawing 2025-09-14 22.03.59.excalidraw.md",
     "_obsidian/temp/PixPin_2025-09-14_21-42-34.png",
     "_obsidian/temp/Pasted Image 20250915151510_567.png",
     "_obsidian/temp/Pasted Image 20250915145537_114.png",
     "_obsidian/temp/Pasted Image 20250915151248_631.png",
     "_obsidian/temp/Pasted Image 20250915142837_811.png",
     "_obsidian/temp/Pasted Image 20250915145422_366.png",
-    "_obsidian/Excalidraw/Drawing 2025-09-15 18.46.16.excalidraw.md",
     "_obsidian/temp",
     "_obsidian/Excalidraw",
     "_obsidian",
@@ -196,9 +200,7 @@
     "Excalidraw/Drawing 2025-09-15 18.46.16.excalidraw.md",
     "Excalidraw/Drawing 2025-09-14 22.03.59.excalidraw.md",
     "Excalidraw",
-    "paper-reading/transformer.md",
     "blog-assets",
-    "deployment-of-the-site.md",
     "Excalidraw/Drawing 2025-09-15 18.52.22.excalidraw.md",
     "未命名.md",
     "MoMKE.md",
