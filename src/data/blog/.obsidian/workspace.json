@@ -1,0 +1,212 @@
+{
+  "main": {
+    "id": "6aee8bcef12d801d",
+    "type": "split",
+    "children": [
+      {
+        "id": "ebdd065c62a0d554",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "ecf340a032c04fb3",
+            "type": "leaf",
+            "state": {
+              "type": "excalidraw",
+              "state": {
+                "file": "_obsidian/Excalidraw/Drawing 2025-09-15 18.46.16.excalidraw.md"
+              },
+              "icon": "excalidraw-icon",
+              "title": "Drawing 2025-09-15 18.46.16.excalidraw"
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "vertical"
+  },
+  "left": {
+    "id": "b37f120e59610c1e",
+    "type": "split",
+    "children": [
+      {
+        "id": "3306e969c4216727",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "aeede8df032a3c48",
+            "type": "leaf",
+            "state": {
+              "type": "file-explorer",
+              "state": {
+                "sortOrder": "alphabetical",
+                "autoReveal": false
+              },
+              "icon": "lucide-folder-closed",
+              "title": "文件列表"
+            }
+          },
+          {
+            "id": "606dbafa918e8e74",
+            "type": "leaf",
+            "state": {
+              "type": "search",
+              "state": {
+                "query": "",
+                "matchingCase": false,
+                "explainSearch": false,
+                "collapseAll": false,
+                "extraContext": false,
+                "sortOrder": "alphabetical"
+              },
+              "icon": "lucide-search",
+              "title": "搜索"
+            }
+          },
+          {
+            "id": "c654afdecf162cf5",
+            "type": "leaf",
+            "state": {
+              "type": "bookmarks",
+              "state": {},
+              "icon": "lucide-bookmark",
+              "title": "书签"
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "horizontal",
+    "width": 200
+  },
+  "right": {
+    "id": "6d70ffc0b8aa6c0b",
+    "type": "split",
+    "children": [
+      {
+        "id": "539573e0861f0c9c",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "09a3fdde077811f0",
+            "type": "leaf",
+            "state": {
+              "type": "backlink",
+              "state": {
+                "file": "reflection-after-watching-lain.md",
+                "collapseAll": false,
+                "extraContext": false,
+                "sortOrder": "alphabetical",
+                "showSearch": false,
+                "searchQuery": "",
+                "backlinkCollapsed": false,
+                "unlinkedCollapsed": true
+              },
+              "icon": "links-coming-in",
+              "title": "reflection-after-watching-lain 的反向链接列表"
+            }
+          },
+          {
+            "id": "972e3d22ec28bd65",
+            "type": "leaf",
+            "state": {
+              "type": "outgoing-link",
+              "state": {
+                "file": "reflection-after-watching-lain.md",
+                "linksCollapsed": false,
+                "unlinkedCollapsed": true
+              },
+              "icon": "links-going-out",
+              "title": "reflection-after-watching-lain 的出链列表"
+            }
+          },
+          {
+            "id": "910c5cb6a8708aeb",
+            "type": "leaf",
+            "state": {
+              "type": "tag",
+              "state": {
+                "sortOrder": "frequency",
+                "useHierarchy": true,
+                "showSearch": false,
+                "searchQuery": ""
+              },
+              "icon": "lucide-tags",
+              "title": "标签"
+            }
+          },
+          {
+            "id": "98c809441de70243",
+            "type": "leaf",
+            "state": {
+              "type": "outline",
+              "state": {
+                "file": "reflection-after-watching-lain.md",
+                "followCursor": false,
+                "showSearch": false,
+                "searchQuery": ""
+              },
+              "icon": "lucide-list",
+              "title": "reflection-after-watching-lain 的大纲"
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "horizontal",
+    "width": 300,
+    "collapsed": true
+  },
+  "left-ribbon": {
+    "hiddenItems": {
+      "switcher:打开快速切换": false,
+      "graph:查看关系图谱": false,
+      "canvas:新建白板": false,
+      "daily-notes:打开/创建今天的日记": false,
+      "templates:插入模板": false,
+      "command-palette:打开命令面板": false,
+      "bases:创建新数据库": false,
+      "obsidian-excalidraw-plugin:新建绘图文件": false
+    }
+  },
+  "active": "ecf340a032c04fb3",
+  "lastOpenFiles": [
+    "_obsidian/Excalidraw/Drawing 2025-09-14 22.03.59.excalidraw.md",
+    "paper-reading/leveraging-knowledge-of-modality-experts-for-incomplete-multimodal-learning.md",
+    "_obsidian/temp/PixPin_2025-09-14_21-42-34.png",
+    "_obsidian/temp/Pasted Image 20250915151510_567.png",
+    "_obsidian/temp/Pasted Image 20250915145537_114.png",
+    "_obsidian/temp/Pasted Image 20250915151248_631.png",
+    "_obsidian/temp/Pasted Image 20250915142837_811.png",
+    "_obsidian/temp/Pasted Image 20250915145422_366.png",
+    "_obsidian/Excalidraw/Drawing 2025-09-15 18.46.16.excalidraw.md",
+    "_obsidian/temp",
+    "_obsidian/Excalidraw",
+    "_obsidian",
+    "obsidian/temp/Pasted Image 20250915151248_631.png",
+    "obsidian/temp/PixPin_2025-09-14_21-42-34.png",
+    "obsidian/temp/Pasted Image 20250915151510_567.png",
+    "obsidian/temp/Pasted Image 20250915145537_114.png",
+    "obsidian/temp",
+    "obsidian/Excalidraw/Drawing 2025-09-15 18.46.16.excalidraw.md",
+    "obsidian/Excalidraw/Drawing 2025-09-14 22.03.59.excalidraw.md",
+    "obsidian/Excalidraw",
+    "obsidian",
+    "temp",
+    "assets",
+    "Excalidraw/Drawing 2025-09-15 18.46.16.excalidraw.md",
+    "Excalidraw/Drawing 2025-09-14 22.03.59.excalidraw.md",
+    "Excalidraw",
+    "paper-reading/transformer.md",
+    "blog-assets",
+    "deployment-of-the-site.md",
+    "Excalidraw/Drawing 2025-09-15 18.52.22.excalidraw.md",
+    "未命名.md",
+    "MoMKE.md",
+    "reflection-after-watching-lain.md",
+    "custom-markdown-syntax-in-astro.md",
+    "aero-paper/aero-paper-v0.5.0.md",
+    "aero-paper/aero-paper-v0.5.0-fixed.md",
+    "aero-paper/aero-paper-v0.4.0 copy.md",
+    "code-collapse-test.md"
+  ]
+}
