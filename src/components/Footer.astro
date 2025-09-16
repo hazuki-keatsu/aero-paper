@@ -14,18 +14,30 @@ export interface Props {
 const { noMarginTop = false } = Astro.props;
 ---
 
-<footer class:list={["relative z-10 w-full pb-4 px-0 sm:px-4 transition-all duration-300", { "mt-auto": !noMarginTop }]}>
-  <div class="content-card sm:mb-4 p-4 rounded-none sm:rounded-lg">
+<footer
+  class:list={[
+    "relative z-10 w-full px-0 pb-4 transition-all duration-300 sm:px-4",
+    { "mt-auto": !noMarginTop },
+  ]}
+>
+  <div class="content-card rounded-none p-4 sm:mb-4 sm:rounded-lg">
     <!-- 社交链接 -->
     <div class="mb-4 flex justify-center">
       <Socials centered />
     </div>
 
-    <div class="space-y-1 flex justify-center flex-col text-center">
-      <div class="flex flex-col md:flex-row justify-center items-center gap-1 md:gap-2">
-        <div class="text-muted-foreground">
-          Copyright &#169; {currentYear}
-          {author}
+    <div class="flex flex-col justify-center space-y-1 text-center">
+      <div
+        class="flex flex-col items-center justify-center gap-1 md:flex-row md:gap-2"
+      >
+        <div class="text-muted-foreground flex items-center">
+          <img style="width: 16px" class="inline-block mr-1" src="/src/assets/images/filing-icon.png"> 
+          <a
+            class="underline decoration-dashed underline-offset-4 hover:text-accent"
+            href="https://beian.mps.gov.cn/#/query/webSearch?code=42082102000235"
+            rel="noreferrer"
+            target="_blank">鄂公网安备42082102000235号</a
+          >
         </div>
         <span class="hidden md:inline">&nbsp;|&nbsp;</span>
         <div>
@@ -37,7 +49,9 @@ const { noMarginTop = false } = Astro.props;
           </LinkButton>
         </div>
       </div>
-      <div class="flex flex-col md:flex-row justify-center items-center gap-1 md:gap-2">
+      <div
+        class="flex flex-col items-center justify-center gap-1 md:flex-row md:gap-2"
+      >
         <div>
           由 <LinkButton
             class="underline decoration-dashed underline-offset-4 hover:text-accent"
@@ -54,6 +68,14 @@ const { noMarginTop = false } = Astro.props;
           >
             CC BY-NC
           </LinkButton> 协议发布
+        </div>
+      </div>
+      <div
+        class="flex flex-col items-center justify-center gap-1 md:flex-row md:gap-2"
+      >
+        <div class="text-muted-foreground">
+          Copyright &#169; {currentYear}
+          {author}
         </div>
       </div>
     </div>

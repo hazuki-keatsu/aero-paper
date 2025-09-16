@@ -13,12 +13,24 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "reflection-after-watching-lain.md",
+                "file": "integrate-obsidian-in-aero-paper.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "reflection-after-watching-lain"
+              "title": "integrate-obsidian-in-aero-paper"
+            }
+          },
+          {
+            "id": "8b6e1c7d881343eb",
+            "type": "leaf",
+            "state": {
+              "type": "excalidraw",
+              "state": {
+                "file": "_obsidian/Excalidraw/Drawing 2025-09-16 14.21.42.excalidraw.md"
+              },
+              "icon": "excalidraw-icon",
+              "title": "Drawing 2025-09-16 14.21.42.excalidraw"
             }
           }
         ]
@@ -78,7 +90,7 @@
       }
     ],
     "direction": "horizontal",
-    "width": 200
+    "width": 285.5
   },
   "right": {
     "id": "6d70ffc0b8aa6c0b",
@@ -167,11 +179,18 @@
       "templates:插入模板": false,
       "command-palette:打开命令面板": false,
       "bases:创建新数据库": false,
-      "obsidian-excalidraw-plugin:新建绘图文件": false
+      "obsidian-excalidraw-plugin:新建绘图文件": false,
+      "tinypng-image:Compress images": false
     }
   },
   "active": "ecf340a032c04fb3",
   "lastOpenFiles": [
+    "blog-assets/integrate-obsidian-in-aero-paper - 1.png",
+    "blog-assets/PixPin_2025-09-16_15-06-43.png",
+    "_obsidian/Excalidraw/Drawing 2025-09-16 14.21.42.excalidraw.md",
+    "integrate-obsidian-in-aero-paper.md",
+    "reflection-after-watching-lain.md",
+    "aero-paper/aero-paper-v0.3.0.md",
     "deployment-of-the-site.md",
     "paper-reading/transformer.md",
     "paper-reading/leveraging-knowledge-of-modality-experts-for-incomplete-multimodal-learning.md",
@@ -188,8 +207,6 @@
     "_obsidian",
     "obsidian/temp/Pasted Image 20250915151248_631.png",
     "obsidian/temp/PixPin_2025-09-14_21-42-34.png",
-    "obsidian/temp/Pasted Image 20250915151510_567.png",
-    "obsidian/temp/Pasted Image 20250915145537_114.png",
     "obsidian/temp",
     "obsidian/Excalidraw/Drawing 2025-09-15 18.46.16.excalidraw.md",
     "obsidian/Excalidraw/Drawing 2025-09-14 22.03.59.excalidraw.md",
@@ -202,9 +219,7 @@
     "Excalidraw",
     "blog-assets",
     "Excalidraw/Drawing 2025-09-15 18.52.22.excalidraw.md",
-    "未命名.md",
     "MoMKE.md",
-    "reflection-after-watching-lain.md",
     "custom-markdown-syntax-in-astro.md",
     "aero-paper/aero-paper-v0.5.0.md",
     "aero-paper/aero-paper-v0.5.0-fixed.md",

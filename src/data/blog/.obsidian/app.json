@@ -1,6 +1,7 @@
 {
   "newLinkFormat": "absolute",
   "useMarkdownLinks": true,
-  "attachmentFolderPath": "./_obsidian/temp",
-  "newFileLocation": "folder"
+  "attachmentFolderPath": "./blog-assets",
+  "newFileLocation": "root",
+  "alwaysUpdateLinks": true
 }
