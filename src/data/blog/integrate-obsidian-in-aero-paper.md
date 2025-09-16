@@ -70,7 +70,7 @@ mklink /J D:\keatsu-top-blog\src\data\blog\blog-assets D:\keatsu-top-blog\public
 
 接下来在 Obsidian 中按下图中的配置来设置，就可以实现对图片的预览和粘贴图片自动放入`blog-assets`文件夹中
 
-![](blog-assets/integrate-obsidian-in-aero-paper%20-%201.png)
+![](blog-assets/integrate-obsidian-in-aero-paper-1.png)
 
 ## 四、Astro 配置
 

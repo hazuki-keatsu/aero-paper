@@ -13,12 +13,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "integrate-obsidian-in-aero-paper.md",
+                "file": "website-filing-approval.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "integrate-obsidian-in-aero-paper"
+              "title": "website-filing-approval"
             }
           },
           {
@@ -90,7 +90,7 @@
       }
     ],
     "direction": "horizontal",
-    "width": 285.5
+    "width": 429.5
   },
   "right": {
     "id": "6d70ffc0b8aa6c0b",
@@ -185,10 +185,12 @@
   },
   "active": "ecf340a032c04fb3",
   "lastOpenFiles": [
-    "blog-assets/integrate-obsidian-in-aero-paper - 1.png",
+    "blog-assets/website-filing-approval-1.png",
+    "integrate-obsidian-in-aero-paper.md",
+    "website-filing-approval.md",
+    "blog-assets/integrate-obsidian-in-aero-paper-1.png",
     "blog-assets/PixPin_2025-09-16_15-06-43.png",
     "_obsidian/Excalidraw/Drawing 2025-09-16 14.21.42.excalidraw.md",
-    "integrate-obsidian-in-aero-paper.md",
     "reflection-after-watching-lain.md",
     "aero-paper/aero-paper-v0.3.0.md",
     "deployment-of-the-site.md",
