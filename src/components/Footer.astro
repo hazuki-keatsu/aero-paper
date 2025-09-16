@@ -2,6 +2,7 @@
 import LinkButton from "./LinkButton.astro";
 import Socials from "./Socials.astro";
 import { SITE } from "../config";
+import FilingIcon from "@/assets/images/filing-icon.png"
 
 const currentYear = new Date().getFullYear();
 
@@ -31,7 +32,7 @@ const { noMarginTop = false } = Astro.props;
         class="flex flex-col items-center justify-center gap-1 md:flex-row md:gap-2"
       >
         <div class="text-muted-foreground flex items-center">
-          <img style="width: 16px" class="inline-block mr-1" src="/src/assets/images/filing-icon.png"> 
+          <img src={FilingIcon.src} alt="Filing Icon" style="width: 16px" class="inline-block mr-1" />
           <a
             class="underline decoration-dashed underline-offset-4 hover:text-accent"
             href="https://beian.mps.gov.cn/#/query/webSearch?code=42082102000235"
