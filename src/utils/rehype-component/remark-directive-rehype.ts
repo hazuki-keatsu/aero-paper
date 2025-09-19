@@ -18,13 +18,15 @@ export const parseDirectiveNode: Plugin<[], Root> = () => {
 				// Special handling for time-block directive
 				if (node.name === "time-block") {
 					// Extract attributes from the directive
-					const { time, title, detail } = node.attributes;
+					const { time, title, detail, image, imageAlt } = node.attributes;
 					
 					// Create the hast element for time-block component
 					const hast = h("time-block", {
 						time: time || "",
 						title: title || "",
 						detail: detail || "",
+						image: image || "",
+						imageAlt: imageAlt || "",
 					}) as any;
 
 					data.hName = hast.tagName;

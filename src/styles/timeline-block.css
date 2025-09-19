@@ -99,3 +99,26 @@ html[data-theme="dark"] .timeline-content-card:hover {
     0 8px 24px rgba(0, 0, 0, 0.35),
     0 4px 12px rgba(0, 0, 0, 0.2);
 }
+
+/* Timeline image styles */
+.timeline-image-container {
+  margin: 1rem 0;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.timeline-image {
+  width: 100%;
+  height: auto;
+  max-height: 300px;
+  object-fit: cover;
+  border-radius: 8px;
+  transition: transform 0.3s ease;
+}
+
+/* 响应式图片 */
+@media (max-width: 640px) {
+  .timeline-image {
+    max-height: 200px;
+  }
+}
