@@ -192,37 +192,97 @@ const isFirstLoad = Astro.cookies.get("hasLoaded")?.value !== "true";
 
 <script>
   function toggleNav() {
-    const menuBtn = document.querySelector("#menu-btn");
-    const menuItems = document.querySelector("#menu-items");
+    const menuBtn = document.querySelector("#menu-btn") as HTMLButtonElement;
+    const menuItems = document.querySelector("#menu-items") as HTMLElement;
     const menuIcon = document.querySelector("#menu-icon");
     const closeIcon = document.querySelector("#close-icon");
 
     if (!menuBtn || !menuItems || !menuIcon || !closeIcon) return;
 
+    // 计算菜单的实际高度
+    function calculateMenuHeight(): number {
+      // 临时显示菜单以计算高度
+      const originalDisplay = menuItems.style.display;
+      const originalVisibility = menuItems.style.visibility;
+      const originalPosition = menuItems.style.position;
+      const originalMaxHeight = menuItems.style.maxHeight;
+      const originalOpacity = menuItems.style.opacity;
+      const originalClass = menuItems.className;
+
+      // 移除所有菜单状态类，设置为可见但不可交互
+      menuItems.className = menuItems.className.replace(/menu-\w+/g, "");
+      menuItems.style.visibility = "hidden";
+      menuItems.style.position = "absolute";
+      menuItems.style.maxHeight = "none";
+      menuItems.style.opacity = "1";
+      menuItems.style.display = "block";
+
+      const height = menuItems.scrollHeight;
+
+      // 恢复原始状态
+      menuItems.className = originalClass;
+      menuItems.style.display = originalDisplay;
+      menuItems.style.visibility = originalVisibility;
+      menuItems.style.position = originalPosition;
+      menuItems.style.maxHeight = originalMaxHeight;
+      menuItems.style.opacity = originalOpacity;
+
+      return height;
+    }
+
     menuBtn.addEventListener("click", () => {
       const isExpanded = menuBtn.getAttribute("aria-expanded") === "true";
 
       if (isExpanded) {
-        // 收起菜单
+        // 收起菜单 - 先设置当前高度，然后过渡到0
+        const currentHeight = menuItems.scrollHeight;
+        menuItems.style.maxHeight = `${currentHeight}px`;
+
+        // 强制重绘
+        menuItems.offsetHeight;
+
         menuItems.classList.remove("menu-open");
         menuItems.classList.add("menu-closing");
 
-        setTimeout(() => {
-          menuItems.classList.remove("menu-closing");
-          menuItems.classList.add("menu-closed");
-          menuBtn.setAttribute("aria-expanded", "false");
-          menuBtn.setAttribute("aria-label", "Open Menu");
-        }, 300); // 与动画时长一致
+        menuItems.classList.remove("menu-closing");
+        menuItems.classList.add("menu-closed");
+        menuBtn.setAttribute("aria-expanded", "false");
+        menuBtn.setAttribute("aria-label", "Open Menu");
+        // 清除内联样式
+        menuItems.style.maxHeight = "";
       } else {
-        // 展开菜单
+        // 展开菜单 - 先设置为0，然后过渡到目标高度
+        const targetHeight = calculateMenuHeight();
+
+        // 先移除closed状态并设置高度为0
         menuItems.classList.remove("menu-closed");
+        menuItems.style.maxHeight = "0px";
+
+        // 强制重绘
+        menuItems.offsetHeight;
+
+        // 设置目标高度并添加open状态
+        menuItems.style.maxHeight = `${targetHeight}px`;
         menuItems.classList.add("menu-open");
+
         menuBtn.setAttribute("aria-expanded", "true");
         menuBtn.setAttribute("aria-label", "Close Menu");
       }
 
       menuIcon.classList.toggle("hidden");
       closeIcon.classList.toggle("hidden");
+    });
+
+    // 监听窗口大小变化，如果菜单是展开状态则重新计算高度
+    let resizeTimer: number;
+    window.addEventListener("resize", () => {
+      clearTimeout(resizeTimer);
+      resizeTimer = window.setTimeout(() => {
+        if (menuItems.classList.contains("menu-open")) {
+          const newHeight = calculateMenuHeight();
+          menuItems.style.maxHeight = `${newHeight}px`;
+        }
+      }, 100);
     });
   }
 
@@ -309,7 +369,7 @@ const isFirstLoad = Astro.cookies.get("hasLoaded")?.value !== "true";
     }
 
     .menu-open {
-      max-height: 320px; /* 调整为更精确的高度 */
+      max-height: 320px; /* 默认值，会被JavaScript动态设置 */
       opacity: 1;
       transform: translateY(0) scaleY(1);
       margin-top: 1rem;
