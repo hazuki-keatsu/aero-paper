@@ -23,6 +23,7 @@ export const SITE = {
     defaultVolume: 50, // 默认音量 (0-100)
     showInPages: ["all"] as string[], // 在哪些页面显示: "all" | "home" | "posts" | ["home", "posts", "about"] 等
   },
+  showTimeline: true,
   sideTableOfContents: true,
   githubRepoCardDataFetchCacheTime: 3600,
   dir: "ltr", // "rtl" | "auto"

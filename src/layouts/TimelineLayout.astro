@@ -5,6 +5,7 @@ import Breadcrumb from "@/components/Breadcrumb.astro";
 import PageContainer from "@/components/PageContainer.astro";
 import Layout from "./Layout.astro";
 import { SITE } from "@/config";
+import "@/styles/timeline-block.css";
 
 export interface Props {
   frontmatter: {
@@ -25,12 +26,22 @@ const { frontmatter } = Astro.props;
       class="mx-auto max-w-app px-0 transition-all duration-300 sm:px-4"
     >
       <section
-        id="about"
+        id="timeline"
         class="content-card app-prose mt-6 mb-12 max-w-app rounded-none px-4 py-8 sm:rounded-lg sm:px-8 prose-img:border-0"
       >
-        <h1 class="mb-6 text-2xl tracking-wider sm:text-3xl">
+        <h1
+          class="mb-6 text-2xl tracking-wider sm:text-3xl"
+        >
           {frontmatter.title}
         </h1>
+
+        {
+          frontmatter.description && (
+            <p class="mb-6 mt-2 italic">
+              {frontmatter.description}
+            </p>
+          )
+        }
         <slot />
       </section>
     </main>

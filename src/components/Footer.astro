@@ -2,7 +2,7 @@
 import LinkButton from "./LinkButton.astro";
 import Socials from "./Socials.astro";
 import { SITE } from "../config";
-import FilingIcon from "@/assets/images/filing-icon.png"
+import FilingIcon from "@/assets/images/filing-icon.png";
 
 const currentYear = new Date().getFullYear();
 
@@ -32,7 +32,12 @@ const { noMarginTop = false } = Astro.props;
         class="flex flex-col items-center justify-center gap-1 md:flex-row md:gap-2"
       >
         <div class="text-muted-foreground flex items-center">
-          <img src={FilingIcon.src} alt="Filing Icon" style="width: 16px" class="inline-block mr-1" />
+          <img
+            src={FilingIcon.src}
+            alt="Filing Icon"
+            style="width: 16px"
+            class="mr-1 inline-block"
+          />
           <a
             class="underline decoration-dashed underline-offset-4 hover:text-accent"
             href="https://beian.mps.gov.cn/#/query/webSearch?code=42082102000235"
@@ -59,7 +64,13 @@ const { noMarginTop = false } = Astro.props;
             href="https://github.com/hazuki-keatsu/aero-paper"
           >
             AeroPaper
-          </LinkButton> 强力驱动
+          </LinkButton> 和 <LinkButton
+            class="underline decoration-dashed underline-offset-4 hover:text-accent"
+            href="https://astro.build"
+          >
+            Astro
+          </LinkButton>
+          强力驱动
         </div>
         <span class="hidden md:inline">&nbsp;|&nbsp;</span>
         <div>

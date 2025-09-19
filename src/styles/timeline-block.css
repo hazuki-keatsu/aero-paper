@@ -1,0 +1,101 @@
+/* Timeline Block Styles */
+.timeline-block {
+  display: flex;
+  flex-direction: row;
+  position: relative;
+}
+
+.timeline-line {
+  width: 2px;
+  height: inherit;
+  background-color: var(--color-accent);
+  margin: 0 1rem;
+}
+
+.timeline-time {
+  display: flex;
+  flex-direction: row;
+  gap: 1rem;
+  color: var(--color-foreground);
+  margin-left: 8px;
+}
+
+.timeline-date {
+  font-weight: bold;
+  font-size: 1rem;
+}
+
+.timeline-clock {
+  font-weight: lighter;
+  font-size: 1rem;
+}
+
+.timeline-marker {
+  position: absolute;
+  border-radius: 50%;
+  height: 0.75rem;
+  width: 0.75rem;
+  border: 2px solid var(--color-accent);
+  background-color: var(--color-background);
+
+  top: 0.52rem;
+  left: 0.68rem;
+}
+
+.timeline-title {
+  margin: 0 0 0.75rem 0;
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: var(--color-foreground);
+  line-height: 1.4;
+}
+
+.timeline-detail {
+  margin: 0;
+  font-size: 1rem;
+  color: var(--color-foreground);
+  line-height: 1.6;
+}
+
+/* Timeline content container */
+.timeline-content {
+  flex: 1;
+  width: 100%;
+}
+
+/* 卡片和内容区域的背景 */
+.timeline-content-card {
+  background: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(8px);
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  border-radius: 12px;
+  box-shadow: 
+    0 4px 16px rgba(0, 0, 0, 0.08),
+    0 2px 8px rgba(0, 0, 0, 0.04);
+  padding: 1.5rem;
+  margin: 8px 8px 8px 0;
+  width: 100%;
+  box-sizing: border-box;
+  transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.timeline-content-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 
+    0 8px 24px rgba(0, 0, 0, 0.12),
+    0 4px 12px rgba(0, 0, 0, 0.06);
+}
+
+html[data-theme="dark"] .timeline-content-card {
+  background: rgba(52, 63, 96, 0.85);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  box-shadow: 
+    0 4px 16px rgba(0, 0, 0, 0.25),
+    0 2px 8px rgba(0, 0, 0, 0.15);
+}
+
+html[data-theme="dark"] .timeline-content-card:hover {
+  box-shadow: 
+    0 8px 24px rgba(0, 0, 0, 0.35),
+    0 4px 12px rgba(0, 0, 0, 0.2);
+}
