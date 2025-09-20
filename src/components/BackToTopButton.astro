@@ -1,30 +1,26 @@
 ---
 import IconChevronLeft from "@/assets/icons/IconChevronLeft.svg";
-import IconArrowNarrowUp from "@/assets/icons/IconArrowNarrowUp.svg";
 ---
 
+<!-- 回到顶部按钮（样式参考 MusicPlayer 最小化按钮） -->
 <div
   id="btt-btn-container"
-  class:list={[
-    "fixed end-8 bottom-8 z-50 rounded-full md:rounded",
-    "translate-y-14 opacity-0 transition duration-300",
-  ]}
+  class="fixed bottom-24 right-5 z-50 transition-all duration-200 ease-in-out opacity-0 translate-y-14"
 >
   <button
+    type="button"
     data-button="back-to-top"
-    class:list={[
-      "group relative bg-background px-2 py-1 flex items-center justify-center",
-      "size-14 rounded-full shadow-xl",
-      "h-16 w-16 md:h-12 md:w-24 md:rounded-md md:shadow-none md:focus-visible:rounded-none",
-      "bg-background/35 bg-clip-padding backdrop-blur-lg",
-    ]}
+    aria-label="返回顶部"
+    class="content-card group flex items-center justify-center cursor-pointer rounded-xl transition-all duration-200 hover:bg-accent/20"
+    style="width: 3.5rem; height: 3.5rem;"
   >
-    <IconChevronLeft class="inline-block rotate-90 md:hidden" />
-    <span class="sr-only text-sm group-hover:text-accent md:not-sr-only flex items-center gap-1">
-      <IconArrowNarrowUp class="inline-block size-4" />
-      回到顶部
-    </span>
+    <IconChevronLeft
+      aria-hidden="true"
+      class="text-accent transition-transform duration-200 group-hover:scale-110 rotate-90"
+      style="width: 1.5rem; height: 1.5rem;"
+    />
   </button>
+  
 </div>
 
 <script is:inline data-astro-rerun>
@@ -40,8 +36,14 @@ import IconArrowNarrowUp from "@/assets/icons/IconArrowNarrowUp.svg";
 
     // Attach click event handler for back-to-top button
     backToTopBtn.addEventListener("click", () => {
-      document.body.scrollTop = 0; // For Safari
-      document.documentElement.scrollTop = 0; // For Chrome, Firefox, IE and Opera
+      // 优先使用平滑滚动
+      if ("scrollTo" in window) {
+        window.scrollTo({ top: 0, behavior: "smooth" });
+      } else {
+        // 回退方案
+        document.body.scrollTop = 0; // For Safari
+        document.documentElement.scrollTop = 0; // For Chrome, Firefox, IE and Opera
+      }
     });
 
     // Handle button visibility according to scroll position
@@ -72,5 +74,51 @@ import IconArrowNarrowUp from "@/assets/icons/IconArrowNarrowUp.svg";
       }
     });
   }
+
+  /** 防止回顶按钮与目录按钮遮挡 */
+  function positionAdjustment() {
+    const tocButton = document.getElementById("toc-button");
+    const mobileFloat = document.getElementById("mobile-toc-float");
+    const bttButton = document.getElementById("btt-btn-container");
+
+    if (!bttButton) return;
+
+    // 当组件不存在时，保持默认位置
+    if (!tocButton || !mobileFloat) {
+      bttButton.classList.remove("bottom-5");
+      bttButton.classList.add("bottom-24");
+      return;
+    }
+
+    const btnStyle = window.getComputedStyle(tocButton);
+    const parentStyle = window.getComputedStyle(mobileFloat);
+
+    const isButtonRendered = btnStyle.display !== "none"; // 最小化状态下是 flex，展开时为 none
+    const isParentVisible = parentStyle.visibility !== "hidden" && parseFloat(parentStyle.opacity || "1") > 0.05;
+    const shouldAvoidOverlap = isButtonRendered && isParentVisible;
+
+    if (shouldAvoidOverlap) {
+      bttButton.classList.remove("bottom-5");
+      bttButton.classList.add("bottom-24");
+    } else {
+      bttButton.classList.remove("bottom-24");
+      bttButton.classList.add("bottom-5");
+    }
+  }
+
+  positionAdjustment();
   backToTop();
+
+  window.addEventListener("resize", () => positionAdjustment());
+
+  // 监听移动目录容器的 class/style 变化，以便及时调整位置
+  const mobileFloat = document.getElementById("mobile-toc-float");
+  if (mobileFloat && "MutationObserver" in window) {
+    const mo = new MutationObserver(() => positionAdjustment());
+    mo.observe(mobileFloat, { attributes: true, attributeFilter: ["class", "style"] });
+  }
+
+  // 页面切换（Astro 过渡）后也重新计算
+  document.addEventListener("astro:page-load", positionAdjustment);
+  document.addEventListener("astro:after-swap", positionAdjustment);
 </script>
