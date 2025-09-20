@@ -5,7 +5,8 @@ import IconChevronLeft from "@/assets/icons/IconChevronLeft.svg";
 <!-- 回到顶部按钮（样式参考 MusicPlayer 最小化按钮） -->
 <div
   id="btt-btn-container"
-  class="fixed bottom-24 right-5 z-50 transition-all duration-200 ease-in-out opacity-0 translate-y-14"
+  transition:persist="back-to-top"
+  class="fixed bottom-24 right-5 z-40 transition-all duration-200 ease-in-out opacity-0 translate-y-14"
 >
   <button
     type="button"
@@ -23,7 +24,7 @@ import IconChevronLeft from "@/assets/icons/IconChevronLeft.svg";
   
 </div>
 
-<script is:inline data-astro-rerun>
+<script is:inline>
   /** Scrolls the document to the top when
    * the "Back to Top" button is clicked. */
   function backToTop() {
@@ -49,16 +50,18 @@ import IconChevronLeft from "@/assets/icons/IconChevronLeft.svg";
     // Handle button visibility according to scroll position
     let lastVisible = null;
     function handleScroll() {
-      const scrollTotal = rootElement.scrollHeight - rootElement.clientHeight;
+      const windowHeight = window.screen.height;
       const scrollTop = rootElement.scrollTop;
 
-      const isVisible = scrollTop / scrollTotal > 0.3;
+      const isVisible = scrollTop > windowHeight / 2;
 
       if (isVisible !== lastVisible) {
         btnContainer.classList.toggle("opacity-100", isVisible);
         btnContainer.classList.toggle("translate-y-0", isVisible);
+        btnContainer.classList.toggle("visible", isVisible);
         btnContainer.classList.toggle("opacity-0", !isVisible);
         btnContainer.classList.toggle("translate-y-14", !isVisible);
+        btnContainer.classList.toggle("invisible", !isVisible);
         lastVisible = isVisible;
       }
     }
@@ -77,33 +80,48 @@ import IconChevronLeft from "@/assets/icons/IconChevronLeft.svg";
 
   /** 防止回顶按钮与目录按钮遮挡 */
   function positionAdjustment() {
-    const tocButton = document.getElementById("toc-button");
-    const mobileFloat = document.getElementById("mobile-toc-float");
     const bttButton = document.getElementById("btt-btn-container");
-
     if (!bttButton) return;
 
-    // 当组件不存在时，保持默认位置
-    if (!tocButton || !mobileFloat) {
-      bttButton.classList.remove("bottom-5");
-      bttButton.classList.add("bottom-24");
-      return;
+    const tocButton = document.getElementById("toc-button");
+
+    // 更稳健的“可见性”判断：
+    // 1) 自身与视口有交集且尺寸>0
+    // 2) 自身或任一祖先不存在 display:none / visibility:hidden / opacity≈0 的情况
+    function isElementVisible(el) {
+      if (!el || !el.isConnected) return false;
+
+      const rect = el.getBoundingClientRect();
+      const vw = window.innerWidth || document.documentElement.clientWidth || 0;
+      const vh = window.innerHeight || document.documentElement.clientHeight || 0;
+      const intersectsViewport =
+        rect.width > 0 &&
+        rect.height > 0 &&
+        rect.bottom > 0 &&
+        rect.right > 0 &&
+        rect.top < vh &&
+        rect.left < vw;
+      if (!intersectsViewport) return false;
+
+      // 检查自身及祖先的显示状态（处理父级 opacity:0 / visibility:hidden 等）
+      let node = el;
+      while (node && node !== document.documentElement) {
+        const s = window.getComputedStyle(node);
+        if (s.display === "none" || s.visibility === "hidden" || parseFloat(s.opacity || "1") <= 0.05) {
+          return false;
+        }
+        node = node.parentElement;
+      }
+
+      return true;
     }
 
-    const btnStyle = window.getComputedStyle(tocButton);
-    const parentStyle = window.getComputedStyle(mobileFloat);
+    const tocVisible = isElementVisible(tocButton);
+    console.log("Toc可见状态：" + tocVisible);
 
-    const isButtonRendered = btnStyle.display !== "none"; // 最小化状态下是 flex，展开时为 none
-    const isParentVisible = parentStyle.visibility !== "hidden" && parseFloat(parentStyle.opacity || "1") > 0.05;
-    const shouldAvoidOverlap = isButtonRendered && isParentVisible;
-
-    if (shouldAvoidOverlap) {
-      bttButton.classList.remove("bottom-5");
-      bttButton.classList.add("bottom-24");
-    } else {
-      bttButton.classList.remove("bottom-24");
-      bttButton.classList.add("bottom-5");
-    }
+    // 根据可见性切换 bottom 间距，right 始终为 right-5
+    bttButton.classList.toggle("bottom-24", tocVisible);
+    bttButton.classList.toggle("bottom-5", !tocVisible);
   }
 
   positionAdjustment();
