@@ -6,25 +6,25 @@ import IconChevronLeft from "@/assets/icons/IconChevronLeft.svg";
 <div
   id="btt-btn-container"
   transition:persist="back-to-top"
-  class="fixed bottom-24 right-5 z-40 transition-all duration-200 ease-in-out opacity-0 translate-y-14"
+  class="fixed right-5 bottom-24 z-40 translate-y-14 opacity-0 transition-all duration-200 ease-in-out"
 >
   <button
     type="button"
     data-button="back-to-top"
     aria-label="返回顶部"
-    class="content-card group flex items-center justify-center cursor-pointer rounded-xl transition-all duration-200 hover:bg-accent/20"
+    class="content-card group flex cursor-pointer items-center justify-center rounded-xl transition-all duration-200 hover:bg-accent/20"
     style="width: 3.5rem; height: 3.5rem;"
   >
     <IconChevronLeft
       aria-hidden="true"
-      class="text-accent transition-transform duration-200 group-hover:scale-110 rotate-90"
+      class="rotate-90 text-accent transition-transform duration-200 group-hover:scale-110"
       style="width: 1.5rem; height: 1.5rem;"
     />
   </button>
-  
 </div>
 
 <script is:inline>
+
   /** Scrolls the document to the top when
    * the "Back to Top" button is clicked. */
   function backToTop() {
@@ -32,8 +32,7 @@ import IconChevronLeft from "@/assets/icons/IconChevronLeft.svg";
     const btnContainer = document.querySelector("#btt-btn-container");
     const backToTopBtn = document.querySelector("[data-button='back-to-top']");
 
-    if (!rootElement || !btnContainer || !backToTopBtn)
-      return;
+    if (!rootElement || !btnContainer || !backToTopBtn) return;
 
     // Attach click event handler for back-to-top button
     backToTopBtn.addEventListener("click", () => {
@@ -83,60 +82,65 @@ import IconChevronLeft from "@/assets/icons/IconChevronLeft.svg";
     const bttButton = document.getElementById("btt-btn-container");
     if (!bttButton) return;
 
-    const tocButton = document.getElementById("toc-button");
+    const mobileFloatMenu = document.getElementById("mobile-toc-float");
 
-    // 更稳健的“可见性”判断：
-    // 1) 自身与视口有交集且尺寸>0
-    // 2) 自身或任一祖先不存在 display:none / visibility:hidden / opacity≈0 的情况
-    function isElementVisible(el) {
-      if (!el || !el.isConnected) return false;
-
-      const rect = el.getBoundingClientRect();
-      const vw = window.innerWidth || document.documentElement.clientWidth || 0;
-      const vh = window.innerHeight || document.documentElement.clientHeight || 0;
-      const intersectsViewport =
-        rect.width > 0 &&
-        rect.height > 0 &&
-        rect.bottom > 0 &&
-        rect.right > 0 &&
-        rect.top < vh &&
-        rect.left < vw;
-      if (!intersectsViewport) return false;
-
-      // 检查自身及祖先的显示状态（处理父级 opacity:0 / visibility:hidden 等）
-      let node = el;
-      while (node && node !== document.documentElement) {
-        const s = window.getComputedStyle(node);
-        if (s.display === "none" || s.visibility === "hidden" || parseFloat(s.opacity || "1") <= 0.05) {
-          return false;
-        }
-        node = node.parentElement;
+    // 基于移动端浮动目录容器的 class 状态判断：expanded 表示展开可见，minimized 表示最小化
+    function shouldBttDisplay() {
+      if (!!mobileFloatMenu && mobileFloatMenu.classList.contains("mobileFloatHidden")) {
+        console.log("contains('mobileFloatHidden')");
+        return false;
       }
-
-      return true;
+      console.log("contains('minimized')");
+      return (
+        !!mobileFloatMenu && mobileFloatMenu.classList.contains("minimized")
+      );
     }
 
-    const tocVisible = isElementVisible(tocButton);
-    console.log("Toc可见状态：" + tocVisible);
+    const tocVisible = shouldBttDisplay();
+    // 将状态写到全局，避免未声明变量报错
+    try {
+      // @ts-ignore
+      window.bttDown = !tocVisible;
+    } catch {}
 
     // 根据可见性切换 bottom 间距，right 始终为 right-5
     bttButton.classList.toggle("bottom-24", tocVisible);
     bttButton.classList.toggle("bottom-5", !tocVisible);
   }
-
-  positionAdjustment();
+  
   backToTop();
 
   window.addEventListener("resize", () => positionAdjustment());
 
   // 监听移动目录容器的 class/style 变化，以便及时调整位置
-  const mobileFloat = document.getElementById("mobile-toc-float");
-  if (mobileFloat && "MutationObserver" in window) {
-    const mo = new MutationObserver(() => positionAdjustment());
-    mo.observe(mobileFloat, { attributes: true, attributeFilter: ["class", "style"] });
+  // 抽出可重入初始化，便于在页面切换后重新绑定
+  function setupMobileTocObserver() {
+    // 断开旧的观察器，避免引用旧节点
+    // @ts-ignore
+    if (window.__bttMO && typeof window.__bttMO.disconnect === "function") {
+      // @ts-ignore
+      window.__bttMO.disconnect();
+    }
+
+    const mobileFloat = document.getElementById("mobile-toc-float");
+    if (mobileFloat && "MutationObserver" in window) {
+      const mo = new MutationObserver(() => positionAdjustment());
+      mo.observe(mobileFloat, {
+        attributes: true,
+        attributeFilter: ["class", "style", "hidden"],
+      });
+      // @ts-ignore
+      window.__bttMO = mo;
+    }
+
+    // 立即调整一次，确保状态正确
+    positionAdjustment();
   }
 
-  // 页面切换（Astro 过渡）后也重新计算
-  document.addEventListener("astro:page-load", positionAdjustment);
-  document.addEventListener("astro:after-swap", positionAdjustment);
+  // 初始化一次
+  setupMobileTocObserver();
+
+  // 页面切换（Astro 过渡）后重新绑定并调整
+  document.addEventListener("astro:page-load", setupMobileTocObserver);
+  document.addEventListener("astro:after-swap", setupMobileTocObserver);
 </script>

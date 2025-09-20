@@ -14,7 +14,7 @@ export const SITE = {
   editPost: {
     enabled: false,
     text: "编辑页面",
-    url: "https://github.com/hazuki-keatsu/hazuki-blog/edit/main/",
+    url: "",
   },
   dynamicOgImage: true,
   musicPlayer: {

@@ -14,7 +14,7 @@ const { class: className } = Astro.props;
     "block", // 响应式显示：只在大屏幕显示
     "fixed z-40", // 固定定位
     "max-h-[calc(100vh-6rem)]",
-    "lg:max-h-[70vh] lg:overflow-hidden lg:flex lg:flex-col", // 大屏：限制为视口70%并使子项可滚动
+    "lg:flex lg:max-h-[70vh] lg:flex-col lg:overflow-hidden", // 大屏：限制为视口70%并使子项可滚动
     "content-card rounded-lg p-4", // 卡片样式
     "transition-all duration-200 ease-out", // 基础过渡
     "shadow-md hover:shadow-lg", // 悬停阴影
@@ -40,7 +40,9 @@ const { class: className } = Astro.props;
     </svg>
     目录
   </p>
-  <nav class="toc-scrollbar relative max-h-[calc(100vh-12rem)] overflow-y-auto lg:flex-1 lg:min-h-0 lg:max-h-full">
+  <nav
+    class="toc-scrollbar relative max-h-[calc(100vh-12rem)] overflow-y-auto lg:max-h-full lg:min-h-0 lg:flex-1"
+  >
     <!-- 移动的激活指示器 -->
     <div
       id="toc-active-indicator"
@@ -643,7 +645,11 @@ const { class: className } = Astro.props;
       ) as HTMLElement | null;
       if (!activeLink) return;
       // 使用 scrollIntoView 让最近的可滚动祖先（即 nav）最小程度滚动到可见区域
-      activeLink.scrollIntoView({ block: "nearest", inline: "nearest", behavior: "smooth" });
+      activeLink.scrollIntoView({
+        block: "nearest",
+        inline: "nearest",
+        behavior: "smooth",
+      });
     }
 
     // 监听滚动事件，高亮当前区域
@@ -722,15 +728,24 @@ const { class: className } = Astro.props;
         // 水平位置：如果右侧空间足够，就贴着文章放置
         if (availableSpace >= 280 + 16) {
           // 264px宽度 + 16px间距
-          tocContainer.style.visibility = "visible"
+          tocContainer.style.visibility = "visible";
           tocContainer.style.left = `${articleRight + 16}px`;
           tocContainer.style.right = "auto";
           tocContainer.style.opacity = "100";
-          if (mobileFloat) mobileFloat.style.opacity = "0";
+          if (mobileFloat) {
+            mobileFloat.style.opacity = "0";
+            mobileFloat.classList.add("mobileFloatHidden");
+            mobileFloat.classList.remove("mobileFloatVisible");
+          }
         } else {
           tocContainer.style.opacity = "0";
-          tocContainer.style.visibility = "hidden"
-          if (mobileFloat) mobileFloat.style.opacity = "100";
+          tocContainer.style.visibility = "hidden";
+          if (mobileFloat) {
+            mobileFloat.style.opacity = "100";
+            mobileFloat.style.visibility = "visible";
+            mobileFloat.classList.add("mobileFloatVisible");
+            mobileFloat.classList.remove("mobileFloatHidden");
+          }
         }
 
         // 垂直位置：根据文章顶部可见性调整
