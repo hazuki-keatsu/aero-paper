@@ -73,14 +73,14 @@ export const SONG_LIST: Song[] = [
     id: 1,
     title: "spiral",
     artist: "LONGMAN",
-    cover: "/LONGMAN%20-%20spiral.jpg",
-    src: "/LONGMAN%20-%20spiral.mp3"
+    cover: "/music/LONGMAN%20-%20spiral.jpg",
+    src: "/music/LONGMAN%20-%20spiral.mp3"
   },
   {
     id: 2,
     title: "Dye the sky.",
     artist: "Shiny Colors",
-    cover: "/Dye%20the%20sky.jpg",
-    src: "/Dye%20the%20sky.m4a"
+    cover: "/music/Dye%20the%20sky.jpg",
+    src: "/music/Dye%20the%20sky.m4a"
   },
 ] as const;

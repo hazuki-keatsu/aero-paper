@@ -8,8 +8,9 @@ import rehypeKatex from "rehype-katex";
 import rehypeMermaid from "rehype-mermaid";
 import path from "path";
 import remarkDirective from 'remark-directive';
-import { parseDirectiveNode } from "./src/utils/github-repo-card/remark-directive-rehype";
-import { GithubCardComponent } from "./src/utils/github-repo-card/rehype-component-github-card";
+import { parseDirectiveNode } from "./src/utils/rehype-component/remark-directive-rehype";
+import { GithubCardComponent } from "./src/utils/rehype-component/rehype-component-github-card";
+import { TimelineBlockComponent } from "./src/utils/rehype-component/rehype-component-timeline-block"
 import rehypeComponents from "rehype-components";
 import expressiveCode from "astro-expressive-code";
 import { pluginLineNumbers } from "@expressive-code/plugin-line-numbers";
@@ -48,6 +49,7 @@ export default defineConfig({
         {
           components: {
             github: (props: any, children: any[]) => GithubCardComponent(props, children),
+            "time-block": (props: any, children: any[]) => TimelineBlockComponent(props, children),
           }
         }
       ],

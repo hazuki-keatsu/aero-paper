@@ -13,7 +13,8 @@ const { class: className } = Astro.props;
   class:list={[
     "block", // 响应式显示：只在大屏幕显示
     "fixed z-40", // 固定定位
-    "max-h-[calc(100vh-6rem)]", // 固定宽度和最大高度
+    "max-h-[calc(100vh-6rem)]",
+    "lg:max-h-[70vh] lg:overflow-hidden lg:flex lg:flex-col", // 大屏：限制为视口70%并使子项可滚动
     "content-card rounded-lg p-4", // 卡片样式
     "transition-all duration-200 ease-out", // 基础过渡
     "shadow-md hover:shadow-lg", // 悬停阴影
@@ -39,7 +40,7 @@ const { class: className } = Astro.props;
     </svg>
     目录
   </p>
-  <nav class="toc-scrollbar relative max-h-[calc(100vh-12rem)] overflow-y-auto">
+  <nav class="toc-scrollbar relative max-h-[calc(100vh-12rem)] overflow-y-auto lg:flex-1 lg:min-h-0 lg:max-h-full">
     <!-- 移动的激活指示器 -->
     <div
       id="toc-active-indicator"
@@ -634,6 +635,17 @@ const { class: className } = Astro.props;
       }
     }
 
+    // 确保激活项在目录滚动容器内可见（不改动定位，仅负责滚动）
+    function ensureActiveItemVisible(container: Element, activeId: string) {
+      if (!activeId) return;
+      const activeLink = container.querySelector(
+        `.toc-link[data-target="${CSS.escape(activeId)}"]`
+      ) as HTMLElement | null;
+      if (!activeLink) return;
+      // 使用 scrollIntoView 让最近的可滚动祖先（即 nav）最小程度滚动到可见区域
+      activeLink.scrollIntoView({ block: "nearest", inline: "nearest", behavior: "smooth" });
+    }
+
     // 监听滚动事件，高亮当前区域
     function updateActiveHeading() {
       if (!tocList) return;
@@ -679,6 +691,7 @@ const { class: className } = Astro.props;
 
       // 更新桌面端激活状态
       updateTocActiveState(tocList, "toc-active-indicator", activeId);
+      ensureActiveItemVisible(tocList, activeId);
 
       // 更新移动端激活状态
       if (mobileTocList) {
@@ -687,6 +700,7 @@ const { class: className } = Astro.props;
           "mobile-toc-active-indicator",
           activeId
         );
+        ensureActiveItemVisible(mobileTocList, activeId);
       }
     }
 

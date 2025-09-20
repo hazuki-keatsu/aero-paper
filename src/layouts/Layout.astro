@@ -5,6 +5,7 @@ import { SITE } from "@/config";
 import "@/styles/global.css";
 import "katex/dist/katex.min.css";
 import MusicPlayer from "@/components/MusicPlayer.astro";
+import BackToTopButton from "@/components/BackToTopButton.astro";
 
 export interface Props {
   title?: string;
@@ -158,6 +159,8 @@ const structuredData = {
         );
       })() && <MusicPlayer />
     }
+
+    <BackToTopButton />
 
     <!-- 音乐播放器独立脚本 -->
     <script is:inline>
