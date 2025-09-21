@@ -87,10 +87,8 @@ import IconChevronLeft from "@/assets/icons/IconChevronLeft.svg";
     // 基于移动端浮动目录容器的 class 状态判断：expanded 表示展开可见，minimized 表示最小化
     function shouldBttDisplay() {
       if (!!mobileFloatMenu && mobileFloatMenu.classList.contains("mobileFloatHidden")) {
-        console.log("contains('mobileFloatHidden')");
         return false;
       }
-      console.log("contains('minimized')");
       return (
         !!mobileFloatMenu && mobileFloatMenu.classList.contains("minimized")
       );
