@@ -332,118 +332,60 @@ const { class: className } = Astro.props;
 </style>
 
 <script>
+  let cleanupAdaptiveToc: (() => void) | null = null;
+
+  const createRafScheduler = (callback: () => void) => {
+    let ticking = false;
+    return () => {
+      if (ticking) return;
+      ticking = true;
+      requestAnimationFrame(() => {
+        ticking = false;
+        callback();
+      });
+    };
+  };
+
   function initAdaptiveTableOfContents() {
+    cleanupAdaptiveToc?.();
+
+    const controller = new AbortController();
+    const { signal } = controller;
+
     const tocContainer = document.getElementById("table-of-contents");
     const tocList = document.getElementById("toc-list");
 
-    // 移动端元素
     const mobileFloat = document.getElementById("mobile-toc-float");
     const tocButton = document.getElementById("toc-button");
     const tocExpanded = document.getElementById("toc-expanded");
     const minimizeBtn = document.getElementById("toc-minimize-btn");
     const mobileTocList = document.getElementById("mobile-toc-list");
 
-    if (!tocContainer || !tocList || !mobileFloat) return;
-
-    // 移动端浮动控制 - 参考MusicPlayer的展开关闭逻辑
-    if (mobileFloat && tocButton && tocExpanded && minimizeBtn) {
-      // 展开目录函数
-      const expandToc = () => {
-        mobileFloat.classList.remove("minimized");
-        mobileFloat.classList.add("expanded");
-        setTimeout(() => {
-          updateActiveHeading();
-        }, 300);
-
-        // 添加目录项的延迟动画
-        setTimeout(() => {
-          const tocItems = mobileTocList?.querySelectorAll(".toc-item");
-          tocItems?.forEach((item, index) => {
-            (item as HTMLElement).style.transitionDelay =
-              `${0.1 + index * 0.05}s`;
-          });
-        }, 50);
-      };
-
-      // 最小化目录函数
-      const minimizeToc = () => {
-        mobileFloat.classList.remove("expanded");
-        mobileFloat.classList.add("minimized");
-
-        // 清除延迟动画
-        const tocItems = mobileTocList?.querySelectorAll(".toc-item");
-        tocItems?.forEach(item => {
-          (item as HTMLElement).style.transitionDelay = "0s";
-        });
-      };
-
-      // 展开目录
-      tocButton.addEventListener("click", e => {
-        e.stopPropagation();
-        expandToc();
-      });
-
-      // 最小化目录
-      minimizeBtn.addEventListener("click", e => {
-        e.stopPropagation();
-        minimizeToc();
-      });
-
-      // 点击外部区域最小化
-      document.addEventListener("click", e => {
-        if (
-          !mobileFloat.contains(e.target as Node) &&
-          mobileFloat.classList.contains("expanded")
-        ) {
-          minimizeToc();
-        }
-      });
-
-      // ESC键最小化
-      document.addEventListener("keydown", e => {
-        if (e.key === "Escape" && mobileFloat.classList.contains("expanded")) {
-          minimizeToc();
-        }
-      });
-
-      // 添加脉冲效果（当目录更新时）
-      const addPulseEffect = () => {
-        tocButton.classList.add("pulse");
-        setTimeout(() => {
-          tocButton.classList.remove("pulse");
-        }, 3000);
-      };
-
-      // 目录内容变化时添加脉冲效果
-      const observer = new MutationObserver(() => {
-        if (mobileFloat.classList.contains("minimized")) {
-          addPulseEffect();
-        }
-      });
-
-      if (mobileTocList) {
-        observer.observe(mobileTocList, {
-          childList: true,
-          subtree: true,
-        });
-      }
+    if (!tocContainer || !tocList || !mobileFloat) {
+      cleanupAdaptiveToc = () => controller.abort();
+      return;
     }
 
-    // 获取文章内容区域的所有标题
+    const tocContainerEl = tocContainer as HTMLElement;
+    const tocListEl = tocList as HTMLUListElement;
+    const mobileFloatEl = mobileFloat as HTMLElement;
+    const mobileTocListEl = mobileTocList as HTMLUListElement | null;
+
     const article = document.getElementById("article");
-    if (!article) return;
+    if (!article) {
+      cleanupAdaptiveToc = () => controller.abort();
+      return;
+    }
 
     const headings = article.querySelectorAll("h2, h3, h4, h5, h6");
 
-    // 隐藏加载状态
-    const loadingElement = tocList.querySelector(".toc-loading");
+    const loadingElement = tocListEl.querySelector(".toc-loading");
     if (loadingElement) {
       loadingElement.remove();
     }
 
-    // 移动端隐藏加载状态
-    if (mobileTocList) {
-      const mobileLoadingElement = mobileTocList.querySelector(
+    if (mobileTocListEl) {
+      const mobileLoadingElement = mobileTocListEl.querySelector(
         ".mobile-toc-loading"
       );
       if (mobileLoadingElement) {
@@ -452,53 +394,55 @@ const { class: className } = Astro.props;
     }
 
     if (headings.length === 0) {
-      tocContainer.style.display = "none";
-      if (mobileFloat) mobileFloat.style.display = "none";
+      tocContainerEl.style.display = "none";
+      mobileFloatEl.style.display = "none";
+      cleanupAdaptiveToc = () => controller.abort();
       return;
     }
 
-    // 生成目录结构
-    const tocItems = Array.from(headings).map((heading, index) => {
-      const level = parseInt(heading.tagName.charAt(1));
+    type TocItem = {
+      level: number;
+      text: string;
+      id: string;
+      element: HTMLHeadingElement;
+    };
 
-      // 获取标题文本，排除链接元素（如#符号链接）
+    const tocItems: TocItem[] = Array.from(headings).map((heading, index) => {
+      const headingElement = heading as HTMLHeadingElement;
+      const level = parseInt(headingElement.tagName.charAt(1));
       let text = "";
-      for (const node of heading.childNodes) {
+
+      for (const node of headingElement.childNodes) {
         if (node.nodeType === Node.TEXT_NODE) {
           text += node.textContent || "";
         } else if (node.nodeType === Node.ELEMENT_NODE) {
           const element = node as Element;
           if (element.tagName && element.tagName.toLowerCase() !== "a") {
-            // 包含非链接元素的文本，但排除<a>标签
             text += element.textContent || "";
           }
         }
       }
+
       text = text.trim();
 
-      // 如果还是获取不到文本，fallback到完整的textContent并移除最后的#
       if (!text) {
-        text = heading.textContent?.trim() || "";
-        // 移除末尾的#符号（来自heading links）
+        text = headingElement.textContent?.trim() || "";
         text = text.replace(/\s*#\s*$/, "");
       }
 
-      const id = heading.id || `heading-${index}`;
-
-      // 确保标题有 ID
-      if (!heading.id) {
-        heading.id = id;
+      const id = headingElement.id || `heading-${index}`;
+      if (!headingElement.id) {
+        headingElement.id = id;
       }
 
       return {
         level,
         text,
         id,
-        element: heading,
+        element: headingElement,
       };
     });
 
-    // 根据标题层级计算缩进的Tailwind类
     const getIndentClass = (level: number) => {
       switch (level) {
         case 2:
@@ -516,9 +460,8 @@ const { class: className } = Astro.props;
       }
     };
 
-    // 生成目录HTML的函数
-    const generateTocHTML = () => {
-      return tocItems
+    const generateTocHTML = () =>
+      tocItems
         .map(
           item => `
           <li class="transition-all duration-200 toc-item relative" data-level="${item.level}">
@@ -533,304 +476,384 @@ const { class: className } = Astro.props;
         `
         )
         .join("");
-    };
 
-    // 渲染桌面端目录
-    tocList.innerHTML = generateTocHTML();
-
-    // 渲染移动端目录
-    if (mobileTocList) {
-      mobileTocList.innerHTML = generateTocHTML();
+    const tocHTML = generateTocHTML();
+    tocListEl.innerHTML = tocHTML;
+    if (mobileTocListEl) {
+      mobileTocListEl.innerHTML = tocHTML;
     }
 
-    // 添加点击事件的函数
-    const addClickEvents = (container: Element, shouldMinimize = false) => {
-      const tocLinks = container.querySelectorAll(".toc-link");
-      tocLinks.forEach(link => {
-        link.addEventListener("click", e => {
-          e.preventDefault();
-          const targetId = link.getAttribute("data-target");
-          const targetElement = document.getElementById(targetId || "");
+    const articleCard = document.querySelector("article.content-card") as
+      | HTMLElement
+      | null;
 
-          if (targetElement) {
-            // 如果是移动端，先最小化浮动组件
-            if (shouldMinimize && mobileFloat) {
-              mobileFloat.classList.remove("expanded");
-              mobileFloat.classList.add("minimized");
-            }
+    const headingPositions = new Array<number>(tocItems.length).fill(0);
+    const activeState = new Map<Element, string>();
 
-            // 计算目标位置，让标题出现在窗口1/3处
-            const windowHeight = window.innerHeight;
-            const targetTop =
-              targetElement.getBoundingClientRect().top + window.scrollY;
-            const offsetTop = targetTop - windowHeight / 3;
-
-            // 平滑滚动到目标位置
-            setTimeout(
-              () => {
-                window.scrollTo({
-                  top: Math.max(0, offsetTop), // 确保不会滚动到负值
-                  behavior: "smooth",
-                });
-              },
-              shouldMinimize ? 200 : 0
-            );
-
-            // 更新 URL hash
-            setTimeout(
-              () => {
-                history.pushState(null, "", `#${targetId}`);
-              },
-              shouldMinimize ? 300 : 100
-            );
-          }
-        });
-      });
-    };
-
-    // 为桌面端和移动端添加点击事件
-    addClickEvents(tocList, false);
-    if (mobileTocList) {
-      addClickEvents(mobileTocList, true);
-    }
-
-    // 更新TOC激活状态的通用函数
-    function updateTocActiveState(
-      container: Element,
-      indicatorId: string,
-      activeId: string
-    ) {
-      const indicator = document.getElementById(indicatorId);
-      const tocLinks = container.querySelectorAll(".toc-link");
-      let activeLiElement: HTMLElement | null = null;
-
-      // 更新活跃状态
-      tocLinks.forEach((link: Element) => {
-        const targetId = link.getAttribute("data-target");
-
-        if (targetId === activeId) {
-          // 激活状态：只改变文字颜色和边框，背景由指示器处理
-          link.classList.remove("text-muted-foreground");
-          link.classList.add("text-accent", "font-medium");
-          activeLiElement = link.parentElement as HTMLElement;
-        } else {
-          // 非激活状态
-          link.classList.add("text-muted-foreground");
-          link.classList.remove("text-accent", "font-medium");
-        }
-      });
-
-      // 移动指示器到激活的链接位置
-      if (indicator && activeLiElement && tocLinks.length > 0) {
-        const firstLi = (tocLinks[0] as Element).parentElement as HTMLElement;
-        const liRect = (activeLiElement as HTMLElement).getBoundingClientRect();
-        const firstLiRect = firstLi.getBoundingClientRect();
-
-        const relativeTop = liRect.top - firstLiRect.top;
-        const height = liRect.height;
-
-        indicator.style.top = `${relativeTop}px`;
-        indicator.style.height = `${height}px`;
-        indicator.style.opacity = "1";
-      } else if (indicator) {
-        indicator.style.opacity = "0";
+    const cacheHeadingPositions = () => {
+      for (let i = 0; i < tocItems.length; i++) {
+        const rect = tocItems[i].element.getBoundingClientRect();
+        headingPositions[i] = rect.top + window.scrollY;
       }
-    }
+    };
 
-    // 确保激活项在目录滚动容器内可见（不改动定位，仅负责滚动）
-    function ensureActiveItemVisible(container: Element, activeId: string) {
+    const ensureActiveItemVisible = (container: Element, activeId: string) => {
       if (!activeId) return;
       const activeLink = container.querySelector(
         `.toc-link[data-target="${CSS.escape(activeId)}"]`
       ) as HTMLElement | null;
       if (!activeLink) return;
-      // 使用 scrollIntoView 让最近的可滚动祖先（即 nav）最小程度滚动到可见区域
       activeLink.scrollIntoView({
         block: "nearest",
         inline: "nearest",
         behavior: "smooth",
       });
+    };
+
+    function updateTocActiveState(
+      container: Element,
+      indicatorId: string,
+      activeId: string
+    ) {
+      const prevActiveId = activeState.get(container);
+      if (prevActiveId === activeId) return;
+
+      if (prevActiveId) {
+        const prevLink = container.querySelector(
+          `.toc-link[data-target="${CSS.escape(prevActiveId)}"]`
+        ) as HTMLElement | null;
+        if (prevLink) {
+          prevLink.classList.add("text-muted-foreground");
+          prevLink.classList.remove("text-accent", "font-medium");
+        }
+      } else {
+        const allLinks = container.querySelectorAll(".toc-link");
+        allLinks.forEach(link => {
+          link.classList.add("text-muted-foreground");
+          link.classList.remove("text-accent", "font-medium");
+        });
+      }
+
+      let activeLiElement: HTMLElement | null = null;
+      if (activeId) {
+        const nextLink = container.querySelector(
+          `.toc-link[data-target="${CSS.escape(activeId)}"]`
+        ) as HTMLElement | null;
+        if (nextLink) {
+          nextLink.classList.remove("text-muted-foreground");
+          nextLink.classList.add("text-accent", "font-medium");
+          activeLiElement = nextLink.parentElement as HTMLElement;
+        }
+      }
+
+      const indicator = document.getElementById(indicatorId);
+      const firstLi = container.querySelector("li") as HTMLElement | null;
+
+      if (indicator && activeLiElement && firstLi) {
+        const liRect = activeLiElement.getBoundingClientRect();
+        const firstRect = firstLi.getBoundingClientRect();
+        indicator.style.top = `${liRect.top - firstRect.top}px`;
+        indicator.style.height = `${liRect.height}px`;
+        indicator.style.opacity = "1";
+      } else if (indicator) {
+        indicator.style.opacity = "0";
+      }
+
+      activeState.set(container, activeId);
     }
 
-    // 监听滚动事件，高亮当前区域
     function updateActiveHeading() {
-      if (!tocList) return;
+      if (!tocItems.length && tocContainer?.classList.contains("expanded")) return;
 
       const windowHeight = window.innerHeight;
-      const activationPoint = windowHeight / 3 + 4; // 窗口高度的1/3处
-      const documentHeight = document.documentElement.scrollHeight;
       const scrollTop = window.scrollY;
-      let activeId = "";
+      const activationPoint = scrollTop + windowHeight / 3 + 4;
+      let low = 0;
+      let high = headingPositions.length - 1;
+      let bestIndex = -1;
 
-      // 检查是否接近页面底部（最后100px）
-      const isNearBottom = scrollTop + windowHeight >= documentHeight - 100;
-
-      // 找到当前在激活点的标题
-      for (let i = 0; i < tocItems.length; i++) {
-        const item = tocItems[i];
-        const element = item.element;
-        const rect = element.getBoundingClientRect();
-
-        // 检查标题是否已经通过了激活点
-        if (rect.top <= activationPoint) {
-          activeId = item.id;
+      while (low <= high) {
+        const mid = Math.floor((low + high) / 2);
+        if (headingPositions[mid] <= activationPoint) {
+          bestIndex = mid;
+          low = mid + 1;
         } else {
-          // 如果当前标题还没到激活点，停止检查
-          break;
+          high = mid - 1;
         }
       }
 
-      // 如果接近底部且没有激活任何标题，激活最后一个可见的标题
+      const isNearBottom =
+        scrollTop + windowHeight >= document.documentElement.scrollHeight - 100;
+
+      let activeId = bestIndex >= 0 ? tocItems[bestIndex].id : "";
       if (isNearBottom && !activeId && tocItems.length > 0) {
-        // 从后往前找第一个在视窗内的标题
-        for (let i = tocItems.length - 1; i >= 0; i--) {
-          const item = tocItems[i];
-          const element = item.element;
-          const rect = element.getBoundingClientRect();
-
-          if (rect.top < windowHeight) {
-            activeId = item.id;
-            break;
-          }
-        }
+        activeId = tocItems[tocItems.length - 1]?.id ?? "";
       }
 
-      // 更新桌面端激活状态
-      updateTocActiveState(tocList, "toc-active-indicator", activeId);
-      ensureActiveItemVisible(tocList, activeId);
+      updateTocActiveState(tocListEl, "toc-active-indicator", activeId);
+      ensureActiveItemVisible(tocListEl, activeId);
 
-      // 更新移动端激活状态
-      if (mobileTocList) {
+      if (mobileTocListEl) {
         updateTocActiveState(
-          mobileTocList,
+          mobileTocListEl,
           "mobile-toc-active-indicator",
           activeId
         );
-        ensureActiveItemVisible(mobileTocList, activeId);
+        ensureActiveItemVisible(mobileTocListEl, activeId);
       }
     }
 
-    // 初始化时更新一次
-    setTimeout(updateActiveHeading, 100);
-
-    // 动态调整桌面端目录位置
     function adjustTocPosition() {
-      const article = document.querySelector("article.content-card");
-      if (article && tocContainer) {
-        const articleRect = article.getBoundingClientRect();
-        const windowWidth = window.innerWidth;
-        const windowHeight = window.innerHeight;
+      if (!articleCard) return;
 
-        // 计算文章右边的位置
-        const articleRight = articleRect.right;
-        const availableSpace = windowWidth - articleRight;
+      const articleRect = articleCard.getBoundingClientRect();
+      const windowWidth = window.innerWidth;
+      const windowHeight = window.innerHeight;
 
-        // 水平位置：如果右侧空间足够，就贴着文章放置
-        if (availableSpace >= 280 + 16) {
-          // 264px宽度 + 16px间距
-          tocContainer.style.visibility = "visible";
-          tocContainer.style.left = `${articleRight + 16}px`;
-          tocContainer.style.right = "auto";
-          tocContainer.style.opacity = "100";
-          if (mobileFloat) {
-            mobileFloat.style.opacity = "0";
-            mobileFloat.classList.add("mobileFloatHidden");
-            mobileFloat.classList.remove("mobileFloatVisible");
-          }
-        } else {
-          tocContainer.style.opacity = "0";
-          tocContainer.style.visibility = "hidden";
-          if (mobileFloat) {
-            mobileFloat.style.opacity = "100";
-            mobileFloat.style.visibility = "visible";
-            mobileFloat.classList.add("mobileFloatVisible");
-            mobileFloat.classList.remove("mobileFloatHidden");
-          }
-        }
+      const articleRight = articleRect.right;
+      const availableSpace = windowWidth - articleRight;
+      const minSpaceForSidebar = 280 + 16;
 
-        // 垂直位置：根据文章顶部可见性调整
-        const articleTop = articleRect.top;
-
-        let targetTop;
-        if (articleTop >= 16) {
-          // 文章顶部可见，目录与文章顶部对齐
-          targetTop = articleTop;
-        } else {
-          // 文章顶部不可见，目录吸附在窗口顶部
-          targetTop = 16;
-        }
-
-        // 确保目录不会超出窗口底部
-        const tocHeight = tocContainer.offsetHeight;
-        const maxTop = windowHeight - tocHeight - 20; // 底部留20px间距
-        targetTop = Math.min(targetTop, maxTop);
-
-        // 应用位置
-        tocContainer.style.top = `${targetTop}px`;
-        tocContainer.style.position = "fixed";
+      if (availableSpace >= minSpaceForSidebar) {
+        tocContainerEl.style.visibility = "visible";
+        tocContainerEl.style.left = `${articleRight + 16}px`;
+        tocContainerEl.style.right = "auto";
+        tocContainerEl.style.opacity = "100";
+        mobileFloatEl.style.opacity = "0";
+        mobileFloatEl.classList.add("mobileFloatHidden");
+        mobileFloatEl.classList.remove("mobileFloatVisible");
+      } else {
+        tocContainerEl.style.opacity = "0";
+        tocContainerEl.style.visibility = "hidden";
+        mobileFloatEl.style.opacity = "100";
+        mobileFloatEl.style.visibility = "visible";
+        mobileFloatEl.classList.add("mobileFloatVisible");
+        mobileFloatEl.classList.remove("mobileFloatHidden");
       }
+
+      const articleTop = articleRect.top;
+      let targetTop = articleTop >= 16 ? articleTop : 16;
+
+      const tocHeight = tocContainerEl.offsetHeight;
+      const maxTop = windowHeight - tocHeight - 20;
+      targetTop = Math.min(targetTop, maxTop);
+
+      tocContainerEl.style.top = `${targetTop}px`;
+      tocContainerEl.style.position = "fixed";
     }
 
-    // 监听窗口大小变化
-    window.addEventListener("resize", adjustTocPosition);
-
-    // 创建ResizeObserver实例，传入回调函数
-    const resizeObserver = new ResizeObserver(entries => {
-      // 遍历所有被观察的元素
-      for (const _ of entries) {
-        // 执行自定义回调逻辑
-        adjustTocPosition();
-      }
+    const scheduleScrollUpdate = createRafScheduler(() => {
+      updateActiveHeading();
+      adjustTocPosition();
     });
 
-    // 监听指定元素（例如ID为"target"的元素）
-    const targetElement = document.querySelector("article.content-card");
-    if (targetElement) {
-      // 开始观察元素
-      resizeObserver.observe(targetElement);
+    const scheduleResizeUpdate = createRafScheduler(() => {
+      cacheHeadingPositions();
+      updateActiveHeading();
+      adjustTocPosition();
+    });
+
+    const addClickEvents = (container: Element, shouldMinimize = false) => {
+      const tocLinks = container.querySelectorAll(".toc-link");
+      tocLinks.forEach(link => {
+        link.addEventListener(
+          "click",
+          event => {
+            event.preventDefault();
+            const targetId = link.getAttribute("data-target");
+            const targetElement = targetId
+              ? document.getElementById(targetId)
+              : null;
+
+            if (targetElement) {
+              if (shouldMinimize) {
+                mobileFloatEl.classList.remove("expanded");
+                mobileFloatEl.classList.add("minimized");
+              }
+
+              const windowHeight = window.innerHeight;
+              const targetTop =
+                targetElement.getBoundingClientRect().top + window.scrollY;
+              const offsetTop = targetTop - windowHeight / 3;
+
+              setTimeout(() => {
+                window.scrollTo({
+                  top: Math.max(0, offsetTop),
+                  behavior: "smooth",
+                });
+              }, shouldMinimize ? 200 : 0);
+
+              setTimeout(() => {
+                history.pushState(null, "", `#${targetId}`);
+              }, shouldMinimize ? 300 : 100);
+            }
+          },
+          { signal }
+        );
+      });
+    };
+
+    addClickEvents(tocListEl, false);
+    if (mobileTocListEl) {
+      addClickEvents(mobileTocListEl, true);
     }
 
-    // 监听滚动事件，更新激活状态和位置
+    let mutationObserver: MutationObserver | null = null;
+    if (mobileTocListEl && tocButton) {
+      const addPulseEffect = () => {
+        tocButton.classList.add("pulse");
+        setTimeout(() => {
+          tocButton.classList.remove("pulse");
+        }, 3000);
+      };
+
+      mutationObserver = new MutationObserver(() => {
+        if (mobileFloatEl.classList.contains("minimized")) {
+          addPulseEffect();
+        }
+        scheduleResizeUpdate();
+      });
+
+      mutationObserver.observe(mobileTocListEl, {
+        childList: true,
+        subtree: true,
+      });
+    }
+
+    if (tocButton && tocExpanded && minimizeBtn) {
+      const expandToc = () => {
+        mobileFloatEl.classList.remove("minimized");
+        mobileFloatEl.classList.add("expanded");
+        setTimeout(() => {
+          updateActiveHeading();
+        }, 300);
+
+        setTimeout(() => {
+          const tocItems = mobileTocListEl?.querySelectorAll(".toc-item");
+          tocItems?.forEach((item, index) => {
+            (item as HTMLElement).style.transitionDelay = `${0.1 + index * 0.05}s`;
+          });
+        }, 50);
+
+        scheduleResizeUpdate();
+      };
+
+      const minimizeToc = () => {
+        mobileFloatEl.classList.remove("expanded");
+        mobileFloatEl.classList.add("minimized");
+
+        const tocItems = mobileTocListEl?.querySelectorAll(".toc-item");
+        tocItems?.forEach(item => {
+          (item as HTMLElement).style.transitionDelay = "0s";
+        });
+      };
+
+      tocButton.addEventListener(
+        "click",
+        event => {
+          event.stopPropagation();
+          expandToc();
+        },
+        { signal }
+      );
+
+      minimizeBtn.addEventListener(
+        "click",
+        event => {
+          event.stopPropagation();
+          minimizeToc();
+        },
+        { signal }
+      );
+
+      document.addEventListener(
+        "click",
+        event => {
+          if (
+            !mobileFloat.contains(event.target as Node) &&
+            mobileFloat.classList.contains("expanded")
+          ) {
+            minimizeToc();
+          }
+        },
+        { signal }
+      );
+
+      document.addEventListener(
+        "keydown",
+        event => {
+          if (
+            event.key === "Escape" &&
+            mobileFloat.classList.contains("expanded")
+          ) {
+            minimizeToc();
+          }
+        },
+        { signal }
+      );
+    }
+
+    window.addEventListener("scroll", scheduleScrollUpdate, {
+      passive: true,
+      signal,
+    });
+    window.addEventListener("resize", scheduleResizeUpdate, { signal });
+    window.addEventListener("orientationchange", scheduleResizeUpdate, {
+      signal,
+    });
     window.addEventListener(
-      "scroll",
+      "load",
       () => {
-        updateActiveHeading();
-        adjustTocPosition();
+        scheduleResizeUpdate();
       },
-      { passive: true }
+      { once: true, signal }
     );
 
-    // 显示目录的入场动画
+    let resizeObserver: ResizeObserver | null = null;
+    if (articleCard) {
+      resizeObserver = new ResizeObserver(() => {
+        scheduleResizeUpdate();
+      });
+      resizeObserver.observe(articleCard);
+    }
+
+    cacheHeadingPositions();
+    updateActiveHeading();
+    adjustTocPosition();
+
+    requestAnimationFrame(() => {
+      cacheHeadingPositions();
+      updateActiveHeading();
+      adjustTocPosition();
+    });
+
     setTimeout(() => {
-      // 桌面端目录显示
-      tocContainer.classList.remove("opacity-0", "translate-y-4");
-      tocContainer.classList.add("opacity-100", "translate-y-0");
+      tocContainerEl.classList.remove("opacity-0", "translate-y-4");
+      tocContainerEl.classList.add("opacity-100", "translate-y-0");
       adjustTocPosition();
 
-      // 移动端浮动组件显示 - 添加弹跳动画
-      if (mobileFloat) {
-        mobileFloat.classList.remove("opacity-0", "translate-y-4");
-        mobileFloat.classList.add(
-          "opacity-100",
-          "translate-y-0",
-          "animate-bounce-in"
-        );
+      mobileFloatEl.classList.remove("opacity-0", "translate-y-4");
+      mobileFloatEl.classList.add(
+        "opacity-100",
+        "translate-y-0",
+        "animate-bounce-in"
+      );
 
-        // 移除弹跳动画类，避免重复触发
-        setTimeout(() => {
-          mobileFloat.classList.remove("animate-bounce-in");
-        }, 600);
-      }
+      setTimeout(() => {
+        mobileFloatEl.classList.remove("animate-bounce-in");
+      }, 600);
 
-      // 初始化指示器位置
       setTimeout(updateActiveHeading, 200);
     }, 50);
+
+    cleanupAdaptiveToc = () => {
+      controller.abort();
+      mutationObserver?.disconnect();
+      resizeObserver?.disconnect();
+    };
   }
 
-  // 页面加载完成后初始化
   document.addEventListener("DOMContentLoaded", initAdaptiveTableOfContents);
-
-  // 支持 Astro 的页面转换
   document.addEventListener("astro:after-swap", initAdaptiveTableOfContents);
   document.addEventListener("astro:page-load", initAdaptiveTableOfContents);
 </script>

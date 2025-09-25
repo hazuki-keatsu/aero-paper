@@ -54,8 +54,20 @@ html[data-theme="dark"] {
     @apply border-border outline-accent/75;
     scrollbar-width: auto;
     scrollbar-color: var(--color-muted) transparent;
+  }
+
+  .content-card,
+  a,
+  button {
     transition: background-color 0.3s ease;
-    
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .content-card,
+    a,
+    button {
+      transition: none;
+    }
   }
   html {
     @apply overflow-y-scroll scroll-smooth;
@@ -87,8 +99,10 @@ html[data-theme="dark"] {
   /* 移动设备优化 */
   @media (max-width: 768px) {
     body::before {
+      background-image: none;
+      background-color: rgba(253, 253, 253, 0.6);
       background-attachment: scroll;
-      filter: blur(1px);
+      filter: none;
       opacity: 1;
     }
   }
@@ -102,7 +116,9 @@ html[data-theme="dark"] {
   
   @media (max-width: 768px) {
     html[data-theme="dark"] body::before {
-      filter: blur(2px);
+      background-image: none;
+      background-color: rgba(33, 39, 55, 0.75);
+      filter: none;
       opacity: 1;
     }
   }
@@ -123,8 +139,8 @@ html[data-theme="dark"] {
   /* 移动设备优化 */
   @media (max-width: 768px) {
     body::after {
-      background: rgba(253, 253, 253, 0.30);
-      backdrop-filter: blur(4px);
+      background: rgba(253, 253, 253, 0.5);
+      backdrop-filter: none;
     }
   }
   
@@ -134,7 +150,7 @@ html[data-theme="dark"] {
   
   @media (max-width: 768px) {
     html[data-theme="dark"] body::after {
-      background: rgba(33, 39, 55, 0.68);
+      background: rgba(33, 39, 55, 0.72);
     }
   }
   a,

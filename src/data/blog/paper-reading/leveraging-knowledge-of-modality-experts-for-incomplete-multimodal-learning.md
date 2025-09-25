@@ -43,7 +43,9 @@ MoMKE的训练过程分为两个关键阶段，形成“分而治之、再融合
 
 ### 3. 整体架构解读
 
-![MoMKE-Structure](/blog-assets/MoMKE-Structure.svg)
+> [!TIP]
+> [MoMKE架构解读图](/blog-assets/MoMKE-Structure.svg)
+> 此图片是svg矢量图，直接展示影响网站性能，所以请右键查看高清无损图片。
 
 ## 二、实验验证：性能与鲁棒性双优
 为验证MoMKE的有效性，研究团队在三大主流多模态情感数据集（IEMOCAP、CMU-MOSI、CMU-MOSEI）上开展对比实验，并设计消融实验拆解关键模块的贡献。

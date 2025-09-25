@@ -123,7 +123,7 @@
   "showReleaseNotes": true,
   "compareManifestToPluginVersion": true,
   "showNewVersionNotification": true,
-  "latexBoilerplate": "\\color{blue}",
+  "latexBoilerplate": "\\color{black}",
   "latexPreambleLocation": "preamble.sty",
   "taskboneEnabled": false,
   "taskboneAPIkey": "",
