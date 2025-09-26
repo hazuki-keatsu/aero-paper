@@ -44,9 +44,15 @@
 - [x] 代码块折叠
 - [x] Mermaid Diagrams支持
 
-### :microscope: v0.5.1将加入
+### :microscope: v0.6.0 加入
 
-- [ ] Xmind图表解析
+- [x] 性能优化
+- [x] 使用 [LXGW](https://github.com/lxgw/LxgwWenKai) 字体
+- [x] 新增时间线页面
+- [x] 添加全局回顶按钮
+
+![手机端性能测试](./mobile-performance.png)
+![电脑端性能测试](./desktop-performance.png)
 
 ## :computer: 本地调试
 
