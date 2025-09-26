@@ -62,13 +62,6 @@ html[data-theme="dark"] {
     transition: background-color 0.3s ease;
   }
 
-  @media (prefers-reduced-motion: reduce) {
-    .content-card,
-    a,
-    button {
-      transition: none;
-    }
-  }
   html {
     @apply overflow-y-scroll scroll-smooth;
   }
@@ -90,8 +83,8 @@ html[data-theme="dark"] {
     background-position: center;
     background-repeat: no-repeat;
     background-attachment: fixed;
-    filter: blur(2px);
     opacity: 1;
+    filter: blur(2px);
     z-index: -2;
     transition: all 0.3s ease;
   }
@@ -100,7 +93,6 @@ html[data-theme="dark"] {
   html[data-theme="dark"] body::before {
     background-image: url('../assets/images/backgrounds/asuka.webp');
     opacity: 1;
-    filter: blur(3px);
   }
   
   /* 内容遮罩层 */
@@ -112,7 +104,6 @@ html[data-theme="dark"] {
     right: 0;
     bottom: 0;
     background: rgba(253, 253, 253, 0.25);
-    backdrop-filter: blur(6px);
     z-index: -1;
   }
   
@@ -120,7 +111,6 @@ html[data-theme="dark"] {
   @media (max-width: 768px) {
     body::after {
       background: rgba(253, 253, 253, 0.5);
-      backdrop-filter: none;
     }
   }
   
@@ -155,7 +145,6 @@ html[data-theme="dark"] {
   /* 卡片和内容区域的背景 */
   .content-card {
     background: rgba(255, 255, 255, 0.85);
-    backdrop-filter: blur(8px);
     border: 1px solid rgba(255, 255, 255, 0.4);
     border-radius: 12px;
     box-shadow: 0 8px 32px rgba(0, 0, 0, 0.08);
@@ -185,7 +174,6 @@ html[data-theme="dark"] {
 /* Pagefind 搜索框样式优化 */
 #pagefind-search .pagefind-ui__search-input {
   background: rgba(255, 255, 255, 0.85);
-  backdrop-filter: blur(8px);
   border: 1px solid rgba(255, 255, 255, 0.4);
   border-radius: 12px;
   box-shadow: 0 8px 32px rgb(0, 0, 0, 0.08);
@@ -202,7 +190,6 @@ html[data-theme="dark"] #pagefind-search .pagefind-ui__search-input {
   margin-top: 1rem;
   margin-bottom: 1rem;
   background: rgba(255, 255, 255, 0.85);
-  backdrop-filter: blur(8px);
   border: 1px solid rgba(255, 255, 255, 0.4);
   border-radius: 12px;
   box-shadow: 0 8px 32px rgba(0, 0, 0, 0.08);

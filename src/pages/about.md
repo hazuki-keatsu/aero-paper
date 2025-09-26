@@ -192,3 +192,16 @@ title: "关于"
     <h3 class="bg-gradient-to-r from-highlight-text to-secondary-highlight bg-clip-text text-transparent mb-4 font-bold text-xl">✨ 感谢你的访问！</h3>
     <p class="opacity-80 m-0">希望这里的内容对你有所帮助，一起在技术的道路上不断前行！🚀</p>
 </div>
+
+---
+
+> [!IMPORTANT]
+> 本站使用以下第三方素材：
+>
+> | **#** | **作者**           | **作品名**                 | **使用内容** | **使用位置** |
+> |-------|------------------|-------------------------|----------|----------|
+> | 1     | sprite           | 蒼の彼方のフォーリズム             | 游戏CG     | 网站的背景图片  |
+> | 2     | Ender-Wiggin2019 | VTuber-Logos-Collection | 语言Logo   | 时间线配图    |
+>
+> **对以上素材的创作者表以最真挚的问候和感谢！！**
+
