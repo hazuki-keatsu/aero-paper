@@ -1,6 +1,6 @@
 ---
 // 导入播放列表数据
-import { SONG_LIST } from '../constants';
+import { SONG_LIST } from "../constants";
 ---
 
 <div id="music-player" transition:persist="music-player" class="fixed bottom-5 left-5 z-50 backdrop-blur-lg rounded-xl text-foreground font-mono shadow-2xl transition-all duration-300 ease-in-out overflow-hidden minimized">
@@ -583,45 +583,102 @@ import { SONG_LIST } from '../constants';
 </style>
 
 <script>
-  import { MusicPlayer } from '../utils/musicPlayer.ts';
-	import { SONG_LIST } from '../constants'
-
   // 全局变量声明
   declare global {
     interface Window {
-      musicPlayerInstance?: MusicPlayer;
+      musicPlayerInstance?: import("../utils/musicPlayer").MusicPlayer;
     }
   }
 
-  // 当DOM加载完成后初始化播放器
-  function initPlayer() {
-    // 检查是否已经初始化过了
-    if (window.musicPlayerInstance) {
-      return; // 已经初始化，不需要重复
+  let initPromise: Promise<unknown> | undefined;
+
+  async function ensurePlayer(reason: string) {
+    if (window.musicPlayerInstance) return window.musicPlayerInstance;
+
+    if (!initPromise) {
+      initPromise = (async () => {
+        try {
+          const [{ MusicPlayer }, { SONG_LIST }] = await Promise.all([
+            import("../utils/musicPlayer.ts"),
+            import("../constants"),
+          ]);
+          const player = new MusicPlayer(SONG_LIST);
+          window.musicPlayerInstance = player;
+          return player;
+        } catch (error) {
+          console.error("音乐播放器懒加载失败:", error);
+          initPromise = undefined;
+          throw error;
+        }
+      })();
     }
-    
+
     try {
-      const player = new MusicPlayer(SONG_LIST);
-      window.musicPlayerInstance = player;
-      console.log('音乐播放器初始化成功');
+      await initPromise;
     } catch (error) {
-      console.error('音乐播放器初始化失败:', error);
+      console.error("音乐播放器初始化异常 (触发方式:", reason, "):", error);
+    }
+
+    return window.musicPlayerInstance;
+  }
+
+  function bindLazyTriggers(root: HTMLElement | null) {
+    if (!root || root.dataset.lazyBound === "true") return;
+    root.dataset.lazyBound = "true";
+
+    const triggers = [
+      root.querySelector("#player-button"),
+      root.querySelector("#play-pause-btn"),
+      root.querySelector("#playlist-btn"),
+      root.querySelector("#next-btn"),
+      root.querySelector("#prev-btn"),
+    ].filter((el): el is HTMLElement => Boolean(el));
+
+    const onInteraction = () => ensurePlayer("interaction");
+    triggers.forEach(trigger => {
+      trigger.addEventListener("pointerdown", onInteraction, { once: true });
+    });
+
+    root.addEventListener(
+      "pointerenter",
+      () => ensurePlayer("hover"),
+      { once: true }
+    );
+
+    root.addEventListener(
+      "keydown",
+      event => {
+        if (event.key === "Enter" || event.key === " ") {
+          ensurePlayer("keyboard");
+        }
+      },
+      { once: true }
+    );
+
+    const idleInit = () => ensurePlayer("idle");
+    if ("requestIdleCallback" in window) {
+      requestIdleCallback(idleInit, { timeout: 4000 });
+    } else {
+      setTimeout(idleInit, 3000);
     }
   }
 
-  // 页面加载时初始化
-  if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', initPlayer);
+  function bootstrapPlayer() {
+    const root = document.getElementById("music-player");
+    if (!root) return;
+    bindLazyTriggers(root);
+  }
+
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", bootstrapPlayer, {
+      once: true,
+    });
   } else {
-    initPlayer();
+    bootstrapPlayer();
   }
 
-  // 监听页面切换事件，确保播放器在新页面中仍然工作
-  document.addEventListener('astro:after-swap', () => {
-    // transition:persist会保持DOM元素，但我们需要确保事件监听器仍然有效
-    // 如果实例不存在，重新初始化
-    if (!window.musicPlayerInstance) {
-      setTimeout(initPlayer, 10);
-    }
+  document.addEventListener("astro:after-swap", () => {
+    // next tick to let Astro update DOM attributes
+    requestAnimationFrame(() => bootstrapPlayer());
   });
 </script>

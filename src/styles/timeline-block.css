@@ -78,6 +78,7 @@
   width: 100%;
   box-sizing: border-box;
   transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  margin-bottom: 2rem;
 }
 
 .timeline-content-card:hover {
@@ -103,23 +104,17 @@ html[data-theme="dark"] .timeline-content-card:hover {
 
 /* Timeline image styles */
 .timeline-image-container {
-  margin: 1rem 0;
+  margin: 0.5rem 0;
   border-radius: 8px;
   overflow: hidden;
+  width: 100%;
 }
 
 .timeline-image {
   width: 100%;
   height: auto;
-  max-height: 300px;
   object-fit: cover;
   border-radius: 8px;
   transition: transform 0.3s ease;
-}
-
-/* 响应式图片 */
-@media (max-width: 640px) {
-  .timeline-image {
-    max-height: 200px;
-  }
+  border: 1px solid var(--color-muted);
 }
