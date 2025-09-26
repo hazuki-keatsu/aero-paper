@@ -142,21 +142,21 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "reflection-after-watching-lain.md",
+                "file": "paper-reading/attention-is-all-you-need.md",
                 "followCursor": false,
                 "showSearch": false,
                 "searchQuery": ""
               },
               "icon": "lucide-list",
-              "title": "reflection-after-watching-lain 的大纲"
+              "title": "attention-is-all-you-need 的大纲"
             }
           }
-        ]
+        ],
+        "currentTab": 3
       }
     ],
     "direction": "horizontal",
-    "width": 300,
-    "collapsed": true
+    "width": 300
   },
   "left-ribbon": {
     "hiddenItems": {
@@ -171,14 +171,14 @@
       "tinypng-image:Compress images": false
     }
   },
-  "active": "d630f596ffeceb54",
+  "active": "98c809441de70243",
   "lastOpenFiles": [
+    "blog-assets/TransformerModalStructure.svg",
+    "paper-reading/attention-is-all-you-need.md",
     "paper-reading/transformer.md",
     "_obsidian/Excalidraw/TransformerModalStructure.excalidraw.md",
-    "paper-reading/attention-is-all-you-need.md",
     "paper-reading/leveraging-knowledge-of-modality-experts-for-incomplete-multimodal-learning.md",
     "blog-assets/MoMKE-Structure.svg",
-    "blog-assets/TransformerModalStructure.svg",
     "blog-assets/TransformerModalStructure (1).svg",
     "_obsidian/Excalidraw/TransformerOverview.excalidraw.md",
     "_obsidian/Excalidraw/blog-assets/Pasted Image 20250924142637_105.png",

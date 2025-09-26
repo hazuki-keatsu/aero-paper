@@ -6,7 +6,18 @@ interface TimelineBlockProperties {
 	detail?: string;
 	image?: string;
 	imageAlt?: string;
+	hideTime?: string | boolean;
 	[key: string]: any;
+}
+
+function parseBoolean(value: unknown, defaultValue = false): boolean {
+	if (typeof value === "boolean") return value;
+	if (typeof value === "string") {
+		const normalized = value.trim().toLowerCase();
+		if (["true", "1", "yes", "on", "y"].includes(normalized)) return true;
+		if (["false", "0", "no", "off", "n"].includes(normalized)) return false;
+	}
+	return defaultValue;
 }
 
 /**
@@ -25,7 +36,16 @@ export function TimelineBlockComponent(
 	properties: TimelineBlockProperties,
 	children: any[]
 ): any {
-	const { time = "", title = "", detail = "", image = "", imageAlt = "" } = properties;
+	const {
+		time = "",
+		title = "",
+		detail = "",
+		image = "",
+		imageAlt = "",
+		hideTime = false,
+	} = properties;
+
+	const shouldHideTime = parseBoolean(hideTime, false);
 
 	// Parse the timestamp
 	let formattedDate = "";
@@ -48,26 +68,33 @@ export function TimelineBlockComponent(
 		}
 	}
 
+	const timeChildren: any[] = [];
+	if (formattedDate) {
+		timeChildren.push(h("div", { class: "timeline-date" }, formattedDate));
+	}
+	if (!shouldHideTime && formattedTime) {
+		timeChildren.push(h("div", { class: "timeline-clock" }, formattedTime));
+	}
+
 	return h("div", { class: "timeline-block" }, [
 		h("div", { class: "timeline-line" }),
 		h("div", { class: "timeline-marker" }),
 		h("div", { class: "timeline-content" }, [
-			h("div", { class: "timeline-time" }, [
-				h("div", { class: "timeline-date" }, formattedDate),
-				h("div", { class: "timeline-clock" }, formattedTime)
-			]),
+			timeChildren.length
+				? h("div", { class: "timeline-time" }, timeChildren)
+				: null,
 			h("div", { class: "timeline-content-card" }, [
 				h("h3", { class: "timeline-title" }, title),
 				h("hr", { class: "mb-4"}),
-				image && h("div", { class: "timeline-image-container mb-4" }, [
+				image && h("div", { class: "timeline-image-container" }, [
 					h("img", { 
 						src: image, 
 						alt: imageAlt || title,
 						class: "timeline-image"
 					})
 				]),
-				detail && h("p", { class: "timeline-detail" }, detail)
-			]),
+				h("div", { class: "timeline-detail"}, detail)
+			].filter(Boolean)),
 		].filter(Boolean))
 	]);
 }

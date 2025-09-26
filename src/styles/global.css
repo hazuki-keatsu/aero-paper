@@ -19,8 +19,8 @@ html[data-theme="light"] {
   --accent: #006cac;
   --muted: #e6e6e6;
   --border: #ece9e9;
-  --highlight-text: #ff6b6b;
-  --secondary-highlight: #4ecdc4;
+  --highlight-text: #eb0000;
+  --secondary-highlight: #27817b;
   --font-mono: "Sarasa", ui-monospace, SFMono-Regular, "SF Mono", Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
   --font-code: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
 }
@@ -31,7 +31,7 @@ html[data-theme="dark"] {
   --accent: #ff6b01;
   --muted: #343f60;
   --border: #ab4b08;
-  --highlight-text: #ff8a8a;
+  --highlight-text: #ff6161;
   --secondary-highlight: #6dd5d1;
   --font-mono: "Sarasa", ui-monospace, SFMono-Regular, "SF Mono", Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
   --font-code: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
@@ -96,31 +96,11 @@ html[data-theme="dark"] {
     transition: all 0.3s ease;
   }
   
-  /* 移动设备优化 */
-  @media (max-width: 768px) {
-    body::before {
-      background-image: none;
-      background-color: rgba(253, 253, 253, 0.6);
-      background-attachment: scroll;
-      filter: none;
-      opacity: 1;
-    }
-  }
-  
   /* 深色模式下的背景图片 */
   html[data-theme="dark"] body::before {
     background-image: url('../assets/images/backgrounds/asuka.webp');
     opacity: 1;
     filter: blur(3px);
-  }
-  
-  @media (max-width: 768px) {
-    html[data-theme="dark"] body::before {
-      background-image: none;
-      background-color: rgba(33, 39, 55, 0.75);
-      filter: none;
-      opacity: 1;
-    }
   }
   
   /* 内容遮罩层 */

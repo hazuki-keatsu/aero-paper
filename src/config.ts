@@ -27,6 +27,6 @@ export const SITE = {
   sideTableOfContents: true,
   githubRepoCardDataFetchCacheTime: 3600,
   dir: "ltr", // "rtl" | "auto"
-  lang: "zh_CN", // html lang code. Set this empty and default will be "en"
+  lang: "zh-hans", // html lang code. Set this empty and default will be "en"
   timezone: "Asia/Shanghai", // Default global timezone (IANA format) https://en.wikipedia.org/wiki/List_of_tz_database_time_zones
 };

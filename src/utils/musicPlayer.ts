@@ -159,6 +159,10 @@ export class MusicPlayer {
   }
 
   private play(): void {
+    const track = this.playlist[this.currentTrackIndex];
+    if (this.audio && !this.audio.src) {
+      this.audio.src = track.src;
+    }
     this.audio?.play().then(() => {
       this.isPlaying = true;
       this.playIcon?.classList.add('hidden');
@@ -228,7 +232,13 @@ export class MusicPlayer {
 
   private loadTrack(index: number): void {
     const track = this.playlist[index];
-    if (this.audio) this.audio.src = track.src;
+    if (this.audio) {
+      if (this.isPlaying) {
+        this.audio.src = track.src;
+      } else {
+        this.audio.removeAttribute('src');
+      }
+    }
     if (this.coverImage) this.coverImage.src = track.cover;
     if (this.songTitle) this.songTitle.textContent = track.title;
     if (this.songArtist) this.songArtist.textContent = track.artist;
