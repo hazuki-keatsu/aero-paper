@@ -76,6 +76,19 @@ export function TimelineBlockComponent(
 		timeChildren.push(h("div", { class: "timeline-clock" }, formattedTime));
 	}
 
+
+	// 处理 detail 内容：
+	// 1. 若传入 children（指令体内容），优先使用 children 作为富文本内容。
+	// 2. 若无 children 且 detail 含 HTML 标签，注入 raw 节点交由后续 rehype-raw 处理。
+	// 3. 否则按纯文本字符串渲染。
+	let detailNodes: any[] | string = detail;
+	if (children && children.length > 0) {
+		detailNodes = children; // 外层 markdown/指令体提供的内容
+	} else if (typeof detail === 'string' && /<[^>]+>/.test(detail)) {
+		// 简单判断含 HTML 标签；插入 raw 节点（需在管线中使用 rehype-raw 才能解析为真正节点）
+		detailNodes = [{ type: 'raw', value: detail }];
+	}
+
 	return h("div", { class: "timeline-block" }, [
 		h("div", { class: "timeline-line" }),
 		h("div", { class: "timeline-marker" }),
@@ -93,7 +106,7 @@ export function TimelineBlockComponent(
 						class: "timeline-image"
 					})
 				]),
-				h("div", { class: "timeline-detail"}, detail)
+				h("div", { class: "timeline-detail"}, detailNodes)
 			].filter(Boolean)),
 		].filter(Boolean))
 	]);
