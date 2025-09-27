@@ -106,23 +106,12 @@ html[data-theme="dark"] {
     background: rgba(253, 253, 253, 0.25);
     z-index: -1;
   }
-  
-  /* 移动设备优化 */
-  @media (max-width: 768px) {
-    body::after {
-      background: rgba(253, 253, 253, 0.5);
-    }
-  }
+
   
   html[data-theme="dark"] body::after {
     background: rgba(33, 39, 55, 0.58);
   }
   
-  @media (max-width: 768px) {
-    html[data-theme="dark"] body::after {
-      background: rgba(33, 39, 55, 0.72);
-    }
-  }
   a,
   button {
     @apply outline-offset-1 outline-accent focus-visible:no-underline focus-visible:outline-2 focus-visible:outline-dashed;
