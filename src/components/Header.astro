@@ -296,14 +296,17 @@ const isFirstLoad = Astro.cookies.get("hasLoaded")?.value !== "true";
 
   // 小屏幕下：切换主题后若导航菜单处于展开状态，自动收起
   // 小屏幕下：切换主题后若导航菜单处于展开状态，自动收起（复用 closeMenu）
-  (function attachAutoCollapseOnThemeChange(){
+  function attachAutoCollapseOnThemeChange(){
     const themeBtn = document.getElementById('theme-btn');
     if (!themeBtn) return;
     themeBtn.addEventListener('click', () => {
       if (window.innerWidth >= 640) return;
       closeMenu();
     });
-  })();
+  };
+  document.addEventListener("astro:after-swap", attachAutoCollapseOnThemeChange);
+  document.addEventListener("astro:page-load", attachAutoCollapseOnThemeChange);
+
 
   // 进度指示器逻辑
   function initLoadingIndicator() {
