@@ -35,6 +35,7 @@ export default defineConfig({
     })
   ],
   markdown: {
+    syntaxHighlight: false,
     remarkPlugins: [
       remarkMath,
       remarkCallouts,
@@ -43,7 +44,13 @@ export default defineConfig({
     ],
     rehypePlugins: [
       rehypeKatex,
-      rehypeMermaid,
+      [  
+        rehypeMermaid,  
+        {  
+          strategy: 'img-svg',  
+          dark: true,  
+        }  
+      ],  
       [
         rehypeComponents,
         {

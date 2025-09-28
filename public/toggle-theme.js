@@ -59,6 +59,7 @@ window.onload = () => {
     // now this script can find and listen for clicks on the control
     document.querySelector("#theme-btn")?.addEventListener("click", () => {
       themeValue = themeValue === "light" ? "dark" : "light";
+      updateMermaidMedia(themeValue === "light" ? "light" : "dark");
       setPreference();
     });
   }
@@ -88,3 +89,15 @@ window
     themeValue = isDark ? "dark" : "light";
     setPreference();
   });
+
+function updateMermaidMedia(theme) {
+  const mediaMap = {
+    'system': '(prefers-color-scheme: dark)',
+    'dark': 'all',
+    'light': 'none'
+  };
+
+  document.querySelectorAll('[id^="mermaid-dark"]').forEach(el =>
+    el.setAttribute('media', mediaMap[theme] || 'none')
+  );
+}
