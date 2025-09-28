@@ -2,7 +2,7 @@ export const SITE = {
   website: "https://keatsu.top/", // replace this with your deployed domain
   author: "Hazuki Keatsu",
   profile: "",
-  desc: "叶月枫",
+  desc: "叶月枫的技术小站",
   title: "Hazuki Keatsu",
   ogImage: "aeropaper-og.jpg",
   lightAndDarkMode: true,

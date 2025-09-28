@@ -1,0 +1,324 @@
+---
+import Layout from "@/layouts/Layout.astro";
+import Header from "@/components/Header.astro";
+import Footer from "@/components/Footer.astro";
+import PageContainer from "@/components/PageContainer.astro";
+import LinkButton from "@/components/LinkButton.astro";
+import { SITE } from "@/config";
+import {
+  friends as rawFriends,
+  getSortedFriends,
+  type FriendLink,
+} from "@/data/friends";
+import Main from "@/layouts/Main.astro";
+
+const friends: FriendLink[] = getSortedFriends(rawFriends);
+
+const title = `友链 | ${SITE.title}`;
+const desc = "互相链接，交流分享。";
+const pageTitle = '友链'
+---
+
+<Layout title={title} description={desc}>
+  <PageContainer>
+    <Header />
+    <Main pageTitle={pageTitle} pageDesc={desc}>
+      <div class="mb-8 space-y-2 text-sm">
+        <details
+          class="content-card js-animated-details rounded-lg p-4 transition-all duration-300 sm:p-5"
+          data-animate
+        >
+          <summary class="cursor-pointer font-semibold text-accent select-none"
+            >申请方式</summary
+          >
+          <div class="js-accordion-content space-y-2 text-sm">
+            <hr class="my-4" />
+            <p>在提交申请前请先添加本站信息：</p>
+
+            <p
+              class="overflow-auto rounded-md border bg-background/60 p-3 text-sm"
+              style="line-height: 2rem;"
+            >
+              <b>名称</b>: {SITE.title}<br />
+              <b>描述</b>: {SITE.desc || ""}
+              <br />
+              <b>地址</b>: {SITE.website || ""}<br />
+              <b>头像地址</b>: {SITE.website || ""}assets/profile_picture.jpg
+            </p>
+
+            <p>
+              然后通过邮件向我发起请求：<LinkButton
+                href="mailto:yeyuefeng699@outlook.com?subject=友链申请"
+                class="underline decoration-dashed underline-offset-4 hover:text-accent"
+                >发送邮件</LinkButton
+              >
+            </p>
+            <p class="text-xs opacity-70">
+              请提供你的网站名称、链接、头像（SVG/PNG/JPG）与可选标签。
+            </p>
+          </div>
+        </details>
+      </div>
+
+      <div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3" id="friends-grid">
+        {
+          friends.map((friend, idx) => (
+            <a
+              href={friend.url}
+              target="_blank"
+              rel="noopener noreferrer"
+              class={`friend-card group will-change-opacity block translate-y-4 overflow-hidden rounded-xl border border-border/60 bg-background/70 opacity-0 shadow-md backdrop-blur-sm transition-all duration-500 will-change-transform hover:bg-background/90 hover:shadow-lg focus-visible:outline-2 focus-visible:outline-accent focus-visible:outline-dashed [animation-delay:${idx * 60}ms]`}
+            >
+              <div class="flex items-center gap-4 p-4">
+                {friend.avatar && (
+                  <img
+                    src={friend.avatar}
+                    alt={friend.name}
+                    loading="lazy"
+                    width={56}
+                    height={56}
+                    class="h-14 w-14 shrink-0 rounded-full border border-border/50 bg-background/40 object-cover transition-transform duration-300 group-hover:scale-[1.05]"
+                  />
+                )}
+                <div class="min-w-0 flex-1">
+                  <h2 class="truncate text-lg font-semibold transition-colors group-hover:text-accent">
+                    {friend.name}
+                  </h2>
+                  {friend.description && (
+                    <p class="mt-1 line-clamp-2 text-sm leading-snug opacity-80">
+                      {friend.description}
+                    </p>
+                  )}
+                  {friend.tags && friend.tags.length > 0 && (
+                    <ul class="mt-2 flex flex-wrap gap-1.5">
+                      {friend.tags.map(tag => (
+                        <li class="rounded-md bg-accent/10 px-2 py-0.5 text-[11px] tracking-wide text-accent uppercase">
+                          {tag}
+                        </li>
+                      ))}
+                    </ul>
+                  )}
+                </div>
+              </div>
+            </a>
+          ))
+        }
+      </div>
+
+      <div class="mt-10 text-center text-sm opacity-70">
+        <p>若你的站点已失效或长期无法访问，我可能会定期清理。</p>
+      </div>
+    </Main>
+    <Footer />
+  </PageContainer>
+</Layout>
+
+<script>
+  // 进入视图渐进显现（首屏顺序级联）
+  document.addEventListener("astro:page-load", () => {
+    const cards = Array.from(
+      document.querySelectorAll(".friend-card")
+    ) as HTMLElement[];
+    requestAnimationFrame(() => {
+      cards.forEach(el => {
+        el.classList.add("friend-card-mounted");
+      });
+    });
+  });
+
+  // 页面切换后再次执行（视图过渡场景）
+  document.addEventListener("astro:after-swap", () => {
+    const cards = Array.from(
+      document.querySelectorAll(".friend-card:not(.friend-card-mounted)")
+    ) as HTMLElement[];
+    requestAnimationFrame(() => {
+      cards.forEach(el => el.classList.add("friend-card-mounted"));
+    });
+  });
+
+  // 高度动画增强：在关闭时阻止默认立即收起，先动画再移除 open；兼容多 details
+  function enhanceDetailsAccordion(root = document) {
+    const prefersReduce = window.matchMedia(
+      "(prefers-reduced-motion: reduce)"
+    ).matches;
+    const list = Array.from(
+      root.querySelectorAll("details[data-animate]")
+    ) as HTMLDetailsElement[];
+    list.forEach(d => {
+      if ((d as HTMLElement).dataset.enhanced === "1") return;
+      (d as HTMLElement).dataset.enhanced = "1";
+      const summary = d.querySelector("summary");
+      const content = d.querySelector(
+        ".js-accordion-content"
+      ) as HTMLElement | null;
+      if (!summary || !content) return;
+      content.style.overflow = "hidden";
+      if (!d.open) {
+        content.style.height = "0px";
+        content.style.opacity = "0";
+      } else {
+        content.style.height = "auto";
+        content.style.opacity = "1";
+      }
+      let animating = false;
+      summary.addEventListener("click", e => {
+        // 若正在动画中，阻止重复
+        if (animating) {
+          e.preventDefault();
+          return;
+        }
+        if (prefersReduce) return; // 退化为原生行为
+
+        if (d.open) {
+          // 关闭：阻止默认(默认会直接移除 open 导致无法读高度)
+          e.preventDefault();
+          animating = true;
+          summary.setAttribute("aria-expanded", "false");
+          d.classList.add("accordion-closing");
+          const startH = content.scrollHeight;
+          content.style.height = startH + "px";
+          content.style.opacity = "1";
+          void content.offsetHeight;
+          content.style.transition =
+            "height 320ms cubic-bezier(.55,.1,.4,1), opacity 220ms ease";
+          content.style.height = "0px";
+          content.style.opacity = "0";
+          const closeEnd = (ev: Event) => {
+            if (
+              ev.target !== content ||
+              (ev as TransitionEvent).propertyName !== "height"
+            )
+              return;
+            content.removeEventListener("transitionend", closeEnd);
+            content.style.transition = "none";
+            d.removeAttribute("open");
+            d.classList.remove("accordion-closing");
+            animating = false;
+          };
+          content.addEventListener("transitionend", closeEnd);
+        } else {
+          // 打开：阻止默认，手动添加 open 并执行 0->目标动画
+          e.preventDefault();
+          animating = true;
+          d.setAttribute("open", "");
+          summary.setAttribute("aria-expanded", "true");
+          d.classList.add("accordion-opening");
+          content.style.transition = "none";
+          content.style.height = "0px";
+          content.style.opacity = "0";
+          void content.offsetHeight;
+          const target = content.scrollHeight;
+          content.style.transition =
+            "height 450ms cubic-bezier(.4,.15,.2,1), opacity 260ms ease";
+          content.style.height = target + "px";
+          content.style.opacity = "1";
+          const openEnd = (ev: Event) => {
+            if (
+              ev.target !== content ||
+              (ev as TransitionEvent).propertyName !== "height"
+            )
+              return;
+            content.removeEventListener("transitionend", openEnd);
+            content.style.transition = "none";
+            content.style.height = "auto";
+            d.classList.remove("accordion-opening");
+            animating = false;
+          };
+          content.addEventListener("transitionend", openEnd);
+        }
+      });
+    });
+  }
+
+  document.addEventListener("astro:page-load", () => enhanceDetailsAccordion());
+  document.addEventListener("astro:after-swap", () =>
+    enhanceDetailsAccordion()
+  );
+</script>
+
+<style is:global>
+  .friend-card {
+    transition-property: transform, opacity, background-color, box-shadow;
+  }
+  .friend-card.friend-card-mounted {
+    opacity: 1 !important;
+    transform: translateY(0) !important;
+  }
+  .friend-card:not(.friend-card-mounted) {
+    /* 初始状态已经在 class 中设置 opacity/translate；这里补充可读性 */
+  }
+  .friend-card:hover .friend-badge {
+    transform: scale(1.05);
+  }
+  .friend-card img {
+    transition: transform 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  }
+  .friend-card:hover img {
+    transform: scale(1.08) rotate(0.5deg);
+  }
+  .friend-card:active {
+    transform: translateY(2px);
+  }
+  html[data-theme="dark"] .friend-card {
+    background: rgba(52, 63, 96, 0.75);
+  }
+  html[data-theme="dark"] .friend-card:hover {
+    background: rgba(52, 63, 96, 0.9);
+  }
+
+  /* JS 手风琴内容初始样式（辅助防止闪烁） */
+  summary {
+    list-style: none;
+  }
+  details[data-animate] .js-accordion-content {
+    will-change: height, opacity;
+    transition: none;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    details[data-animate] .js-accordion-content {
+      transition: none !important;
+    }
+  }
+
+  /* 实心三角指示器（重写：使用伪元素大小变量 + 更稳定的垂直居中） */
+  details[data-animate] > summary {
+    --triangle-size: 9px; /* 控制三角边长（高度） */
+    --triangle-width: calc(var(--triangle-size) * 0.65);
+    --triangle-color: var(--color-accent);
+    display: inline-flex;
+    align-items: center;
+    gap: 0.55rem;
+    position: relative;
+    padding-left: 0.1rem; /* 减少多余缩进 */
+    line-height: 1.4;
+  }
+  /* 使用 ::before 形成“朝右”的实心三角（初始闭合） */
+  details[data-animate] > summary::before {
+    content: "";
+    flex: 0 0 auto;
+    width: 0;
+    height: 0;
+    border-style: solid;
+    border-width: var(--triangle-width) 0 var(--triangle-width)
+      var(--triangle-size);
+    border-color: transparent transparent transparent var(--triangle-color);
+    transform-origin: 40% 50%;
+    transform: rotate(0deg); /* 朝右 */
+    transition: transform 380ms cubic-bezier(0.4, 0.15, 0.2, 1);
+  }
+  /* 展开时旋转为朝下：右向三角旋转 90° => 指向下 */
+  details[data-animate].accordion-opening > summary::before,
+  details[data-animate][open] > summary::before {
+    transform: rotate(90deg);
+  }
+  /* 关闭时回旋稍快 */
+  details[data-animate].accordion-closing > summary::before {
+    transition: transform 300ms cubic-bezier(0.55, 0.1, 0.4, 1);
+    transform: rotate(0deg);
+  }
+  details[data-animate] > summary:focus-visible::before {
+    outline: 2px dashed var(--triangle-color);
+    outline-offset: 2px;
+  }
+  /* 支持在不同尺寸下自适应：可通过给 details 设置 style="--triangle-size:12px" 来改变大小 */
+</style>

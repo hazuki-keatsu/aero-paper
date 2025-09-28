@@ -120,6 +120,14 @@ const isFirstLoad = Astro.cookies.get("hasLoaded")?.value !== "true";
                 关于
               </a>
             </li>
+            <li class="col-span-2">
+              <a
+                href="/friends"
+                class:list={{ "active-nav": isActive("/friends") }}
+              >
+                友链
+              </a>
+            </li>
             {
               SITE.showTimeline && (
                 <li class="col-span-2">
