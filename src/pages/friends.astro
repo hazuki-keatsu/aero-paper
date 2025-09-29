@@ -16,7 +16,7 @@ const friends: FriendLink[] = getSortedFriends(rawFriends);
 
 const title = `友链 | ${SITE.title}`;
 const desc = "互相链接，交流分享。";
-const pageTitle = '友链'
+const pageTitle = "友链";
 ---
 
 <Layout title={title} description={desc}>
@@ -144,15 +144,21 @@ const pageTitle = '友链'
     const list = Array.from(
       root.querySelectorAll("details[data-animate]")
     ) as HTMLDetailsElement[];
+
     list.forEach(d => {
       if ((d as HTMLElement).dataset.enhanced === "1") return;
+
       (d as HTMLElement).dataset.enhanced = "1";
+
       const summary = d.querySelector("summary");
       const content = d.querySelector(
         ".js-accordion-content"
       ) as HTMLElement | null;
+
       if (!summary || !content) return;
+
       content.style.overflow = "hidden";
+
       if (!d.open) {
         content.style.height = "0px";
         content.style.opacity = "0";
@@ -160,8 +166,10 @@ const pageTitle = '友链'
         content.style.height = "auto";
         content.style.opacity = "1";
       }
+
       let animating = false;
-      summary.addEventListener("click", e => {
+
+      d.addEventListener("click", e => {
         // 若正在动画中，阻止重复
         if (animating) {
           e.preventDefault();

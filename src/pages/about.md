@@ -3,7 +3,7 @@ layout: ../layouts/AboutLayout.astro
 title: "关于"
 ---
 
-<div class="text-center mb-12 bg-gradient-to-br from-red-100/50 to-teal-100/50 p-8 rounded-2xl border border-white/20 shadow-md hover:shadow-xl transition-all duration-300">
+<div class="text-center mb-12 bg-gradient-to-br from-red-100/50 to-teal-100/50 p-8 rounded-2xl border border-white/20 shadow-md hover:shadow-lg transition-all duration-300">
     <img src="/assets/profile_picture.jpg" alt="Hazuki Keatsu" class="w-30 h-30 rounded-full object-cover border-3 border-accent shadow-md hover:shadow-lg mb-6 mx-auto transition-all duration-300 hover:scale-105">
     <h1 class="text-3xl mb-2 bg-gradient-to-r from-highlight-text to-secondary-highlight bg-clip-text text-transparent font-bold">你好，我是 Hazuki Keatsu！</h1>
     <p class="text-xl text-foreground/80 mb-4">👋 欢迎来到我的技术博客</p>
