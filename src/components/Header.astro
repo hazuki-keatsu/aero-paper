@@ -85,7 +85,7 @@ const isFirstLoad = Astro.cookies.get("hasLoaded")?.value !== "true";
             id="menu-items"
             class:list={[
               "mt-4 grid w-44 grid-cols-2 place-content-center gap-2",
-              "[&>li>a]:block [&>li>a]:px-4 [&>li>a]:py-3 [&>li>a]:text-center [&>li>a]:font-medium [&>li>a]:hover:text-accent sm:[&>li>a]:px-1 sm:[&>li>a]:py-1",
+              "[&>li>a]:block [&>li>a]:px-4 [&>li>a]:py-3 [&>li>a]:text-center [&>li>a]:font-medium [&>li>a]:hover:text-accent sm:[&>li>a]:px-2 sm:[&>li>a]:py-1",
               "menu-closed",
               "mx-auto",
               "sm:mt-0 sm:flex sm:w-auto sm:gap-y-0 md:gap-x-5",
@@ -104,7 +104,8 @@ const isFirstLoad = Astro.cookies.get("hasLoaded")?.value !== "true";
                 标签
               </a>
             </li>
-            <li class="col-span-2">
+            <!-- 次要导航：在 ≥sm 桌面端折叠进“更多”菜单；保留这些元素用于小屏（sm:hidden 放在克隆项上） -->
+            <li class="col-span-2 sm:hidden">
               <a
                 href="/stats"
                 class:list={{ "active-nav": isActive("/stats") }}
@@ -112,7 +113,7 @@ const isFirstLoad = Astro.cookies.get("hasLoaded")?.value !== "true";
                 统计
               </a>
             </li>
-            <li class="col-span-2">
+            <li class="col-span-2 sm:hidden">
               <a
                 href="/about"
                 class:list={{ "active-nav": isActive("/about") }}
@@ -120,7 +121,7 @@ const isFirstLoad = Astro.cookies.get("hasLoaded")?.value !== "true";
                 关于
               </a>
             </li>
-            <li class="col-span-2">
+            <li class="col-span-2 sm:hidden">
               <a
                 href="/friends"
                 class:list={{ "active-nav": isActive("/friends") }}
@@ -128,18 +129,55 @@ const isFirstLoad = Astro.cookies.get("hasLoaded")?.value !== "true";
                 友链
               </a>
             </li>
-            {
-              SITE.showTimeline && (
-                <li class="col-span-2">
-                  <a
-                    href="/timeline"
-                    class:list={{ "active-nav": isActive("/timeline") }}
-                  >
-                    时间线
+            { SITE.showTimeline && (
+              <li class="col-span-2 sm:hidden">
+                <a
+                  href="/timeline"
+                  class:list={{ "active-nav": isActive("/timeline") }}
+                >
+                  时间线
+                </a>
+              </li>
+            ) }
+            <!-- 更多菜单触发器：仅在 ≥sm 显示，结构与其它导航项保持一致（li > a） -->
+            <li class="relative hidden sm:block">
+              <a
+                id="more-btn"
+                href="#" role="button"
+                aria-haspopup="true"
+                aria-expanded="false"
+                aria-controls="more-menu"
+                title="更多导航"
+              >更多</a>
+              <ul
+                id="more-menu"
+                class="content-card bg-white/100 absolute right-0 top-full z-40 mt-2 w-40 origin-top-right rounded-md p-2 text-sm shadow-lg transition-all duration-150 focus:outline-none"
+                data-open="false"
+              >
+                <li>
+                  <a href="/stats" class:list={["block rounded px-3 py-2 hover:bg-accent/10 hover:text-accent", { "active-nav": isActive("/stats") }]}>
+                    统计
                   </a>
                 </li>
-              )
-            }
+                <li>
+                  <a href="/about" class:list={["block rounded px-3 py-2 hover:bg-accent/10 hover:text-accent", { "active-nav": isActive("/about") }]}>
+                    关于
+                  </a>
+                </li>
+                <li>
+                  <a href="/friends" class:list={["block rounded px-3 py-2 hover:bg-accent/10 hover:text-accent", { "active-nav": isActive("/friends") }]}>
+                    友链
+                  </a>
+                </li>
+                { SITE.showTimeline && (
+                  <li>
+                    <a href="/timeline" class:list={["block rounded px-3 py-2 hover:bg-accent/10 hover:text-accent", { "active-nav": isActive("/timeline") }]}>
+                      时间线
+                    </a>
+                  </li>
+                ) }
+              </ul>
+            </li>
             {
               SITE.showArchives && (
                 <li class="col-span-2">
@@ -302,6 +340,47 @@ const isFirstLoad = Astro.cookies.get("hasLoaded")?.value !== "true";
   initNav();
   document.addEventListener('astro:after-swap', initNav);
 
+  // 更多菜单逻辑（桌面端）
+  function initMoreMenu(){
+    const moreBtn = document.getElementById('more-btn');
+    const moreMenu = document.getElementById('more-menu');
+    if(!moreBtn || !moreMenu) return;
+
+    let open = false;
+    const close = () => {
+      if(!open) return;
+      open = false;
+      moreBtn.setAttribute('aria-expanded','false');
+      moreMenu.dataset.open = 'false';
+    };
+    const show = () => {
+      if(open) return;
+      open = true;
+      moreBtn.setAttribute('aria-expanded','true');
+      moreMenu.dataset.open = 'true';
+    };
+    moreBtn.addEventListener('click', (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+      open ? close() : show();
+    });
+    document.addEventListener('click', (e) => {
+      if(!(e.target instanceof Node)) return;
+      if(!moreMenu.contains(e.target) && e.target !== moreBtn) close();
+    });
+    document.addEventListener('keydown', (e) => {
+      if(e.key === 'Escape') close();
+    });
+    // 页面切换后关闭
+    document.addEventListener('astro:before-swap', close);
+    window.addEventListener('resize', () => {
+      // 进入移动端时强制关闭
+      if(window.innerWidth < 640) close();
+    });
+  }
+  initMoreMenu();
+  document.addEventListener('astro:after-swap', initMoreMenu);
+
   // 小屏幕下：切换主题后若导航菜单处于展开状态，自动收起
   // 小屏幕下：切换主题后若导航菜单处于展开状态，自动收起（复用 closeMenu）
   function attachAutoCollapseOnThemeChange(){
@@ -423,5 +502,22 @@ const isFirstLoad = Astro.cookies.get("hasLoaded")?.value !== "true";
       max-height: none !important;
       margin-top: 0 !important;
     }
+  }
+
+  /* 更多菜单动画 */
+  #more-menu {
+    pointer-events: none;
+    opacity: 0;
+    transform: translateY(4px) scale(.98);
+    transition: opacity .14s ease, transform .14s ease;
+  }
+  #more-menu[data-open="true"] {
+    pointer-events: auto;
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+  #more-menu a.active-nav {
+    color: var(--color-accent);
+    font-weight: 600;
   }
 </style>
