@@ -20,7 +20,9 @@ const pageDescription = "展示博客的文章统计信息";
     <Main pageTitle="博客统计" pageDesc={pageDescription}>
       <div class="space-y-8">
         <!-- 月度字数统计图表 -->
-        <div class="content-card rounded-lg bg-muted/20 dark:bg-background/20 sm:p-8 p-4 my-6 transition-all duration-300 hover:shadow-lg hover:shadow-black/10 dark:hover:shadow-black/30">
+        <div
+          class="content-card my-6 rounded-lg p-4 transition-all duration-300 hover:shadow-lg hover:shadow-black/10 sm:p-8 dark:hover:shadow-black/30"
+        >
           <h3 class="mb-6 flex items-center gap-2 text-xl font-semibold">
             <svg
               width="20"
@@ -40,7 +42,7 @@ const pageDescription = "展示博客的文章统计信息";
           </h3>
 
           <div class="overflow-hidden">
-            <div class="relative md:h-80 h-50">
+            <div class="relative h-50 md:h-80">
               <canvas id="monthlyChart" class="h-full w-full"></canvas>
             </div>
             <div
@@ -67,9 +69,9 @@ const pageDescription = "展示博客的文章统计信息";
         </div>
 
         <!-- 总体统计卡片 -->
-        <div class="grid gap-6 grid-cols-1 md:grid-cols-2 lg:grid-cols-4">
+        <div class="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-4">
           <div
-            class="content-card rounded-lg bg-muted/20 dark:bg-background/20 group sm:p-8 p-4 transition-all duration-300 hover:shadow-lg hover:shadow-black/10 dark:hover:shadow-black/30"
+            class="content-card group rounded-lg p-4 transition-all duration-300 hover:shadow-lg hover:shadow-black/10 sm:p-8 dark:hover:shadow-black/30"
           >
             <div class="flex items-center justify-between">
               <div>
@@ -105,7 +107,7 @@ const pageDescription = "展示博客的文章统计信息";
           </div>
 
           <div
-            class="content-card rounded-lg bg-muted/20 dark:bg-background/20 group sm:p-8 p-4 transition-all duration-300 hover:shadow-lg hover:shadow-black/10 dark:hover:shadow-black/30"
+            class="content-card group rounded-lg p-4 transition-all duration-300 hover:shadow-lg hover:shadow-black/10 sm:p-8 dark:hover:shadow-black/30"
           >
             <div class="flex items-center justify-between">
               <div>
@@ -143,7 +145,7 @@ const pageDescription = "展示博客的文章统计信息";
           </div>
 
           <div
-            class="content-card rounded-lg bg-muted/20 dark:bg-background/20 group sm:p-8 p-4 transition-all duration-300 hover:shadow-lg hover:shadow-black/10 dark:hover:shadow-black/30"
+            class="content-card group rounded-lg p-4 transition-all duration-300 hover:shadow-lg hover:shadow-black/10 sm:p-8 dark:hover:shadow-black/30"
           >
             <div class="flex items-center justify-between">
               <div>
@@ -180,7 +182,7 @@ const pageDescription = "展示博客的文章统计信息";
           </div>
 
           <div
-            class="content-card rounded-lg bg-muted/20 dark:bg-background/20 group sm:p-8 p-4 transition-all duration-300 hover:shadow-lg hover:shadow-black/10 dark:hover:shadow-black/30"
+            class="content-card group rounded-lg p-4 transition-all duration-300 hover:shadow-lg hover:shadow-black/10 sm:p-8 dark:hover:shadow-black/30"
           >
             <div class="flex items-center justify-between">
               <div>
@@ -219,7 +221,7 @@ const pageDescription = "展示博客的文章统计信息";
           <!-- 最长文章 -->
           {
             stats.longestPost && (
-              <div class="content-card rounded-lg bg-muted/20 dark:bg-background/20 sm:p-8 p-4 transition-all duration-300 hover:shadow-lg hover:shadow-black/10 dark:hover:shadow-black/30">
+              <div class="content-card rounded-lg p-4 transition-all duration-300 hover:shadow-lg hover:shadow-black/10 sm:p-8 dark:hover:shadow-black/30">
                 <h3 class="mb-4 flex items-center gap-2 text-lg font-semibold">
                   <svg
                     width="20"
@@ -241,7 +243,7 @@ const pageDescription = "展示博客的文章统计信息";
                   <a
                     transition:name={slugifyStr(stats.longestPost.title)}
                     href={stats.longestPost.path}
-                    class="block text-lg font-medium text-accent decoration-dashed underline-offset-4 hover:text-highlight-text hover:underline transition-colors"
+                    class="block text-lg font-medium text-accent decoration-dashed underline-offset-4 transition-colors hover:text-highlight-text hover:underline"
                   >
                     {stats.longestPost.title}
                   </a>
@@ -256,7 +258,7 @@ const pageDescription = "展示博客的文章统计信息";
           <!-- 最新文章 -->
           {
             stats.latestPost && (
-              <div class="content-card rounded-lg bg-muted/20 dark:bg-background/20 sm:p-8 p-4 transition-all duration-300 hover:shadow-lg hover:shadow-black/10 dark:hover:shadow-black/30">
+              <div class="content-card rounded-lg p-4 transition-all duration-300 hover:shadow-lg hover:shadow-black/10 sm:p-8 dark:hover:shadow-black/30">
                 <h3 class="mb-4 flex items-center gap-2 text-lg font-semibold">
                   <svg
                     width="20"
@@ -277,7 +279,7 @@ const pageDescription = "展示博客的文章统计信息";
                   <a
                     transition:name={slugifyStr(stats.latestPost.title)}
                     href={stats.latestPost.path}
-                    class="block text-lg font-medium text-accent decoration-dashed underline-offset-4 hover:text-highlight-text hover:underline transition-colors"
+                    class="block text-lg font-medium text-accent decoration-dashed underline-offset-4 transition-colors hover:text-highlight-text hover:underline"
                   >
                     {stats.latestPost.title}
                   </a>
@@ -297,7 +299,7 @@ const pageDescription = "展示博客的文章统计信息";
         <!-- 年度统计 -->
         {
           stats.yearlyStats.length > 0 && (
-            <div class="content-card rounded-lg bg-muted/10 dark:bg-background/20 sm:p-8 p-4 transition-all duration-300 hover:shadow-lg hover:shadow-black/10 dark:hover:shadow-black/30">
+            <div class="content-card rounded-lg p-4 transition-all duration-300 hover:shadow-lg hover:shadow-black/10 sm:p-8 dark:hover:shadow-black/30">
               <h3 class="mb-6 flex items-center gap-2 text-xl font-semibold">
                 <svg
                   width="20"
@@ -319,7 +321,7 @@ const pageDescription = "展示博客的文章统计信息";
               </h3>
               <div class="space-y-4">
                 {stats.yearlyStats.map(yearStat => (
-                  <div class="flex items-center justify-between rounded-lg bg-muted/20 dark:bg-background/20 p-4">
+                  <div class="flex items-center justify-between rounded-lg p-4">
                     <div class="flex items-center gap-4">
                       <span class="text-2xl font-bold text-accent">
                         {yearStat.year}
@@ -350,7 +352,7 @@ const pageDescription = "展示博客的文章统计信息";
         <!-- 标签统计 -->
         {
           stats.tagStats.length > 0 && (
-            <div class="content-card rounded-lg bg-muted/10 dark:bg-background/20 sm:p-8 p-4 transition-all duration-300 hover:shadow-lg hover:shadow-black/10 dark:hover:shadow-black/30">
+            <div class="content-card rounded-lg p-4 transition-all duration-300 hover:shadow-lg hover:shadow-black/10 sm:p-8 dark:hover:shadow-black/30">
               <h3 class="mb-6 flex items-center gap-2 text-xl font-semibold">
                 <svg
                   width="20"
@@ -368,12 +370,17 @@ const pageDescription = "展示博客的文章统计信息";
                 </svg>
                 热门标签
               </h3>
-              <div class="grid gap-4 grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
+              <div class="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
                 {stats.tagStats.map(tagStat => (
-                  <div class="flex items-center justify-between rounded-lg bg-muted/20 dark:bg-background/20 p-4">
+                  <div class="flex items-center justify-between rounded-lg p-4">
                     <div class="flex items-center gap-3">
-                      <ul class="list-none p-0 m-0">
-                        <Tag tag={tagStat.tag} tagName={tagStat.tag} size="sm" isTransition={false} />
+                      <ul class="m-0 list-none p-0">
+                        <Tag
+                          tag={tagStat.tag}
+                          tagName={tagStat.tag}
+                          size="sm"
+                          isTransition={false}
+                        />
                       </ul>
                       <div class="text-muted-foreground text-sm">
                         {tagStat.count} 篇 ({tagStat.percentage}%)
@@ -398,7 +405,7 @@ const pageDescription = "展示博客的文章统计信息";
 </Layout>
 
 <script>
-  import Chart from 'chart.js/auto';
+  import Chart from "chart.js/auto";
 
   // 全局接口声明
   declare global {
@@ -410,31 +417,38 @@ const pageDescription = "展示博客的文章统计信息";
   }
 
   // 获取月度统计数据
-  const monthlyStatsData = JSON.parse(document.getElementById('monthly-stats-data')?.textContent || '[]');
-  
+  const monthlyStatsData = JSON.parse(
+    document.getElementById("monthly-stats-data")?.textContent || "[]"
+  );
+
   // 获取 CSS 变量中的主题色
   function getCSSVariable(name: string): string {
-    return getComputedStyle(document.documentElement).getPropertyValue(name).trim();
+    return getComputedStyle(document.documentElement)
+      .getPropertyValue(name)
+      .trim();
   }
 
   // 清理所有资源
   function cleanupChart() {
     // 清理图表实例
-    if (window.monthlyChart && typeof window.monthlyChart.destroy === 'function') {
+    if (
+      window.monthlyChart &&
+      typeof window.monthlyChart.destroy === "function"
+    ) {
       try {
         window.monthlyChart.destroy();
       } catch (e) {
-        console.warn('Error destroying chart:', e);
+        console.warn("Error destroying chart:", e);
       }
       window.monthlyChart = null;
     }
-    
+
     // 清理主题观察器
     if (window.themeObserver) {
       try {
         window.themeObserver.disconnect();
       } catch (e) {
-        console.warn('Error disconnecting observer:', e);
+        console.warn("Error disconnecting observer:", e);
       }
       window.themeObserver = null;
     }
@@ -445,38 +459,44 @@ const pageDescription = "展示博客的文章统计信息";
     // 先清理之前的资源
     cleanupChart();
 
-    const ctx = document.getElementById('monthlyChart') as HTMLCanvasElement;
+    const ctx = document.getElementById("monthlyChart") as HTMLCanvasElement;
     if (!ctx) return;
 
     // 准备数据 - 获取最近12个月的数据
-    const sortedData = monthlyStatsData.sort((a: any, b: any) => {
-      if (a.year === b.year) {
-        return a.month - b.month;
-      }
-      return a.year - b.year;
-    }).slice(-12);
+    const sortedData = monthlyStatsData
+      .sort((a: any, b: any) => {
+        if (a.year === b.year) {
+          return a.month - b.month;
+        }
+        return a.year - b.year;
+      })
+      .slice(-12);
 
-    const labels = sortedData.map((item: any) => `${item.year}年${item.month}月`);
+    const labels = sortedData.map(
+      (item: any) => `${item.year}年${item.month}月`
+    );
     const wordsData = sortedData.map((item: any) => item.words);
     const postsData = sortedData.map((item: any) => item.posts);
 
     // 获取主题色
-    const accentColor = getCSSVariable('--color-accent');
-    const secondaryHighlightColor = getCSSVariable('--color-secondary-highlight');
-    const backgroundColor = getCSSVariable('--color-background');
-    const foregroundColor = getCSSVariable('--color-foreground');
-    const mutedColor = getCSSVariable('--color-muted');
+    const accentColor = getCSSVariable("--color-accent");
+    const secondaryHighlightColor = getCSSVariable(
+      "--color-secondary-highlight"
+    );
+    const backgroundColor = getCSSVariable("--color-background");
+    const foregroundColor = getCSSVariable("--color-foreground");
+    const mutedColor = getCSSVariable("--color-muted");
 
     const chart = new Chart(ctx, {
-      type: 'line',
+      type: "line",
       data: {
         labels: labels,
         datasets: [
           {
-            label: '月度字数',
+            label: "月度字数",
             data: wordsData,
             borderColor: accentColor,
-            backgroundColor: accentColor + '20',
+            backgroundColor: accentColor + "20",
             pointBackgroundColor: accentColor,
             pointBorderColor: backgroundColor,
             pointBorderWidth: 2,
@@ -487,10 +507,10 @@ const pageDescription = "展示博客的文章统计信息";
             borderWidth: 3,
           },
           {
-            label: '文章数量',
+            label: "文章数量",
             data: postsData,
             borderColor: secondaryHighlightColor,
-            backgroundColor: secondaryHighlightColor + '20',
+            backgroundColor: secondaryHighlightColor + "20",
             pointBackgroundColor: secondaryHighlightColor,
             pointBorderColor: backgroundColor,
             pointBorderWidth: 2,
@@ -499,31 +519,31 @@ const pageDescription = "展示博客的文章统计信息";
             fill: false,
             tension: 0.4,
             borderWidth: 3,
-            yAxisID: 'y1',
-          }
-        ]
+            yAxisID: "y1",
+          },
+        ],
       },
       options: {
         responsive: true,
         maintainAspectRatio: false,
         interaction: {
           intersect: false,
-          mode: 'index'
+          mode: "index",
         },
         plugins: {
           legend: {
             display: true,
-            position: 'top',
+            position: "top",
             labels: {
               usePointStyle: true,
-              pointStyle: 'circle',
+              pointStyle: "circle",
               padding: 20,
               color: foregroundColor,
               font: {
                 size: 14,
-                family: 'Sarasa, ui-monospace'
-              }
-            }
+                family: "Sarasa, ui-monospace",
+              },
+            },
           },
           tooltip: {
             backgroundColor: backgroundColor,
@@ -534,68 +554,68 @@ const pageDescription = "展示博客的文章统计信息";
             cornerRadius: 8,
             displayColors: true,
             callbacks: {
-              title: function(context: any) {
+              title: function (context: any) {
                 return context[0].label;
               },
-              label: function(context: any) {
+              label: function (context: any) {
                 if (context.datasetIndex === 0) {
                   return `字数: ${context.parsed.y.toLocaleString()}`;
                 } else {
                   return `文章数: ${context.parsed.y} 篇`;
                 }
-              }
-            }
-          }
+              },
+            },
+          },
         },
         scales: {
           x: {
             display: true,
             grid: {
-              color: mutedColor + '40',
-              drawOnChartArea: true
+              color: mutedColor + "40",
+              drawOnChartArea: true,
             },
             ticks: {
               color: foregroundColor,
               font: {
                 size: 12,
-                family: 'Sarasa, ui-monospace'
+                family: "Sarasa, ui-monospace",
               },
               maxRotation: 45,
-              minRotation: 0
-            }
+              minRotation: 0,
+            },
           },
           y: {
-            type: 'linear',
+            type: "linear",
             display: true,
-            position: 'left',
+            position: "left",
             grid: {
-              color: mutedColor + '40',
-              drawOnChartArea: true
+              color: mutedColor + "40",
+              drawOnChartArea: true,
             },
             ticks: {
               color: foregroundColor,
               font: {
                 size: 12,
-                family: 'Sarasa, ui-monospace'
+                family: "Sarasa, ui-monospace",
               },
-              callback: function(value: any) {
+              callback: function (value: any) {
                 return value.toLocaleString();
-              }
+              },
             },
             title: {
               display: true,
-              text: '字数',
+              text: "字数",
               color: foregroundColor,
               font: {
                 size: 14,
-                family: 'Sarasa, ui-monospace'
-              }
-            }
+                family: "Sarasa, ui-monospace",
+              },
+            },
           },
           y1: {
-            type: 'linear',
+            type: "linear",
             display: true,
-            position: 'right',
+            position: "right",
             grid: {
               drawOnChartArea: false,
             },
@@ -603,28 +623,28 @@ const pageDescription = "展示博客的文章统计信息";
               color: foregroundColor,
               font: {
                 size: 12,
-                family: 'Sarasa, ui-monospace'
-              }
+                family: "Sarasa, ui-monospace",
+              },
             },
             title: {
               display: true,
-              text: '文章数',
+              text: "文章数",
               color: foregroundColor,
               font: {
                 size: 14,
-                family: 'Sarasa, ui-monospace'
-              }
-            }
-          }
+                family: "Sarasa, ui-monospace",
+              },
+            },
+          },
         },
         animation: {
           duration: 1000,
-          easing: 'easeInOutQuart',
+          easing: "easeInOutQuart",
           delay: (context: any) => {
             return context.dataIndex * 50;
-          }
-        }
-      }
+          },
+        },
+      },
     });
 
     // 保存图表实例
@@ -632,16 +652,18 @@ const pageDescription = "展示博客的文章统计信息";
 
     // 创建主题观察器（只创建一次）
     if (!window.themeObserver) {
-      window.themeObserver = new MutationObserver((mutations) => {
+      window.themeObserver = new MutationObserver(mutations => {
         let shouldRecreate = false;
-        mutations.forEach((mutation) => {
-          if (mutation.type === 'attributes' && 
-              mutation.attributeName === 'data-theme' && 
-              window.monthlyChart) {
+        mutations.forEach(mutation => {
+          if (
+            mutation.type === "attributes" &&
+            mutation.attributeName === "data-theme" &&
+            window.monthlyChart
+          ) {
             shouldRecreate = true;
           }
         });
-        
+
         if (shouldRecreate) {
           console.log("主题变化，重新创建图表");
           // 延迟一点时间等待主题样式完全应用
@@ -654,7 +676,7 @@ const pageDescription = "展示博客的文章统计信息";
       // 开始观察
       window.themeObserver.observe(document.documentElement, {
         attributes: true,
-        attributeFilter: ['data-theme']
+        attributeFilter: ["data-theme"],
       });
     }
   }
@@ -673,36 +695,43 @@ const pageDescription = "展示博客的文章统计信息";
   }
 
   // 页面加载完成后创建图表
-  if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', initStats);
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", initStats);
   } else {
     initStats();
   }
-  
+
   // Astro 路由切换后重新创建图表
-  document.addEventListener('astro:page-load', initStats);
-  
+  document.addEventListener("astro:page-load", initStats);
+
   // 页面离开前清理所有资源
-  document.addEventListener('astro:before-preparation', () => setTimeout(() => cleanupStats(), 10));
-  
+  document.addEventListener("astro:before-preparation", () =>
+    setTimeout(() => cleanupStats(), 10)
+  );
+
   // 页面可见性变化时处理图表
-  document.addEventListener('visibilitychange', () => {
-    if (document.visibilityState === 'hidden') {
+  document.addEventListener("visibilitychange", () => {
+    if (document.visibilityState === "hidden") {
       // 页面隐藏时暂停图表动画以节省资源，但不销毁图表
       if (window.monthlyChart) {
         window.monthlyChart.stop();
       }
-    } else if (document.visibilityState === 'visible') {
+    } else if (document.visibilityState === "visible") {
       // 页面重新可见时，如果图表不存在则重新创建
       if (!window.monthlyChart) {
         createMonthlyChart();
       }
     }
   });
-  
+
   // 页面卸载时清理资源
-  window.addEventListener('beforeunload', cleanupStats);
+  window.addEventListener("beforeunload", cleanupStats);
 </script>
 
 <!-- 月度统计数据 -->
-<script is:inline id="monthly-stats-data" type="application/json" set:html={JSON.stringify(stats.monthlyStats)}></script>
+<script
+  is:inline
+  id="monthly-stats-data"
+  type="application/json"
+  set:html={JSON.stringify(stats.monthlyStats)}
+/>

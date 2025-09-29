@@ -104,6 +104,14 @@ const isFirstLoad = Astro.cookies.get("hasLoaded")?.value !== "true";
                 标签
               </a>
             </li>
+            <li class="col-span-2">
+              <a
+                href="/about"
+                class:list={{ "active-nav": isActive("/about") }}
+              >
+                关于
+              </a>
+            </li>
             <!-- 次要导航：在 ≥sm 桌面端折叠进“更多”菜单；保留这些元素用于小屏（sm:hidden 放在克隆项上） -->
             <li class="col-span-2 sm:hidden">
               <a
@@ -111,14 +119,6 @@ const isFirstLoad = Astro.cookies.get("hasLoaded")?.value !== "true";
                 class:list={{ "active-nav": isActive("/stats") }}
               >
                 统计
-              </a>
-            </li>
-            <li class="col-span-2 sm:hidden">
-              <a
-                href="/about"
-                class:list={{ "active-nav": isActive("/about") }}
-              >
-                关于
               </a>
             </li>
             <li class="col-span-2 sm:hidden">
@@ -151,17 +151,12 @@ const isFirstLoad = Astro.cookies.get("hasLoaded")?.value !== "true";
               >更多</a>
               <ul
                 id="more-menu"
-                class="content-card bg-white/100 absolute right-0 top-full z-40 mt-2 w-40 origin-top-right rounded-md p-2 text-sm shadow-lg transition-all duration-150 focus:outline-none"
+                class="content-card absolute right-0 top-full z-40 mt-2 w-40 origin-top-right rounded-md p-2 text-sm shadow-lg transition-all duration-150 focus:outline-none"
                 data-open="false"
               >
                 <li>
                   <a href="/stats" class:list={["block rounded px-3 py-2 hover:bg-accent/10 hover:text-accent", { "active-nav": isActive("/stats") }]}>
                     统计
-                  </a>
-                </li>
-                <li>
-                  <a href="/about" class:list={["block rounded px-3 py-2 hover:bg-accent/10 hover:text-accent", { "active-nav": isActive("/about") }]}>
-                    关于
                   </a>
                 </li>
                 <li>
