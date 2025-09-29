@@ -151,7 +151,7 @@ const isFirstLoad = Astro.cookies.get("hasLoaded")?.value !== "true";
               >更多</a>
               <ul
                 id="more-menu"
-                class="content-card absolute right-0 top-full z-40 mt-2 w-40 origin-top-right rounded-md p-2 text-sm shadow-lg transition-all duration-150 focus:outline-none"
+                class="content-card--low-opacity absolute right-0 top-full z-40 mt-2 w-40 origin-top-right rounded-md p-2 text-sm shadow-lg transition-all duration-150 focus:outline-none"
                 data-open="false"
               >
                 <li>
@@ -510,9 +510,5 @@ const isFirstLoad = Astro.cookies.get("hasLoaded")?.value !== "true";
     pointer-events: auto;
     opacity: 1;
     transform: translateY(0) scale(1);
-  }
-  #more-menu a.active-nav {
-    color: var(--color-accent);
-    font-weight: 600;
   }
 </style>

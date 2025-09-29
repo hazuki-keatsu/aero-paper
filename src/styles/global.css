@@ -80,13 +80,13 @@ html[data-theme="dark"] {
     bottom: 0;
     background-image: url('../assets/images/backgrounds/mashiro.webp');
     background-size: cover;
-    background-position: center;
+    background-position: 85% 25%;
     background-repeat: no-repeat;
     background-attachment: fixed;
     opacity: 1;
-    filter: blur(2px);
+    filter: blur(1px);
     z-index: -2;
-    transition: all 0.3s ease;
+    transition: all 0.2s ease;
   }
   
   /* 深色模式下的背景图片 */
@@ -109,7 +109,7 @@ html[data-theme="dark"] {
 
   
   html[data-theme="dark"] body::after {
-    background: rgba(33, 39, 55, 0.58);
+    background: rgba(33, 39, 55, 0.45);
   }
   
   a,
@@ -141,6 +141,19 @@ html[data-theme="dark"] {
   
   html[data-theme="dark"] .content-card {
     background: rgba(52, 63, 96, 0.85);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.25);
+  }
+
+  .content-card--low-opacity {
+    background: rgba(255, 255, 255, 1);
+    border: 1px solid rgba(255, 255, 255, 0.4);
+    border-radius: 12px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.08);
+  }
+  
+  html[data-theme="dark"] .content-card--low-opacity {
+    background: rgba(52, 63, 96, 1);
     border: 1px solid rgba(255, 255, 255, 0.15);
     box-shadow: 0 8px 32px rgba(0, 0, 0, 0.25);
   }

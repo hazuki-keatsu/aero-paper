@@ -1,4 +1,6 @@
 import { defineConfig, envField } from "astro/config";
+// 构建时读取 package.json 版本号
+import pkg from "./package.json" assert { type: "json" };
 import tailwindcss from "@tailwindcss/vite";
 import sitemap from "@astrojs/sitemap";
 import remarkCallouts from "./src/utils/remark-callouts";
@@ -75,6 +77,10 @@ export default defineConfig({
     },
     optimizeDeps: {
       exclude: ["@resvg/resvg-js"],
+    },
+    define: {
+      // 全局常量，任意前后端代码中可直接使用 __APP_VERSION__
+      __APP_VERSION__: JSON.stringify(pkg.version),
     },
   },
   image: {
