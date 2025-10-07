@@ -129,48 +129,71 @@ const isFirstLoad = Astro.cookies.get("hasLoaded")?.value !== "true";
                 友链
               </a>
             </li>
-            { SITE.showTimeline && (
-              <li class="col-span-2 sm:hidden">
-                <a
-                  href="/timeline"
-                  class:list={{ "active-nav": isActive("/timeline") }}
-                >
-                  时间线
-                </a>
-              </li>
-            ) }
+            {
+              SITE.showTimeline && (
+                <li class="col-span-2 sm:hidden">
+                  <a
+                    href="/timeline"
+                    class:list={{ "active-nav": isActive("/timeline") }}
+                  >
+                    时间线
+                  </a>
+                </li>
+              )
+            }
             <!-- 更多菜单触发器：仅在 ≥sm 显示，结构与其它导航项保持一致（li > a） -->
             <li class="relative hidden sm:block">
               <a
                 id="more-btn"
-                href="#" role="button"
+                href="#"
+                role="button"
                 aria-haspopup="true"
                 aria-expanded="false"
                 aria-controls="more-menu"
-                title="更多导航"
-              >更多</a>
+                title="更多导航">更多</a
+              >
               <ul
                 id="more-menu"
-                class="content-card--low-opacity absolute right-0 top-full z-40 mt-2 w-40 origin-top-right rounded-md p-2 text-sm shadow-lg transition-all duration-150 focus:outline-none"
+                class="content-card--low-opacity absolute top-full right-0 z-40 mt-2 w-40 origin-top-right rounded-md p-2 text-sm shadow-lg transition-all duration-150 focus:outline-none [&>*]:my-1 [&>*:first-child]:mt-0 [&>*:last-child]:mb-0"
                 data-open="false"
               >
                 <li>
-                  <a href="/stats" class:list={["block rounded px-3 py-2 hover:bg-accent/10 hover:text-accent", { "active-nav": isActive("/stats") }]}>
+                  <a
+                    href="/stats"
+                    class:list={[
+                      "block rounded px-3 py-2 hover:bg-accent/10 hover:text-accent",
+                      { "active-nav": isActive("/stats") },
+                    ]}
+                  >
                     统计
                   </a>
                 </li>
                 <li>
-                  <a href="/friends" class:list={["block rounded px-3 py-2 hover:bg-accent/10 hover:text-accent", { "active-nav": isActive("/friends") }]}>
+                  <a
+                    href="/friends"
+                    class:list={[
+                      "block rounded px-3 py-2 hover:bg-accent/10 hover:text-accent",
+                      { "active-nav": isActive("/friends") },
+                    ]}
+                  >
                     友链
                   </a>
                 </li>
-                { SITE.showTimeline && (
-                  <li>
-                    <a href="/timeline" class:list={["block rounded px-3 py-2 hover:bg-accent/10 hover:text-accent", { "active-nav": isActive("/timeline") }]}>
-                      时间线
-                    </a>
-                  </li>
-                ) }
+                {
+                  SITE.showTimeline && (
+                    <li>
+                      <a
+                        href="/timeline"
+                        class:list={[
+                          "block rounded px-3 py-2 hover:bg-accent/10 hover:text-accent",
+                          { "active-nav": isActive("/timeline") },
+                        ]}
+                      >
+                        时间线
+                      </a>
+                    </li>
+                  )
+                }
               </ul>
             </li>
             {
@@ -234,10 +257,10 @@ const isFirstLoad = Astro.cookies.get("hasLoaded")?.value !== "true";
 <script>
   function getNavRefs() {
     return {
-      menuBtn: document.querySelector('#menu-btn') as HTMLButtonElement | null,
-      menuItems: document.querySelector('#menu-items') as HTMLElement | null,
-      menuIcon: document.querySelector('#menu-icon') as HTMLElement | null,
-      closeIcon: document.querySelector('#close-icon') as HTMLElement | null,
+      menuBtn: document.querySelector("#menu-btn") as HTMLButtonElement | null,
+      menuItems: document.querySelector("#menu-items") as HTMLElement | null,
+      menuIcon: document.querySelector("#menu-icon") as HTMLElement | null,
+      closeIcon: document.querySelector("#close-icon") as HTMLElement | null,
     };
   }
 
@@ -250,12 +273,12 @@ const isFirstLoad = Astro.cookies.get("hasLoaded")?.value !== "true";
       opacity: menuItems.style.opacity,
       className: menuItems.className,
     };
-    menuItems.className = menuItems.className.replace(/menu-\w+/g, '');
-    menuItems.style.visibility = 'hidden';
-    menuItems.style.position = 'absolute';
-    menuItems.style.maxHeight = 'none';
-    menuItems.style.opacity = '1';
-    menuItems.style.display = 'block';
+    menuItems.className = menuItems.className.replace(/menu-\w+/g, "");
+    menuItems.style.visibility = "hidden";
+    menuItems.style.position = "absolute";
+    menuItems.style.maxHeight = "none";
+    menuItems.style.opacity = "1";
+    menuItems.style.display = "block";
     const height = menuItems.scrollHeight;
     // 恢复
     menuItems.className = original.className;
@@ -267,60 +290,64 @@ const isFirstLoad = Astro.cookies.get("hasLoaded")?.value !== "true";
     return height;
   }
 
-  function openMenu(context?: {skipIconToggle?: boolean}) {
+  function openMenu(context?: { skipIconToggle?: boolean }) {
     const { menuBtn, menuItems, menuIcon, closeIcon } = getNavRefs();
     if (!menuBtn || !menuItems || !menuIcon || !closeIcon) return;
-    if (menuItems.classList.contains('menu-open')) return; // 已是展开
+    if (menuItems.classList.contains("menu-open")) return; // 已是展开
     const targetHeight = calculateMenuHeight(menuItems);
-    menuItems.classList.remove('menu-closed');
-    menuItems.style.maxHeight = '0px';
+    menuItems.classList.remove("menu-closed");
+    menuItems.style.maxHeight = "0px";
     menuItems.offsetHeight; // 强制重绘
     menuItems.style.maxHeight = `${targetHeight}px`;
-    menuItems.classList.add('menu-open');
-    menuBtn.setAttribute('aria-expanded','true');
-    menuBtn.setAttribute('aria-label','Close Menu');
+    menuItems.classList.add("menu-open");
+    menuBtn.setAttribute("aria-expanded", "true");
+    menuBtn.setAttribute("aria-label", "Close Menu");
     if (!context?.skipIconToggle) {
-      menuIcon.classList.add('hidden');
-      closeIcon.classList.remove('hidden');
+      menuIcon.classList.add("hidden");
+      closeIcon.classList.remove("hidden");
     }
   }
 
-  function closeMenu(context?: {skipIconToggle?: boolean, animate?: boolean}) {
+  function closeMenu(context?: {
+    skipIconToggle?: boolean;
+    animate?: boolean;
+  }) {
     const { menuBtn, menuItems, menuIcon, closeIcon } = getNavRefs();
     if (!menuBtn || !menuItems || !menuIcon || !closeIcon) return;
-    if (!menuItems.classList.contains('menu-open')) return; // 已是关闭
+    if (!menuItems.classList.contains("menu-open")) return; // 已是关闭
     const currentHeight = menuItems.scrollHeight;
     menuItems.style.maxHeight = `${currentHeight}px`;
     menuItems.offsetHeight; // 强制重绘
-    menuItems.classList.remove('menu-open');
+    menuItems.classList.remove("menu-open");
     if (context?.animate !== false) {
-      menuItems.classList.add('menu-closing');
-      menuItems.classList.remove('menu-closing');
+      menuItems.classList.add("menu-closing");
+      menuItems.classList.remove("menu-closing");
     }
-    menuItems.classList.add('menu-closed');
-    menuBtn.setAttribute('aria-expanded','false');
-    menuBtn.setAttribute('aria-label','Open Menu');
-    menuItems.style.maxHeight = '';
+    menuItems.classList.add("menu-closed");
+    menuBtn.setAttribute("aria-expanded", "false");
+    menuBtn.setAttribute("aria-label", "Open Menu");
+    menuItems.style.maxHeight = "";
     if (!context?.skipIconToggle) {
-      menuIcon.classList.remove('hidden');
-      closeIcon.classList.add('hidden');
+      menuIcon.classList.remove("hidden");
+      closeIcon.classList.add("hidden");
     }
   }
 
   function bindNavToggle() {
     const { menuBtn } = getNavRefs();
     if (!menuBtn) return;
-    menuBtn.addEventListener('click', () => {
-      const expanded = menuBtn.getAttribute('aria-expanded') === 'true';
-      if (expanded) closeMenu(); else openMenu();
+    menuBtn.addEventListener("click", () => {
+      const expanded = menuBtn.getAttribute("aria-expanded") === "true";
+      if (expanded) closeMenu();
+      else openMenu();
     });
     // resize 时如果展开则更新高度
     let resizeTimer: number;
-    window.addEventListener('resize', () => {
+    window.addEventListener("resize", () => {
       clearTimeout(resizeTimer);
       resizeTimer = window.setTimeout(() => {
         const { menuItems } = getNavRefs();
-        if (menuItems && menuItems.classList.contains('menu-open')) {
+        if (menuItems && menuItems.classList.contains("menu-open")) {
           const newHeight = calculateMenuHeight(menuItems);
           menuItems.style.maxHeight = `${newHeight}px`;
         }
@@ -333,62 +360,64 @@ const isFirstLoad = Astro.cookies.get("hasLoaded")?.value !== "true";
   }
 
   initNav();
-  document.addEventListener('astro:after-swap', initNav);
+  document.addEventListener("astro:after-swap", initNav);
 
   // 更多菜单逻辑（桌面端）
-  function initMoreMenu(){
-    const moreBtn = document.getElementById('more-btn');
-    const moreMenu = document.getElementById('more-menu');
-    if(!moreBtn || !moreMenu) return;
+  function initMoreMenu() {
+    const moreBtn = document.getElementById("more-btn");
+    const moreMenu = document.getElementById("more-menu");
+    if (!moreBtn || !moreMenu) return;
 
     let open = false;
     const close = () => {
-      if(!open) return;
+      if (!open) return;
       open = false;
-      moreBtn.setAttribute('aria-expanded','false');
-      moreMenu.dataset.open = 'false';
+      moreBtn.setAttribute("aria-expanded", "false");
+      moreMenu.dataset.open = "false";
     };
     const show = () => {
-      if(open) return;
+      if (open) return;
       open = true;
-      moreBtn.setAttribute('aria-expanded','true');
-      moreMenu.dataset.open = 'true';
+      moreBtn.setAttribute("aria-expanded", "true");
+      moreMenu.dataset.open = "true";
     };
-    moreBtn.addEventListener('click', (e) => {
+    moreBtn.addEventListener("click", e => {
       e.preventDefault();
       e.stopPropagation();
       open ? close() : show();
     });
-    document.addEventListener('click', (e) => {
-      if(!(e.target instanceof Node)) return;
-      if(!moreMenu.contains(e.target) && e.target !== moreBtn) close();
+    document.addEventListener("click", e => {
+      if (!(e.target instanceof Node)) return;
+      if (!moreMenu.contains(e.target) && e.target !== moreBtn) close();
     });
-    document.addEventListener('keydown', (e) => {
-      if(e.key === 'Escape') close();
+    document.addEventListener("keydown", e => {
+      if (e.key === "Escape") close();
     });
     // 页面切换后关闭
-    document.addEventListener('astro:before-swap', close);
-    window.addEventListener('resize', () => {
+    document.addEventListener("astro:before-swap", close);
+    window.addEventListener("resize", () => {
       // 进入移动端时强制关闭
-      if(window.innerWidth < 640) close();
+      if (window.innerWidth < 640) close();
     });
   }
   initMoreMenu();
-  document.addEventListener('astro:after-swap', initMoreMenu);
+  document.addEventListener("astro:after-swap", initMoreMenu);
 
   // 小屏幕下：切换主题后若导航菜单处于展开状态，自动收起
   // 小屏幕下：切换主题后若导航菜单处于展开状态，自动收起（复用 closeMenu）
-  function attachAutoCollapseOnThemeChange(){
-    const themeBtn = document.getElementById('theme-btn');
+  function attachAutoCollapseOnThemeChange() {
+    const themeBtn = document.getElementById("theme-btn");
     if (!themeBtn) return;
-    themeBtn.addEventListener('click', () => {
+    themeBtn.addEventListener("click", () => {
       if (window.innerWidth >= 640) return;
       closeMenu();
     });
-  };
-  document.addEventListener("astro:after-swap", attachAutoCollapseOnThemeChange);
+  }
+  document.addEventListener(
+    "astro:after-swap",
+    attachAutoCollapseOnThemeChange
+  );
   document.addEventListener("astro:page-load", attachAutoCollapseOnThemeChange);
-
 
   // 进度指示器逻辑
   function initLoadingIndicator() {
@@ -503,8 +532,10 @@ const isFirstLoad = Astro.cookies.get("hasLoaded")?.value !== "true";
   #more-menu {
     pointer-events: none;
     opacity: 0;
-    transform: translateY(4px) scale(.98);
-    transition: opacity .14s ease, transform .14s ease;
+    transform: translateY(4px) scale(0.98);
+    transition:
+      opacity 0.14s ease,
+      transform 0.14s ease;
   }
   #more-menu[data-open="true"] {
     pointer-events: auto;
