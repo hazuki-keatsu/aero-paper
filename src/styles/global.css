@@ -78,15 +78,28 @@ html[data-theme="dark"] {
     left: 0;
     right: 0;
     bottom: 0;
+    /* 背景图稳定策略：
+       1. 去掉 background-attachment: fixed; （伪元素已 fixed）避免双重 fixed 重绘抖动。
+       2. 不直接用 cover（会在宽高比切换主轴时产生“跳”感）。
+       3. 通过媒体查询按当前视口宽高比锁定单一缩放轴，另一轴超出裁剪；这样连续拖拽高度时，图片视觉锚点不再突然重算。
+       4. Y 方向锚定到 top，X 方向使用原 85% 的兴趣点。若需要微调，可改 --bg-focus-x。 */
+    --bg-focus-x: 85%; /* 关注主体在图中的横向百分比 */
     background-image: url('../assets/images/backgrounds/mashiro.webp');
-    background-size: cover;
-    background-position: 85% 25%;
     background-repeat: no-repeat;
-    background-attachment: fixed;
+    background-position: var(--bg-focus-x) top; /* 锚定顶部，避免高度变化时按百分比重新取样导致的视差跳动 */
+    background-size: 100vw auto; /* 默认按宽度铺满 */
     opacity: 1;
     filter: blur(1px);
     z-index: -2;
     transition: all 0.2s ease;
+    pointer-events: none; /* 防止遮挡交互 */
+  }
+
+  /* 当视口变得“更窄更高”（宽高比 <= 16/10）时，改为按高度 100vh 铺满，保持上边缘锚定，减少 cover 裁剪翻转时的跳动 */
+  @media (max-aspect-ratio: 16/10) {
+    body::before {
+      background-size: auto 100vh;
+    }
   }
   
   /* 深色模式下的背景图片 */
