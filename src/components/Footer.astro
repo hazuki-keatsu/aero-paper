@@ -45,11 +45,25 @@ const { noMarginTop = false } = Astro.props;
             target="_blank">鄂公网安备42082102000235号</a
           >
         </div>
+      </div>
+      <div
+        class="flex flex-col items-center justify-center gap-1 md:flex-row md:gap-2"
+      >
+        <div class="text-muted-foreground flex items-center">
+          <LinkButton
+            class="underline decoration-dashed underline-offset-4 hover:text-accent"
+            href="https://icp.gov.moe/?keyword=20255960"
+            target="_blank"
+          >
+            萌ICP备20255960号
+          </LinkButton>
+        </div>
         <span class="hidden md:inline">&nbsp;|&nbsp;</span>
         <div>
           <LinkButton
             class="underline decoration-dashed underline-offset-4 hover:text-accent"
             href="https://beian.miit.gov.cn/"
+            target="_blank"
           >
             鄂ICP备2025143996号
           </LinkButton>
@@ -68,11 +82,13 @@ const { noMarginTop = false } = Astro.props;
           <LinkButton
             class="flex items-center underline decoration-dashed underline-offset-4 hover:text-accent"
             href="https://astro.build"
+            target="_blank"
           >
             Astro
           </LinkButton> 和 <LinkButton
             class="underline decoration-dashed underline-offset-4 hover:text-accent"
             href="https://github.com/hazuki-keatsu/aero-paper"
+            target="_blank"
           >
             AeroPaper {SITE.version ? `v${SITE.version}` : ""}
           </LinkButton>
@@ -83,6 +99,7 @@ const { noMarginTop = false } = Astro.props;
           文章基于 <LinkButton
             class="underline decoration-dashed underline-offset-4 hover:text-accent"
             href="https://creativecommons.org/licenses/by-nc/4.0/"
+            target="_blank"
           >
             CC BY-NC
           </LinkButton> 协议发布
