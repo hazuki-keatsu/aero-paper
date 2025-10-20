@@ -1,6 +1,7 @@
 import { getCollection } from "astro:content";
 import postFilter from "./postFilter";
 import { getPath } from "./getPath";
+import { slugifyStr } from "./slugify";
 
 export interface BlogStats {
   totalPosts: number;
@@ -21,6 +22,7 @@ export interface BlogStats {
   }[];
   tagStats: {
     tag: string;
+    tagName: string;
     count: number;
     percentage: number;
   }[];
@@ -198,8 +200,9 @@ export async function getBlogStats(): Promise<BlogStats> {
 
   const totalTagCount = Array.from(tagMap.values()).reduce((sum, count) => sum + count, 0);
   const tagStats = Array.from(tagMap.entries())
-    .map(([tag, count]) => ({
-      tag,
+    .map(([tagName, count]) => ({
+      tag: slugifyStr(tagName),
+      tagName,
       count,
       percentage: Math.round((count / totalTagCount) * 100)
     }))
