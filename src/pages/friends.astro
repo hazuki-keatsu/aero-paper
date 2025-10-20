@@ -25,8 +25,9 @@ const pageTitle = "友链";
     <Main pageTitle={pageTitle} pageDesc={desc}>
       <div class="mb-8 space-y-2 text-sm">
         <details
-          class="content-card js-animated-details rounded-lg p-4 transition-all duration-300 sm:p-5"
+          class="content-card js-animated-details rounded-lg pt-2 pb-1 pl-4 transition-all duration-300"
           data-animate
+          id="how-to-apply"
         >
           <summary class="cursor-pointer font-semibold text-accent select-none"
             >申请方式</summary
@@ -141,100 +142,101 @@ const pageTitle = "友链";
     const prefersReduce = window.matchMedia(
       "(prefers-reduced-motion: reduce)"
     ).matches;
-    const list = Array.from(
-      root.querySelectorAll("details[data-animate]")
-    ) as HTMLDetailsElement[];
 
-    list.forEach(d => {
-      if ((d as HTMLElement).dataset.enhanced === "1") return;
+    const d = document.querySelector<HTMLDetailsElement>("#how-to-apply");
 
-      (d as HTMLElement).dataset.enhanced = "1";
+    if (d == null) {
+      return;
+    }
 
-      const summary = d.querySelector("summary");
-      const content = d.querySelector(
-        ".js-accordion-content"
-      ) as HTMLElement | null;
+    if ((d as HTMLElement).dataset.enhanced === "1") return;
 
-      if (!summary || !content) return;
+    (d as HTMLElement).dataset.enhanced = "1";
 
-      content.style.overflow = "hidden";
+    const summary = d.querySelector("summary");
+    const content = d.querySelector(
+      ".js-accordion-content"
+    ) as HTMLElement | null;
 
-      if (!d.open) {
+    if (!summary || !content) return;
+
+    content.style.overflow = "hidden";
+
+    if (!d.open) {
+      content.style.height = "0px";
+      content.style.opacity = "0";
+    } else {
+      content.style.height = "auto";
+      content.style.opacity = "1";
+    }
+
+    let animating = false;
+
+    summary.addEventListener("click", e => {
+      // 若正在动画中，阻止重复
+      if (animating) {
+        e.preventDefault();
+        return;
+      }
+      if (prefersReduce) return; // 退化为原生行为
+
+      if (d.open) {
+        // 关闭：阻止默认(默认会直接移除 open 导致无法读高度)
+        e.preventDefault();
+        animating = true;
+        summary.setAttribute("aria-expanded", "false");
+        d.classList.add("accordion-closing");
+        const startH = content.scrollHeight;
+        content.style.height = startH + "px";
+        content.style.opacity = "1";
+        void content.offsetHeight;
+        content.style.transition =
+          "height 320ms cubic-bezier(.55,.1,.4,1), opacity 220ms ease";
         content.style.height = "0px";
         content.style.opacity = "0";
-      } else {
-        content.style.height = "auto";
-        content.style.opacity = "1";
-      }
-
-      let animating = false;
-
-      d.addEventListener("click", e => {
-        // 若正在动画中，阻止重复
-        if (animating) {
-          e.preventDefault();
-          return;
-        }
-        if (prefersReduce) return; // 退化为原生行为
-
-        if (d.open) {
-          // 关闭：阻止默认(默认会直接移除 open 导致无法读高度)
-          e.preventDefault();
-          animating = true;
-          summary.setAttribute("aria-expanded", "false");
-          d.classList.add("accordion-closing");
-          const startH = content.scrollHeight;
-          content.style.height = startH + "px";
-          content.style.opacity = "1";
-          void content.offsetHeight;
-          content.style.transition =
-            "height 320ms cubic-bezier(.55,.1,.4,1), opacity 220ms ease";
-          content.style.height = "0px";
-          content.style.opacity = "0";
-          const closeEnd = (ev: Event) => {
-            if (
-              ev.target !== content ||
-              (ev as TransitionEvent).propertyName !== "height"
-            )
-              return;
-            content.removeEventListener("transitionend", closeEnd);
-            content.style.transition = "none";
-            d.removeAttribute("open");
-            d.classList.remove("accordion-closing");
-            animating = false;
-          };
-          content.addEventListener("transitionend", closeEnd);
-        } else {
-          // 打开：阻止默认，手动添加 open 并执行 0->目标动画
-          e.preventDefault();
-          animating = true;
-          d.setAttribute("open", "");
-          summary.setAttribute("aria-expanded", "true");
-          d.classList.add("accordion-opening");
+        const closeEnd = (ev: Event) => {
+          if (
+            ev.target !== content ||
+            (ev as TransitionEvent).propertyName !== "height"
+          )
+            return;
+          content.removeEventListener("transitionend", closeEnd);
           content.style.transition = "none";
-          content.style.height = "0px";
-          content.style.opacity = "0";
-          void content.offsetHeight;
-          const target = content.scrollHeight;
-          content.style.transition =
-            "height 450ms cubic-bezier(.4,.15,.2,1), opacity 260ms ease";
-          content.style.height = target + "px";
-          content.style.opacity = "1";
-          const openEnd = (ev: Event) => {
-            if (
-              ev.target !== content ||
-              (ev as TransitionEvent).propertyName !== "height"
-            )
-              return;
-            content.removeEventListener("transitionend", openEnd);
-            content.style.transition = "none";
-            content.style.height = "auto";
-            d.classList.remove("accordion-opening");
-            animating = false;
-          };
-          content.addEventListener("transitionend", openEnd);
-        }
-      });
+          d.removeAttribute("open");
+          d.classList.remove("accordion-closing");
+          animating = false;
+        };
+        content.addEventListener("transitionend", closeEnd);
+      } else {
+        // 打开：阻止默认，手动添加 open 并执行 0->目标动画
+        e.preventDefault();
+        animating = true;
+        d.setAttribute("open", "");
+        summary.setAttribute("aria-expanded", "true");
+        d.classList.add("accordion-opening");
+        content.style.transition = "none";
+        content.style.height = "0px";
+        content.style.opacity = "0";
+        void content.offsetHeight;
+        const target = content.scrollHeight;
+        content.style.transition =
+          "height 450ms cubic-bezier(.4,.15,.2,1), opacity 260ms ease";
+        content.style.height = target + "px";
+        content.style.opacity = "1";
+        const openEnd = (ev: Event) => {
+          if (
+            ev.target !== content ||
+            (ev as TransitionEvent).propertyName !== "height"
+          )
+            return;
+          content.removeEventListener("transitionend", openEnd);
+          content.style.transition = "none";
+          content.style.height = "auto";
+          d.classList.remove("accordion-opening");
+          animating = false;
+        };
+        content.addEventListener("transitionend", openEnd);
+      }
     });
   }
 
@@ -293,12 +295,16 @@ const pageTitle = "友链";
     --triangle-size: 9px; /* 控制三角边长（高度） */
     --triangle-width: calc(var(--triangle-size) * 0.65);
     --triangle-color: var(--color-accent);
-    display: inline-flex;
+    display: flex;
     align-items: center;
-    gap: 0.55rem;
+    gap: 0.65rem;
     position: relative;
-    padding-left: 0.1rem; /* 减少多余缩进 */
+    width: 100%;
+    padding: 0.85rem 0.75rem;
+    margin: -0.25rem -0.75rem 0;
     line-height: 1.4;
+    border-radius: 0.85rem;
+    transition: background-color 0.25s ease;
   }
   /* 使用 ::before 形成“朝右”的实心三角（初始闭合） */
   details[data-animate] > summary::before {
