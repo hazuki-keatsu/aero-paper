@@ -2,7 +2,7 @@
 author: Hazuki Keatsu
 pubDatetime: 2025-08-29T17:47:57+08:00
 title: 阿里云 OSS 静态站点托管：从 0 到 1 部署博客教程
-featured: true
+featured: false
 draft: false
 tags:
   - 网站部署
@@ -47,10 +47,10 @@ description: 阿里云对象存储部署静态站点操作指南，同时也是�
 #### 方式 2：官方工具 `ossutil` 上传（推荐，适合批量/频繁更新，可以保留目录结构）
 `ossutil` 是阿里云官方提供的命令行工具，支持批量同步文件，效率更高，步骤如下：
 
-1. **安装 `ossutil`**  
+1. **安装 `ossutil`**
    参考 [阿里云官方文档](https://help.aliyun.com/zh/oss/developer-reference/ossutil-overview/)，根据本地操作系统（Windows/macOS/Linux）下载对应的安装包，完成安装后配置环境变量（确保终端可直接调用 `ossutil` 命令）。
 
-2. **配置访问凭证**  
+2. **配置访问凭证**
    访问凭证是 `ossutil` 操作 OSS 的权限证明，需先在阿里云控制台创建：
    - 进入 [RAM 访问控制](https://ram.console.aliyun.com/overview) 页面，点击左侧「身份管理」->「用户」；
    - 点击「创建用户」，输入「登录名称」和「显示名称」，勾选「编程访问（使用 AccessKey 访问）」，点击「确定」；
@@ -58,7 +58,7 @@ description: 阿里云对象存储部署静态站点操作指南，同时也是�
    - 回到「用户」列表，点击刚创建的用户，进入「权限管理」页面，点击「添加权限」；
    - 在权限列表中搜索并勾选「AliyunOSSFullAccess」（OSS 全权限，确保可上传/管理文件），点击「确定」完成授权。
 
-3. **执行同步命令**  
+3. **执行同步命令**
    打开终端，进入本地博客项目的 `dist` 目录所在路径，执行以下命令（将 `your-bucket-name` 替换为你的 Bucket 名称，`region` 替换为 Bucket 所在地域，如 `oss-cn-shanghai`）：
    ```bash
    # 同步本地dist目录到OSS（-r 表示递归同步所有子目录和文件）

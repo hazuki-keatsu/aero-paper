@@ -2,7 +2,7 @@
 author: Hazuki Keatsu
 title: 叶月枫的小站备案通过纪念日
 pubDatetime: 2025-09-16T20:38:44+08:00
-featured: true
+featured: false
 draft: false
 description: 这个是叶月枫的小站通过两个备案的纪念文章。
 tags:

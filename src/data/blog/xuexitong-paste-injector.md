@@ -6,7 +6,7 @@ tags:
   - Typescript
   - Tampermonkey
 pubDatetime: 2025-10-07T23:23:38+08:00
-featured: true
+featured: false
 draft: false
 description: 通过 Selection API 实现对 UEditor 限制粘贴的破除
 ---
@@ -40,7 +40,7 @@ description: 通过 Selection API 实现对 UEditor 限制粘贴的破除
 `main.ts` 是主程序，编写了所有的代码逻辑。`build-userjs.js` 把编译后的 JS 包装成 TamperMonkey 脚本。
 
 ## 三、实现细节
-### 1. 禁用弹窗 
+### 1. 禁用弹窗
 
 第一步是干掉那些烦人的警告：
 
@@ -252,7 +252,7 @@ fs.writeFileSync(outputPath, banner + js);
 
 关键是 `@run-at document-start`，让脚本在文档开始加载时就执行，这样能尽早劫持事件。
 
-## 五、兼容性处理 
+## 五、兼容性处理
 
 代码中有多处降级策略：
 
