@@ -21,15 +21,15 @@ Aero Paper v0.5.0 版本带来了许多令人兴奋的新功能和改进。这�
 
 用户可以选择性地添加代码块折叠区域，这样会使得代码的折叠更受掌控，在不影响阅读效果的情况下，提升阅读体验。
 
-通过使用`collapse`参数来定义折叠范围。
+通过使用 `collapse` 参数来定义折叠范围。
 
 例如：
 
-```javascript
+````javascript
 ```javascript collapse={5-9, 29-55}
 // 你的代码
 // ...
-```
+````
 
 效果：
 
@@ -111,7 +111,7 @@ for idx in range(0,6):
 print r
 ```
 
-同时，你也可以通过`showLineNumbers=false`参数设置来禁用行号展示。
+同时，你也可以通过 `showLineNumbers=false` 参数设置来禁用行号展示。
 
 ### 3. 代码高亮和主题支持
 
@@ -185,7 +185,7 @@ gantt
 
 ## 三、Github Card 语法支持
 
-现在，你可以在你的文档中使用 Markdown 拓展语法`::github{repo="owner/repo"}`来直接插入 Github Card，这个功能可以十分优雅地引用其他的仓库地址。例如：
+现在，你可以在你的文档中使用 Markdown 拓展语法 `::github{repo="owner/repo"}` 来直接插入 Github Card，这个功能可以十分优雅地引用其他的仓库地址。例如：
 
 ```markdown showLineNumbers=false
 ::github{repo="hazuki-keatsu/aero-paper"}
